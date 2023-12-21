@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
-
 import '../../../login/responsive.dart';
 import '../../../usrTime/screens/home/components/home_header.dart';
 import '../../curved_navigation_bar.dart';
 import '../forms/formscom.dart';
-
+import 'bodyhome.dart';
 import 'components/discount_banner.dart';
-
-import 'components/popular_product.dart';
 
 class HomeScreencom extends StatelessWidget {
   static String routeName = "/home";
@@ -33,7 +30,7 @@ class HomeScreencom extends StatelessWidget {
               HomeHeader(),
               DiscountBanner(),
               SizedBox(height: 90),
-              PopularProducts(),
+              ComponantBody(),
               SizedBox(height: 20),
             ],
           ),
@@ -101,7 +98,7 @@ class HomeScreencom extends StatelessWidget {
                     HomeHeader(),
                     DiscountBanner(),
                     SizedBox(height: 90),
-                    PopularProducts(),
+                    ComponantBody(),
                     SizedBox(height: 20),
                   ],
                 ),
