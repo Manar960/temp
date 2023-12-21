@@ -72,3 +72,16 @@ const logoutapi = "${url}logout";
 const getyoerprodact = "${url}getProByCompany";
 
 const getalluserinfo = "${url}get-all-users";
+
+const getcompanysprodactcount = "${url}countProdacts";
+
+const getcompanysservicscount = "${url}countServs";
+
+const getcompanysbookingcscount = "${url}countBooking";
+
+const getcompanysorfearscscount = "${url}countOrders";
+
+const getcompanynighbercscount = "${url}get-users-in-company-location";
+
+const getcompanynighbercomcscount =
+    "${url}get-count-of-companies-in-same-location";

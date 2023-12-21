@@ -1,7 +1,13 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:fron_end/timeelinee/screens/home/widget/card_tile.dart';
 import 'package:fron_end/timeelinee/screens/home/widget/chart_card_tile.dart';
 import 'package:fron_end/timeelinee/screens/home/widget/project_widget.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
+
+import '../../../config.dart';
 
 class ComponantBody extends StatefulWidget {
   const ComponantBody({Key? key}) : super(key: key);
@@ -11,10 +17,134 @@ class ComponantBody extends StatefulWidget {
 }
 
 class _ComponantBodyState extends State<ComponantBody> {
+  String companyName = '';
+  int prodact = 0;
+  int serv = 0;
+  late int totalSP;
+  int booking = 0;
+  int ordars = 0;
+  late int totalBR;
+  int nigh = 0;
+  int nighc = 0;
   @override
+  void initState() {
+    super.initState();
+    getCompanyName().then((value) {
+      print('FIRST $companyName');
+      fetchProdactCount();
+      fetchServisesCount();
+      fetchBookingCount();
+      fetchOrdarsCount();
+      fetchNighberCount();
+      fetchNighbercomCount();
+    });
+  }
+
+  Future<void> getCompanyName() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      companyName = prefs.getString('company') ?? '';
+    });
+  }
+
+  Future<void> fetchProdactCount() async {
+    if (companyName == '') {
+      print('prod $companyName');
+    }
+    final response =
+        await http.get(Uri.parse('$getcompanysprodactcount/$companyName'));
+
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> data = json.decode(response.body);
+      setState(() {
+        prodact = data['count'];
+        print('pro $companyName');
+      });
+    } else {
+      print('Failed to fetch users count $companyName');
+    }
+  }
+
+  Future<void> fetchServisesCount() async {
+    final response =
+        await http.get(Uri.parse('$getcompanysservicscount/$companyName'));
+
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> data = json.decode(response.body);
+      setState(() {
+        serv = data['count'];
+        print('ser $companyName');
+      });
+    } else {
+      print('Failed to fetch users count $companyName');
+    }
+  }
+
+  Future<void> fetchBookingCount() async {
+    final response =
+        await http.get(Uri.parse('$getcompanysbookingcscount/$companyName'));
+
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> data = json.decode(response.body);
+      setState(() {
+        booking = data['count'];
+        print('ser $companyName');
+      });
+    } else {
+      print('Failed to fetch users count $companyName');
+    }
+  }
+
+  Future<void> fetchOrdarsCount() async {
+    final response =
+        await http.get(Uri.parse('$getcompanysorfearscscount/$companyName'));
+
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> data = json.decode(response.body);
+      setState(() {
+        ordars = data['count'];
+        print('ser $companyName');
+      });
+    } else {
+      print('Failed to fetch users count $companyName');
+    }
+  }
+
+  Future<void> fetchNighberCount() async {
+    final response =
+        await http.get(Uri.parse('$getcompanynighbercscount/$companyName'));
+
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> data = json.decode(response.body);
+      setState(() {
+        nigh = data['countUsersInCompanyLocation'];
+        print('ser $companyName');
+      });
+    } else {
+      print('Failed to fetch users count $companyName');
+    }
+  }
+
+  Future<void> fetchNighbercomCount() async {
+    final response =
+        await http.get(Uri.parse('$getcompanynighbercomcscount/$companyName'));
+
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> data = json.decode(response.body);
+      setState(() {
+        nighc = data['count'];
+        print('ser $companyName');
+      });
+    } else {
+      print('Failed to fetch users count $companyName');
+    }
+  }
+
   Widget build(BuildContext context) {
     final _media = MediaQuery.of(context).size;
-
+    totalSP = serv + prodact;
+    print('totalSP$totalSP');
+    totalBR = ordars + booking;
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: SingleChildScrollView(
@@ -22,79 +152,79 @@ class _ComponantBodyState extends State<ComponantBody> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             if (ResponsiveWidget.isSmallScreen(context)) ...[
-              const FractionallySizedBox(
+              FractionallySizedBox(
                 widthFactor: 0.3,
                 child: CardTile(
                   iconBgColor: Colors.orange,
                   cardTitle: 'الطلبيات\nالحجوزات',
                   icon: Icons.work,
-                  mainText: '230',
+                  mainText: totalBR.toString(),
                 ),
               ),
               const SizedBox(
                 height: 40,
               ),
-              const FractionallySizedBox(
+              FractionallySizedBox(
                 widthFactor: 0.3,
                 child: CardTile(
                   iconBgColor: Colors.pinkAccent,
-                  cardTitle: 'Website Visits',
+                  cardTitle: ' منتجات \n خدمات',
                   icon: Icons.category,
-                  mainText: '3.560',
+                  mainText: totalSP.toString(),
                 ),
               ),
               const SizedBox(
                 height: 40,
               ),
-              const FractionallySizedBox(
+              FractionallySizedBox(
                 widthFactor: 0.3,
                 child: CardTile(
                   iconBgColor: Colors.green,
-                  cardTitle: 'Revenue',
+                  cardTitle: 'زبائن \n في الجوار',
                   icon: Icons.location_city,
-                  mainText: '2500',
+                  mainText: nigh.toString(),
                 ),
               ),
               const SizedBox(
                 height: 40,
               ),
-              const FractionallySizedBox(
+              FractionallySizedBox(
                 widthFactor: 0.3,
                 child: CardTile(
                   iconBgColor: Colors.lightBlueAccent,
-                  cardTitle: 'Followers',
+                  cardTitle: 'شركات  \n في الجوار ',
                   icon: Icons.store,
-                  mainText: '112',
+                  mainText: nighc.toString(),
                 ),
               ),
             ],
             if (!ResponsiveWidget.isSmallScreen(context))
-              const Row(
+              Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   CardTile(
                     iconBgColor: Colors.orange,
                     cardTitle: 'الطلبيات\nالحجوزات',
                     icon: Icons.work,
-                    mainText: '230',
+                    mainText: totalBR.toString(),
                   ),
                   CardTile(
                     iconBgColor: Colors.pinkAccent,
-                    cardTitle: 'Website Visits',
+                    cardTitle: ' منتجات \n خدمات',
                     icon: Icons.category,
-                    mainText: '3.560',
+                    mainText: totalSP.toString(),
                   ),
                   CardTile(
                     iconBgColor: Colors.green,
-                    cardTitle: 'Revenue',
+                    cardTitle: 'زبائن \n في الجوار',
                     icon: Icons.location_city,
-                    mainText: '2500',
+                    mainText: nigh.toString(),
                   ),
                   CardTile(
                     iconBgColor: Colors.lightBlueAccent,
-                    cardTitle: 'Followers',
+                    cardTitle: 'شركات  \n في الجوار ',
                     icon: Icons.store,
-                    mainText: '112',
+                    mainText: nighc.toString(),
                   ),
                 ],
               ),
