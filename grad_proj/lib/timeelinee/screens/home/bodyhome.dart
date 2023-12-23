@@ -27,7 +27,7 @@ class _ComponantBodyState extends State<ComponantBody> {
   late int totalBR;
   int nigh = 0;
   int nighc = 0;
-  int counterValue = 0;
+  int counterValue = 4;
   @override
   void initState() {
     super.initState();
@@ -259,7 +259,9 @@ class _ComponantBodyState extends State<ComponantBody> {
               ),
               FractionallySizedBox(
                 widthFactor: 0.9,
-                child: ProjectWidget(media: _media),
+                child: ProductWidget(
+                  media: _media,
+                ),
               ),
             ],
             if (!ResponsiveWidget.isSmallScreen(context))
@@ -272,7 +274,9 @@ class _ComponantBodyState extends State<ComponantBody> {
                     icon: Icons.people,
                     typeText: counterValue.toString(),
                   ),
-                  ProjectWidget(media: _media),
+                  ProductWidget(
+                    media: _media,
+                  ),
                 ],
               ),
             const SizedBox(

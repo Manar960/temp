@@ -85,3 +85,7 @@ const getcompanynighbercscount = "${url}get-users-in-company-location";
 
 const getcompanynighbercomcscount =
     "${url}get-count-of-companies-in-same-location";
+
+const getprodact = "${url}getProByCompany";
+
+const getservic = "${url}servicesByCompany";
