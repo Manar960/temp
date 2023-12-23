@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:convert';
 
+import '../../../../config.dart';
 import '../commons/theme.dart';
-import 'project_model.dart';
 
-class ProjectWidget extends StatelessWidget {
-  const ProjectWidget({
+class ProductWidget extends StatefulWidget {
+  const ProductWidget({
     Key? key,
     required Size media,
   })  : _media = media,
@@ -13,123 +16,159 @@ class ProjectWidget extends StatelessWidget {
   final Size _media;
 
   @override
+  _ProductWidgetState createState() => _ProductWidgetState();
+}
+
+class _ProductWidgetState extends State<ProductWidget> {
+  late String companyName = '';
+  late List<ProductItem> productItems = [];
+  late List<ProductItem> serviceItems = [];
+
+  @override
+  void initState() {
+    super.initState();
+    getCompanyName().then((value) {
+      getProductItems(companyName).then((items) {
+        setState(() {
+          productItems = items;
+        });
+      });
+
+      getServicItems(companyName).then((items) {
+        setState(() {
+          serviceItems = items;
+        });
+      });
+    });
+  }
+
+  Future<void> getCompanyName() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      companyName = prefs.getString('company') ?? '';
+    });
+  }
+
+  Future<List<ProductItem>> getProductItems(String companyName) async {
+    final response = await http.get(Uri.parse('$getprodact/$companyName'));
+
+    if (response.statusCode == 200) {
+      final dynamic data = json.decode(response.body);
+      print(data);
+      if (data is Map<String, dynamic>) {
+        return [ProductItem.fromJson(data)];
+      } else {
+        throw Exception('Invalid data format');
+      }
+    } else {
+      throw Exception('Failed to load product items');
+    }
+  }
+
+  Future<List<ProductItem>> getServicItems(String companyName) async {
+    final response = await http.get(Uri.parse('$getservic/$companyName'));
+
+    if (response.statusCode == 200) {
+      final dynamic data = json.decode(response.body);
+      print(data);
+      if (data is Map<String, dynamic>) {
+        return [ProductItem.fromJson(data)];
+      } else {
+        throw Exception('Invalid data format');
+      }
+    } else {
+      throw Exception('Failed to load service items');
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Material(
-      elevation: 10,
-      shadowColor: Colors.grey,
-      borderRadius: BorderRadius.circular(4),
-      child: Container(
-        height: _media.height / 1.9,
-        width: _media.width / 3 + 20,
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(4),
-        ),
-        child: ListView(
-          children: <Widget>[
-            Stack(
+    try {
+      return Material(
+        elevation: 10,
+        shadowColor: Colors.grey,
+        borderRadius: BorderRadius.circular(12),
+        child: SingleChildScrollView(
+          child: Container(
+            width: widget._media.width / 2, // تم تصغير عرض البطاقة إلى النصف
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Column(
               children: <Widget>[
-                Positioned(
-                  top: 10,
-                  left: 20,
-                  child: Text(
-                    'Projects of the Month',
-                    style: cardTitleTextStyle,
-                  ),
-                ),
-                Padding(
-                  padding:
-                      const EdgeInsets.only(top: 50.0, left: 20, right: 20),
-                  child: Column(
-                    children: <Widget>[
-                      const Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          SizedBox(width: 2),
-                          Text(
-                            'Assigned',
-                            style: TextStyle(color: Colors.grey),
-                          ),
-                          Text(
-                            'Name',
-                            style: TextStyle(color: Colors.grey),
-                          ),
-                          Text(
-                            'Priority',
-                            style: TextStyle(color: Colors.grey),
-                          ),
-                          Text(
-                            'Budget',
-                            style: TextStyle(color: Colors.grey),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 10),
-                      const Divider(),
-                      ListView.builder(
-                        shrinkWrap: true,
-                        itemCount: projectItems.length,
-                        itemBuilder: (context, index) {
-                          return Padding(
-                            padding: const EdgeInsets.only(bottom: 18),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              textBaseline: TextBaseline.alphabetic,
-                              children: <Widget>[
-                                Row(
-                                  children: <Widget>[
-                                    CircleAvatar(
-                                      child: Text(projectItems[index]
-                                          .assigned
-                                          .substring(0, 2)),
-                                    ),
-                                    const SizedBox(
-                                      width: 10,
-                                    ),
-                                    Text(projectItems[index].assigned),
-                                  ],
-                                ),
-                                Text(
-                                  projectItems[index].name,
-                                  textAlign: TextAlign.justify,
-                                ),
-                                Container(
-                                  child: Text(
-                                    projectItems[index].priority.index == 0
-                                        ? 'Low'
-                                        : projectItems[index].priority.index ==
-                                                1
-                                            ? 'Medium'
-                                            : 'High',
-                                    textAlign: TextAlign.justify,
-                                    style: const TextStyle(
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                  height: 30,
-                                  width: 80,
-                                  alignment: Alignment.center,
-                                  decoration: BoxDecoration(
-                                    color: projectItems[index].color,
-                                    borderRadius: BorderRadius.circular(8),
-                                  ),
-                                ),
-                                Text(
-                                    '${projectItems[index].budget.toString()} K'),
-                              ],
-                            ),
-                          );
-                        },
-                      ),
-                    ],
-                  ),
-                ),
+                _buildListTitle('المنتجات'),
+                _buildDataTable(productItems),
+                _buildListTitle('خدمات'),
+                _buildDataTable(serviceItems),
               ],
             ),
-          ],
+          ),
         ),
+      );
+    } catch (e) {
+      print('Error in ProductWidget build: $e');
+      rethrow;
+    }
+  }
+
+  Widget _buildListTitle(String title) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          Text(
+            title,
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+              color: Colors.blue,
+            ),
+          ),
+        ],
       ),
+    );
+  }
+
+  Widget _buildDataTable(List<ProductItem> items) {
+    if (items.isNotEmpty) {
+      return DataTable(
+        columns: [
+          DataColumn(label: Text('الاسم')),
+          DataColumn(label: Text('الوصف')),
+          DataColumn(label: Text('الثمن')),
+          DataColumn(label: Text('بار كود')),
+        ],
+        rows: items
+            .expand(
+              (item) => item.results.map(
+                (product) => DataRow(
+                  cells: [
+                    DataCell(Text(product['Name'] ?? 'No Name')),
+                    DataCell(Text(product['descrption'] ?? 'No Description')),
+                    DataCell(Text(product['price']?.toString() ?? 'No Price')),
+                    DataCell(Text(product['parcode'] ?? 'No Barcode')),
+                  ],
+                ),
+              ),
+            )
+            .toList(),
+      );
+    } else {
+      return Container();
+    }
+  }
+}
+
+class ProductItem {
+  final List<Map<String, dynamic>> results;
+
+  ProductItem({required this.results});
+
+  factory ProductItem.fromJson(Map<String, dynamic> json) {
+    return ProductItem(
+      results: List<Map<String, dynamic>>.from(json['results'] ?? []),
     );
   }
 }

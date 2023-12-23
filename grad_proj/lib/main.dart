@@ -22,7 +22,7 @@ void main() async {
           measurementId: "G-D1CL97P6E5"),
     );
   } else {
-    // await Firebase.initializeApp();
+   await Firebase.initializeApp();
   }
 
   runApp(
