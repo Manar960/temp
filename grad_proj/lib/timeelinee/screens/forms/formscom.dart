@@ -8,11 +8,14 @@ import 'package:path/path.dart' as path;
 import '../../../config.dart';
 import '../../../login/responsive.dart';
 import '../../curved_navigation_bar.dart';
+import '../home/calendar/calendar.dart';
 import '../home/home_screen.dart';
 import 'package:http/http.dart' as http;
 import 'dart:io';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+
+import '../stoks/stock.dart';
 
 class MyButtonsScreen extends StatefulWidget {
   static var routeName = "/mybuttons";
@@ -465,13 +468,30 @@ class _MyButtonsScreenState extends State<MyButtonsScreen> {
                 );
                 break;
               case 1:
-                // الانتقال إلى صفحة الريبورت
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) {
+                    return CalendarPage(
+                      title: 'calendar',
+                    );
+                  }),
+                );
                 break;
               case 2:
-                // الانتقال إلى صفحة الأزرار
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) {
+                    return MyButtonsScreen();
+                  }),
+                );
                 break;
               case 3:
-                // الانتقال إلى صفحة الطلبيات
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) {
+                    return StokScreenPage();
+                  }),
+                );
                 break;
               case 4:
                 // الانتقال إلى صفحة الصفحة الشخصية
