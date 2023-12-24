@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -26,6 +27,7 @@ class _MyButtonsScreenState extends State<MyButtonsScreen> {
   bool _checkBoxEdit = false;
   String _selectedCategory = 'خدمة';
   PickedFile? _pickedImage;
+  String _imagePath = '';
 
   TextEditingController nameController = TextEditingController();
   TextEditingController barcodeController = TextEditingController();
@@ -34,20 +36,54 @@ class _MyButtonsScreenState extends State<MyButtonsScreen> {
   TextEditingController stokController = TextEditingController();
 
   Future<void> _pickImage() async {
+    FilePickerResult? result;
+
     try {
-      final pickedFile =
-          await ImagePicker().getImage(source: ImageSource.gallery);
+      result = await FilePicker.platform.pickFiles(
+        type: FileType.custom,
+        allowedExtensions: ['png', 'jpg'],
+      );
 
-      setState(() {
-        _pickedImage = pickedFile != null ? PickedFile(pickedFile.path) : null;
+      if (result != null) {
+        Uint8List? uploadFile = result.files.single.bytes;
+        String fileName = result.files.single.name;
+        String barcode = barcodeController.text;
+
+        await _uploadImage(uploadFile, barcode, fileName, 'product');
+        await _uploadImage(uploadFile, barcode, fileName, 'service');
+      }
+    } catch (e) {
+      print('Error picking image: $e');
+    }
+  }
+
+  Future<void> _uploadImage(
+    Uint8List? uploadFile,
+    String barcode,
+    String fileName,
+    String category,
+  ) async {
+    if (uploadFile == null) {
+      return;
+    }
+
+    try {
+      final Reference storageRef = FirebaseStorage.instance.ref();
+      String filePath = '$category/$barcode/$fileName';
+
+      final UploadTask uploadTask =
+          storageRef.child(filePath).putData(uploadFile);
+
+      await uploadTask.whenComplete(() async {
+        final String downloadURL =
+            await storageRef.child(filePath).getDownloadURL();
+        print('Download URL: $downloadURL');
+        setState(() {
+          _imagePath = downloadURL;
+        });
       });
-
-      // استخراج اسم الملف من المسار
-      final String? fileName =
-          _pickedImage != null ? path.basename(_pickedImage!.path) : null;
-      print('Selected file name: $fileName');
     } catch (error) {
-      print('Error picking image: $error');
+      print('Error uploading image: $error');
     }
   }
 
@@ -103,23 +139,25 @@ class _MyButtonsScreenState extends State<MyButtonsScreen> {
   }
 
   Widget getImageWidget() {
-    // Check if the platform is web or not
-    if (kIsWeb) {
-      // If web, use Image.network instead
+    if (_pickedImage != null) {
       return ClipRRect(
         borderRadius: BorderRadius.circular(75),
-        child: Image.network(
-          _pickedImage!.path,
-          fit: BoxFit.cover,
-        ),
+        child: kIsWeb
+            ? Image.network(
+                _pickedImage!.path,
+                fit: BoxFit.cover,
+              )
+            : Image.file(
+                File(_pickedImage!.path),
+                fit: BoxFit.cover,
+              ),
       );
     } else {
-      // If not web, use Image.file
-      return ClipRRect(
-        borderRadius: BorderRadius.circular(75),
-        child: Image.file(
-          File(_pickedImage!.path),
-          fit: BoxFit.cover,
+      return const Center(
+        child: Icon(
+          Icons.add_a_photo,
+          size: 50,
+          color: Colors.white,
         ),
       );
     }
@@ -480,6 +518,11 @@ class _MyButtonsScreenState extends State<MyButtonsScreen> {
 
   Future<void> addService(String companyName) async {
     try {
+      await uploadImage('خدمة', companyName);
+
+      final String? fileName =
+          _pickedImage != null ? path.basename(_pickedImage!.path) : null;
+
       final response = await http.post(
         Uri.parse(addServic),
         headers: <String, String>{
@@ -556,7 +599,7 @@ class _MyButtonsScreenState extends State<MyButtonsScreen> {
 
   Future<void> addProdact(String companyName) async {
     try {
-      await uploadImage(); // تحميل الصورة أولاً
+      await uploadImage('منتج', companyName);
 
       final String? fileName =
           _pickedImage != null ? path.basename(_pickedImage!.path) : null;
@@ -587,25 +630,35 @@ class _MyButtonsScreenState extends State<MyButtonsScreen> {
     }
   }
 
-  Future<void> uploadImage() async {
+  Future<void> uploadImage(String category, String companyName) async {
     try {
+      if (_pickedImage == null) {
+        return;
+      }
+
       final Reference storageRef = FirebaseStorage.instance.ref();
-      final UploadTask uploadTask = storageRef
-          .child('your-image-filename.png')
-          .putFile(File(_pickedImage!.path));
 
-      await uploadTask.whenComplete(() {
-        print('Image uploaded to Firebase Storage');
-        // Handle success
+      String filePath;
+      if (category == 'منتج') {
+        filePath = 'prodact/$companyName/${path.basename(_pickedImage!.path)}';
+      } else {
+        filePath = 'servic/$companyName/${path.basename(_pickedImage!.path)}';
+      }
+
+      final UploadTask uploadTask =
+          storageRef.child(filePath).putFile(File(_pickedImage!.path));
+
+      await uploadTask.whenComplete(() async {
+        final String downloadURL =
+            await storageRef.child(filePath).getDownloadURL();
+        print('Download URL: $downloadURL');
+
+        setState(() {
+          _imagePath = downloadURL;
+        });
       });
-
-      // Optionally get the download URL
-      final String downloadURL =
-          await storageRef.child('your-image-filename.png').getDownloadURL();
-      print('Download URL: $downloadURL');
     } catch (error) {
       print('Error uploading image: $error');
-      // Handle error
     }
   }
 

@@ -4,6 +4,7 @@ import '../../../usrTime/screens/home/components/home_header.dart';
 import '../../curved_navigation_bar.dart';
 import '../forms/formscom.dart';
 import 'bodyhome.dart';
+import 'calendar/calendar.dart';
 import 'components/discount_banner.dart';
 
 class HomeScreencom extends StatelessWidget {
@@ -58,7 +59,14 @@ class HomeScreencom extends StatelessWidget {
                 break;
 
               case 1:
-                // Navigate to the report page
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) {
+                    return CalendarPage(
+                      title: 'calendar',
+                    );
+                  }),
+                );
                 break;
               case 2:
                 Navigator.push(
@@ -70,6 +78,7 @@ class HomeScreencom extends StatelessWidget {
                 break;
               case 3:
                 // Navigate to the orders page
+
                 break;
               case 4:
                 // Navigate to the personal page
@@ -125,7 +134,14 @@ class HomeScreencom extends StatelessWidget {
                       Navigator.pushNamed(context, HomeScreencom.routeName);
                       break;
                     case 1:
-                      // Navigate to the report page
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) {
+                          return CalendarPage(
+                            title: 'calendar',
+                          );
+                        }),
+                      );
                       break;
                     case 2:
                       Navigator.push(
