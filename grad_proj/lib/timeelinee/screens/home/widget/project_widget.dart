@@ -4,7 +4,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 
 import '../../../../config.dart';
-import '../commons/theme.dart';
 
 class ProductWidget extends StatefulWidget {
   const ProductWidget({
@@ -88,21 +87,20 @@ class _ProductWidgetState extends State<ProductWidget> {
         elevation: 10,
         shadowColor: Colors.grey,
         borderRadius: BorderRadius.circular(12),
-        child: SingleChildScrollView(
-          child: Container(
-            width: widget._media.width / 2, // تم تصغير عرض البطاقة إلى النصف
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: Column(
-              children: <Widget>[
-                _buildListTitle('المنتجات'),
-                _buildDataTable(productItems),
-                _buildListTitle('خدمات'),
-                _buildDataTable(serviceItems),
-              ],
-            ),
+        child: Container(
+          width: widget._media.width / 2,
+          height: widget._media.height / 2,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: Column(
+            children: <Widget>[
+              _buildListTitle('المنتجات'),
+              Expanded(child: _buildDataTable(productItems)),
+              _buildListTitle('خدمات'),
+              Expanded(child: _buildDataTable(serviceItems)),
+            ],
           ),
         ),
       );
@@ -133,27 +131,30 @@ class _ProductWidgetState extends State<ProductWidget> {
 
   Widget _buildDataTable(List<ProductItem> items) {
     if (items.isNotEmpty) {
-      return DataTable(
-        columns: [
-          DataColumn(label: Text('الاسم')),
-          DataColumn(label: Text('الوصف')),
-          DataColumn(label: Text('الثمن')),
-          DataColumn(label: Text('بار كود')),
-        ],
-        rows: items
-            .expand(
-              (item) => item.results.map(
-                (product) => DataRow(
-                  cells: [
-                    DataCell(Text(product['Name'] ?? 'No Name')),
-                    DataCell(Text(product['descrption'] ?? 'No Description')),
-                    DataCell(Text(product['price']?.toString() ?? 'No Price')),
-                    DataCell(Text(product['parcode'] ?? 'No Barcode')),
-                  ],
+      return SingleChildScrollView(
+        child: DataTable(
+          columns: [
+            DataColumn(label: Text('الاسم')),
+            DataColumn(label: Text('الوصف')),
+            DataColumn(label: Text('الثمن')),
+            DataColumn(label: Text('بار كود')),
+          ],
+          rows: items
+              .expand(
+                (item) => item.results.map(
+                  (product) => DataRow(
+                    cells: [
+                      DataCell(Text(product['Name'] ?? 'No Name')),
+                      DataCell(Text(product['descrption'] ?? 'No Description')),
+                      DataCell(
+                          Text(product['price']?.toString() ?? 'No Price')),
+                      DataCell(Text(product['parcode'] ?? 'No Barcode')),
+                    ],
+                  ),
                 ),
-              ),
-            )
-            .toList(),
+              )
+              .toList(),
+        ),
       );
     } else {
       return Container();

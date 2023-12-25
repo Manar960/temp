@@ -3,6 +3,7 @@ import '../../../login/responsive.dart';
 import '../../../usrTime/screens/home/components/home_header.dart';
 import '../../curved_navigation_bar.dart';
 import '../forms/formscom.dart';
+import '../stoks/stock.dart';
 import 'bodyhome.dart';
 import 'calendar/calendar.dart';
 import 'components/discount_banner.dart';
@@ -77,7 +78,12 @@ class HomeScreencom extends StatelessWidget {
                 );
                 break;
               case 3:
-                // Navigate to the orders page
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) {
+                    return StokScreenPage();
+                  }),
+                );
 
                 break;
               case 4:
@@ -152,7 +158,12 @@ class HomeScreencom extends StatelessWidget {
                       );
                       break;
                     case 3:
-                      // Navigate to the orders page
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) {
+                          return StokScreenPage();
+                        }),
+                      );
                       break;
                     case 4:
                       // Navigate to the personal page
