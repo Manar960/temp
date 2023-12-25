@@ -1,0 +1,259 @@
+import 'dart:typed_data';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'package:file_picker/file_picker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:uuid/uuid.dart';
+
+import '../../../admin/pages/dashboard/widget/header_widget.dart';
+import '../../../config.dart';
+import '../../screens/forms/formscom.dart';
+import '../../screens/home/calendar/calendar.dart';
+import '../../screens/home/home_screen.dart';
+import '../../screens/stoks/stock.dart';
+import '../widget/addminButoon.dart';
+import '../widget/numbers_widget.dart';
+import '../widget/profile_widget.dart';
+import 'package:grad_proj/timeelinee/curved_navigation_bar.dart';
+
+class ProfilePageadCompany extends StatefulWidget {
+  final String companyName;
+
+  const ProfilePageadCompany({Key? key, required this.companyName})
+      : super(key: key);
+
+  @override
+  _ProfilePageCompanyStatead createState() => _ProfilePageCompanyStatead();
+}
+
+class _ProfilePageCompanyStatead extends State<ProfilePageadCompany> {
+  Map<String, dynamic>? companyData;
+  final String pageTitle = 'الملف الشخصي';
+  String? _imagePath;
+
+  @override
+  void initState() {
+    super.initState();
+    _initImage();
+  }
+
+  Future<void> _initImage() async {
+    try {
+      ListResult result = await FirebaseStorage.instance
+          .ref()
+          .child(widget.companyName)
+          .listAll();
+
+      List<Future<DateTime>> creationTimeFutures = result.items.map((file) {
+        return file
+            .getMetadata()
+            .then((metadata) => metadata.timeCreated ?? DateTime(0));
+      }).toList();
+
+      List<DateTime> creationTimes = await Future.wait(creationTimeFutures);
+
+      int latestIndex = creationTimes
+          .indexOf(creationTimes.reduce((a, b) => a.isAfter(b) ? a : b));
+
+      String latestFileURL = await result.items[latestIndex].getDownloadURL();
+
+      setState(() {
+        _imagePath = latestFileURL;
+      });
+    } catch (error) {
+      print("Error initializing image: $error");
+    }
+  }
+
+  Future<void> _pickImage() async {
+    FilePickerResult? result;
+
+    result = await FilePicker.platform.pickFiles(
+      type: FileType.custom,
+      allowedExtensions: ['png', 'jpg'],
+    );
+
+    if (result != null) {
+      Uint8List? uploadFile = result.files.single.bytes;
+      String fileName = result.files.single.name;
+
+      Reference reference = FirebaseStorage.instance
+          .ref()
+          .child(widget.companyName)
+          .child(fileName);
+
+      final UploadTask uploadTask = reference.putData(uploadFile!);
+
+      await uploadTask.whenComplete(() async {
+        reference.getDownloadURL().then((fileURL) {
+          setState(() {
+            _imagePath = fileURL;
+          });
+        });
+      });
+    }
+  }
+
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: FutureBuilder<Map<String, dynamic>>(
+        future: fetchCompanyData(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(child: CircularProgressIndicator());
+          } else if (snapshot.hasError) {
+            return Center(child: Text("Error: ${snapshot.error}"));
+          } else if (snapshot.hasData) {
+            return buildProfileContent(snapshot.data!);
+          } else {
+            return Center(child: Text("No data available."));
+          }
+        },
+      ),
+      bottomNavigationBar: Container(
+        color: const Color(0xFF063970),
+        child: CurvedNavigationBar(
+          index: 0,
+          color: const Color(0xFF063970),
+          buttonBackgroundColor: const Color(0xFF063970),
+          backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+          height: 75.0,
+          items: const [
+            Icon(Icons.home, size: 30, color: Colors.white),
+            Icon(Icons.book, size: 30, color: Colors.white),
+            Icon(Icons.add, size: 30, color: Colors.white),
+            Icon(Icons.factory, size: 30, color: Colors.white),
+            Icon(Icons.person, size: 30, color: Colors.white),
+          ],
+          onTap: (index) {
+            switch (index) {
+              case 0:
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) {
+                    return HomeScreencom();
+                  }),
+                );
+                break;
+              case 1:
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) {
+                    return CalendarPage(
+                      title: 'calendar',
+                    );
+                  }),
+                );
+                break;
+              case 2:
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) {
+                    return MyButtonsScreen();
+                  }),
+                );
+                break;
+              case 3:
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) {
+                    return StokScreenPage();
+                  }),
+                );
+                break;
+              case 4:
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) {
+                    return ProfilePageadCompany(
+                      companyName: companyData?['Name'] ?? '',
+                    );
+                  }),
+                );
+                break;
+            }
+          },
+        ),
+      ),
+    );
+  }
+
+  Widget buildProfileContent(Map<String, dynamic> companyData) {
+    return SingleChildScrollView(
+      physics: const BouncingScrollPhysics(),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          HeaderWidget(
+            title: 'الملف الشخصي',
+          ),
+          ProfileWidget(
+            imagePath: _imagePath ??
+                'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png',
+            onClicked: () async {
+              _pickImage();
+            },
+          ),
+          const SizedBox(height: 24),
+          buildUserInfo(companyData),
+          const SizedBox(height: 24),
+          NumbersWidget(),
+          const SizedBox(height: 100),
+          ProjectsView(
+            key: UniqueKey(),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget buildUserInfo(Map<String, dynamic> companyData) {
+    return Column(
+      children: [
+        Text(
+          companyData['Name'] ?? 'Company Name',
+          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+        ),
+        const SizedBox(height: 4),
+        Text(
+          companyData['email'] ?? 'Email',
+          style: const TextStyle(color: Colors.grey),
+        ),
+      ],
+    );
+  }
+
+  Future<Map<String, dynamic>> fetchCompanyData() async {
+    String companyName = widget.companyName;
+    print("from profile $companyName");
+    try {
+      final response = await http.get(
+        Uri.parse('$getCompanyInfo/$companyName'),
+      );
+
+      if (response.statusCode == 200) {
+        final Map<String, dynamic>? jsonResponse = json.decode(response.body);
+
+        if (jsonResponse != null && jsonResponse['status'] == true) {
+          final Map<String, dynamic>? companyData = jsonResponse['companyInfo'];
+
+          if (companyData != null) {
+            return companyData;
+          } else {
+            print(jsonResponse);
+            return {}; // Provide a default value or an empty map if 'companyInfo' is not found
+          }
+        } else {
+          throw Exception('Failed Request Status Code: ${response.statusCode}');
+        }
+      } else {
+        throw Exception('Failed Request Status Code: ${response.statusCode}');
+      }
+    } catch (error) {
+      print("Error fetching company data: $error");
+      throw Exception('Error fetching company data: $error');
+    }
+  }
+}
