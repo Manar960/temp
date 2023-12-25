@@ -1,17 +1,39 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../../login/responsive.dart';
-import '../../../usrTime/screens/home/components/home_header.dart';
 import '../../curved_navigation_bar.dart';
 import '../forms/formscom.dart';
 import '../stoks/stock.dart';
 import 'bodyhome.dart';
 import 'calendar/calendar.dart';
 import 'components/discount_banner.dart';
+import '../../profilecompany/page/profile_page_company.dart';
+import 'components/home_header.dart';
 
-class HomeScreencom extends StatelessWidget {
+class HomeScreencom extends StatefulWidget {
   static String routeName = "/home";
 
   const HomeScreencom({Key? key}) : super(key: key);
+
+  @override
+  _HomeScreencomState createState() => _HomeScreencomState();
+}
+
+class _HomeScreencomState extends State<HomeScreencom> {
+  late String companyName;
+
+  @override
+  void initState() {
+    super.initState();
+    getCompanyName().then((value) {});
+  }
+
+  Future<void> getCompanyName() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      companyName = prefs.getString('company') ?? '';
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -88,6 +110,14 @@ class HomeScreencom extends StatelessWidget {
                 break;
               case 4:
                 // Navigate to the personal page
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) {
+                    return ProfilePageadCompany(
+                      companyName: companyName,
+                    );
+                  }),
+                );
                 break;
             }
           },
@@ -166,7 +196,14 @@ class HomeScreencom extends StatelessWidget {
                       );
                       break;
                     case 4:
-                      // Navigate to the personal page
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) {
+                          return ProfilePageadCompany(
+                            companyName: companyName,
+                          );
+                        }),
+                      );
                       break;
                   }
                 },

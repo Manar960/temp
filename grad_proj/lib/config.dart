@@ -89,3 +89,5 @@ const getcompanynighbercomcscount =
 const getprodact = "${url}getProByCompany";
 
 const getservic = "${url}servicesByCompany";
+
+const getCompanyInfo = "${url}getCompanyInfo";
