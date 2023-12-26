@@ -85,9 +85,7 @@ class _HomeScreencomState extends State<HomeScreencom> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) {
-                    return CalendarPage(
-                      title: 'calendar',
-                    );
+                    return CalendarPage();
                   }),
                 );
                 break;
@@ -173,9 +171,7 @@ class _HomeScreencomState extends State<HomeScreencom> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) {
-                          return CalendarPage(
-                            title: 'calendar',
-                          );
+                          return CalendarPage();
                         }),
                       );
                       break;

@@ -471,9 +471,7 @@ class _MyButtonsScreenState extends State<MyButtonsScreen> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) {
-                    return CalendarPage(
-                      title: 'calendar',
-                    );
+                    return CalendarPage();
                   }),
                 );
                 break;
