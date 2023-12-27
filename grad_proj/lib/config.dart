@@ -93,3 +93,5 @@ const getservic = "${url}servicesByCompany";
 const getCompanyInfo = "${url}getCompanyInfo";
 
 const updateCompanyInfo = "${url}updateCompanyInfo";
+
+const getbookinginfo = "${url}bookings";

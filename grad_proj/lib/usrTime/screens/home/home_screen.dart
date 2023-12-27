@@ -1,31 +1,40 @@
 import 'package:flutter/material.dart';
-import '../../../login/responsive.dart';
-//import '../../../timeelinee/screens/cart/cart_screen.dart';
-import '../../curved_navigation_bar.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../map/map.dart';
+import '../../curved_navigation_bar.dart';
 import 'components/categories.dart';
 import 'components/discount_banner.dart';
 import 'components/home_header.dart';
 import 'components/popular_product.dart';
 import 'components/special_offers.dart';
+import '../../../userPro/page/profile_page.dart';
 
-class HomeScreenu extends StatelessWidget {
-  static String routeName = "/home";
-
-  const HomeScreenu({Key? key}) : super(key: key);
+class HomeScreencomu extends StatefulWidget {
+  const HomeScreencomu({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return Responsive(
-      mobile: buildMobileUI(context),
-      tablet: buildTabletUI(context),
-      desktop: buildDesktopUI(context),
-    );
+  _HomeScreencomuState createState() => _HomeScreencomuState();
+}
+
+class _HomeScreencomuState extends State<HomeScreencomu> {
+  // Declare SharedPreferences variable
+  late SharedPreferences prefs;
+
+  @override
+  void initState() {
+    super.initState();
+    // Initialize SharedPreferences
+    initPrefs();
+  }
+
+// Function to initialize SharedPreferences
+  Future<void> initPrefs() async {
+    prefs = await SharedPreferences.getInstance();
   }
 
   Widget buildMobileUI(BuildContext context) {
     return Scaffold(
-      body: const SafeArea(
+      body: SafeArea(
         child: SingleChildScrollView(
           padding: EdgeInsets.symmetric(vertical: 16),
           child: Column(
@@ -62,7 +71,7 @@ class HomeScreenu extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) {
-                    return const HomeScreenu();
+                    return const HomeScreencomu();
                   }),
                 );
                 break;
@@ -87,7 +96,18 @@ class HomeScreenu extends StatelessWidget {
                 );*/
                 break;
               case 4:
-                // Navigate to the personal page
+                // Navigate to the personal page ProfilePage
+                String? token = prefs.getString('token');
+                String? email = prefs.getString('email');
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) {
+                    return ProfilePage(
+                      token: token,
+                      userName: email,
+                    );
+                  }),
+                );
                 break;
             }
           },
@@ -142,7 +162,7 @@ class HomeScreenu extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) {
-                          return const HomeScreenu();
+                          return const HomeScreencomu();
                         }),
                       );
                       break;
@@ -166,7 +186,18 @@ class HomeScreenu extends StatelessWidget {
                       );*/
                       break;
                     case 4:
-                      // Navigate to the personal page
+                      // Navigate to the personal page ProfilePage
+                      String? token = prefs.getString('token');
+                      String? email = prefs.getString('email');
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) {
+                          return ProfilePage(
+                            token: token,
+                            userName: email,
+                          );
+                        }),
+                      );
                       break;
                   }
                 },
@@ -175,6 +206,24 @@ class HomeScreenu extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        if (constraints.maxWidth < 600) {
+          // Mobile UI
+          return buildMobileUI(context);
+        } else if (constraints.maxWidth < 1200) {
+          // Tablet UI
+          return buildTabletUI(context);
+        } else {
+          // Desktop UI
+          return buildDesktopUI(context);
+        }
+      },
     );
   }
 }

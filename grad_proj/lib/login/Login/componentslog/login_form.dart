@@ -107,11 +107,13 @@ class _LoginFormState extends State<LoginForm> {
       if (jsonResponse['status']) {
         var myToken = jsonResponse['token'];
         prefs.setString('token', myToken);
+        prefs.setString('email', emailController.text);
+
         // ignore: use_build_context_synchronously
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) {
-            return const HomeScreenu();
+            return const HomeScreencomu();
           }),
         );
       } else {

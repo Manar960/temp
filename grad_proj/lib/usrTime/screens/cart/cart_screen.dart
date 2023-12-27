@@ -80,7 +80,7 @@ class _CartScreenState extends State<CartScreen> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) {
-                    return const HomeScreenu();
+                    return const HomeScreencomu();
                   }),
                 );
                 break;

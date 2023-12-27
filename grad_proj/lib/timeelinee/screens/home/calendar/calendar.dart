@@ -1,7 +1,11 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:calendar_view/calendar_view.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
+import 'package:connectivity/connectivity.dart'; // Import the connectivity package
 
+import '../../../../config.dart';
 import '../../../curved_navigation_bar.dart';
 import '../../../profilecompany/page/profile_page_company.dart';
 import '../../forms/formscom.dart';
@@ -15,6 +19,10 @@ class CalendarPage extends StatefulWidget {
 
 class _CalendarPageState extends State<CalendarPage> {
   late String companyName;
+
+  // Add a GlobalKey to access the state
+  final GlobalKey<_CalendarPageState> _calendarKey =
+      GlobalKey<_CalendarPageState>();
 
   @override
   void initState() {
@@ -45,7 +53,7 @@ class _CalendarPageState extends State<CalendarPage> {
       bottomNavigationBar: Container(
         color: const Color(0xFF063970),
         child: CurvedNavigationBar(
-          index: 1, // Set the index to 1 for CalendarPage
+          index: 1,
           color: const Color(0xFF063970),
           buttonBackgroundColor: const Color(0xFF063970),
           backgroundColor: const Color.fromARGB(255, 255, 255, 255),
@@ -125,7 +133,7 @@ class _CalendarPageState extends State<CalendarPage> {
               SizedBox(height: 10),
               ElevatedButton(
                 onPressed: () {
-                  _addEvent(context);
+                  _addEvent();
                   Navigator.pop(context);
                 },
                 child: Text('Add Event'),
@@ -137,13 +145,55 @@ class _CalendarPageState extends State<CalendarPage> {
     );
   }
 
-  void _addEvent(BuildContext context) {
-    final eventController = CalendarControllerProvider.of(context).controller;
-    final event = CalendarEventData(
-      date: DateTime.now(),
-      event: 'Event Title',
-      title: '',
-    );
-    eventController.add(event);
+  void _addEvent() async {
+    try {
+      // Check for internet connectivity
+      final result = await Connectivity().checkConnectivity();
+      if (result == ConnectivityResult.none) {
+        print('No internet connection');
+        return;
+      }
+
+      // Check if the widget is still mounted
+      if (!_calendarKey.currentState!.mounted) {
+        return;
+      }
+
+      final response = await http.get(
+        Uri.parse('$getbookinginfo/$companyName'),
+      );
+
+      if (response.statusCode == 200) {
+        final List<dynamic>? bookings = json.decode(response.body)['bookings'];
+
+        if (bookings != null) {
+          for (var booking in bookings) {
+            final DateTime date = DateTime.parse(booking['date']);
+            final String eventTitle = 'Booking: ${booking['BookingCode']}';
+            print("eventTitle $eventTitle");
+            print("date $date");
+
+            // Use the GlobalKey to access the controller
+            final eventController =
+                CalendarControllerProvider.of(_calendarKey.currentContext!)
+                    .controller;
+
+            final event = CalendarEventData(
+              date: date,
+              event: eventTitle,
+              title: eventTitle,
+            );
+
+            eventController.add(event);
+          }
+        } else {
+          print('Bookings field is null or absent');
+        }
+      } else {
+        print('Failed to load bookings. Status code: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error fetching bookings: $e');
+    }
   }
 }
