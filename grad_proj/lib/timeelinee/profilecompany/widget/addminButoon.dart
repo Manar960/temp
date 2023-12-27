@@ -7,21 +7,21 @@ import '../../../config.dart';
 import '../../../landing/navebar/utils/theme_selector.dart';
 import 'viwwabber.dart';
 
-class ProjectsView extends StatefulWidget {
-  const ProjectsView({Key? key}) : super(key: key);
+class ProjectsViewcom extends StatefulWidget {
+  const ProjectsViewcom({Key? key}) : super(key: key);
 
   @override
   // ignore: library_private_types_in_public_api
-  _ProjectsViewState createState() => _ProjectsViewState();
+  _ProjectsViewcomState createState() => _ProjectsViewcomState();
 }
 
-class _ProjectsViewState extends State<ProjectsView> {
+class _ProjectsViewcomState extends State<ProjectsViewcom> {
   late double screenWidth;
   late double screenHeight;
   int selectedIndex = 0;
   List<btton> projects = [
     btton(
-      title: 'إضافة مسؤول',
+      title: ' تعديل المعلومات ',
       imageURL: 'assets/addadm.png',
     ),
     btton(

@@ -139,9 +139,7 @@ class _StokScreenState extends State<StokScreen> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) {
-                        return CalendarPage(
-                          title: 'calendar',
-                        );
+                        return CalendarPage();
                       }),
                     );
                     break;

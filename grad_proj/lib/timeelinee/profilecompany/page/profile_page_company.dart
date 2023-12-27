@@ -1,6 +1,8 @@
 import 'dart:typed_data';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:grad_proj/timeelinee/profilecompany/page/updateinfocom.dart';
+import 'package:grad_proj/timeelinee/profilecompany/widget/about.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:file_picker/file_picker.dart';
@@ -141,9 +143,7 @@ class _ProfilePageCompanyStatead extends State<ProfilePageadCompany> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) {
-                    return CalendarPage(
-                      title: 'calendar',
-                    );
+                    return CalendarPage();
                   }),
                 );
                 break;
@@ -201,9 +201,7 @@ class _ProfilePageCompanyStatead extends State<ProfilePageadCompany> {
           const SizedBox(height: 24),
           NumbersWidget(),
           const SizedBox(height: 100),
-          ProjectsView(
-            key: UniqueKey(),
-          ),
+          buildAbout(context), // تم استبدال هنا
         ],
       ),
     );
@@ -228,6 +226,7 @@ class _ProfilePageCompanyStatead extends State<ProfilePageadCompany> {
   Future<Map<String, dynamic>> fetchCompanyData() async {
     String companyName = widget.companyName;
     print("from profile $companyName");
+
     try {
       final response = await http.get(
         Uri.parse('$getCompanyInfo/$companyName'),
@@ -238,7 +237,12 @@ class _ProfilePageCompanyStatead extends State<ProfilePageadCompany> {
 
         if (jsonResponse != null && jsonResponse['status'] == true) {
           final Map<String, dynamic>? companyData = jsonResponse['companyInfo'];
+          String comtaype = companyData?['Type'];
 
+          print("company type $comtaype");
+          String comloc = companyData?['Type'];
+
+          print("company type $comloc");
           if (companyData != null) {
             return companyData;
           } else {
@@ -255,5 +259,144 @@ class _ProfilePageCompanyStatead extends State<ProfilePageadCompany> {
       print("Error fetching company data: $error");
       throw Exception('Error fetching company data: $error');
     }
+  }
+
+  Widget buildAbout(BuildContext context) {
+    print("from profile2 $companyData?['location']");
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        Card(
+          color: Colors.white,
+          margin: EdgeInsets.symmetric(vertical: 9.0, horizontal: 20.0),
+          child: ListTile(
+            leading: const Icon(
+              Icons.work,
+              color: Colors.black,
+              size: 30.0,
+            ),
+            title: Text(
+              companyData?['Type'] ?? 'Location Not Available',
+              style: const TextStyle(
+                color: Colors.black,
+                fontSize: 20.0,
+                fontFamily: 'Source Sans Pro',
+              ),
+            ),
+          ),
+        ),
+        Card(
+          color: Colors.white,
+          margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 25.0),
+          child: ListTile(
+            leading: const Icon(
+              Icons.location_city,
+              color: Colors.black,
+              size: 30.0,
+            ),
+            title: Text(
+              companyData?['location'] ?? 'Location Not Available',
+              style: const TextStyle(
+                color: Colors.black,
+                fontSize: 20.0,
+                fontFamily: 'Source Sans Pro',
+              ),
+            ),
+          ),
+        ),
+        ElevatedButton(
+          onPressed: () {
+            showEditProfileDialog(context);
+          },
+          child: Text('تعديل المعلومات'),
+        ),
+      ],
+    );
+  }
+
+  void showEditProfileDialog(BuildContext context) {
+    TextEditingController nameController = TextEditingController();
+    TextEditingController emailController = TextEditingController();
+    TextEditingController passwordController = TextEditingController();
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('تحرير المعلومات'),
+          content: Column(
+            children: [
+              TextField(
+                controller: nameController,
+                decoration: InputDecoration(
+                  labelText: 'الاسم',
+                ),
+              ),
+              TextField(
+                controller: emailController,
+                decoration: InputDecoration(
+                  labelText: 'البريد الإلكتروني',
+                ),
+              ),
+              TextField(
+                controller: passwordController,
+                obscureText: true,
+                decoration: InputDecoration(
+                  labelText: 'كلمة المرور',
+                ),
+              ),
+            ],
+          ),
+          actions: <Widget>[
+            ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('إلغاء'),
+            ),
+            ElevatedButton(
+              // Handle the editing logic here
+              onPressed: () async {
+                // Handle the editing logic here
+                String newName = nameController.text;
+                String newEmail = emailController.text;
+                String newPassword = passwordController.text;
+
+                // Send a request to update company information
+                try {
+                  await updateCompanyInfo(
+                      companyData?['Name'], newName, newEmail, newPassword);
+                  print('Company information updated successfully');
+                } catch (error) {
+                  print('Failed to update company information: $error');
+                }
+
+                Navigator.of(context).pop(); // Close the dialog
+              },
+              child: Text('حفظ'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Future<void> updateCompanyInfo(String companyName, String newName,
+      String newEmail, String newPassword) async {
+    final String updateCompanyInfoEndpoint = '$updateCompanyInfo/$companyName';
+
+    await http.put(
+      Uri.parse(updateCompanyInfoEndpoint),
+      body: jsonEncode({
+        'updatedInfo': {
+          'Name': newName,
+          'email': newEmail,
+          'password': newPassword,
+        },
+      }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    );
   }
 }

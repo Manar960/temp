@@ -9,7 +9,6 @@ import 'screens/init_screen.dart';
 // All our routes will be available here
 final Map<String, WidgetBuilder> routes = {
   InitScreen.routeName: (context) => const InitScreen(),
-  HomeScreenu.routeName: (context) => const HomeScreenu(),
   ProductsScreen.routeName: (context) => const ProductsScreen(),
   DetailsScreen.routeName: (context) => const DetailsScreen(),
   CartScreen.routeName: (context) => const CartScreen(),

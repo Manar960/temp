@@ -30,7 +30,7 @@ class _ProfilePageState extends State<ProfilePage> {
     super.initState();
     Map<String, dynamic> jwtDecodedToken = JwtDecoder.decode(widget.token);
     email = jwtDecodedToken['email'];
-    name = widget.userName ?? 'user';
+    name = jwtDecodedToken['userName'] ?? 'user';
   }
 
   void selectImage() async {

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:grad_proj/timeelinee/screens/home/calendar/calendar.dart';
 import 'package:grad_proj/usrTime/map/map.dart';
 import 'package:provider/provider.dart';
-
+import 'package:calendar_view/calendar_view.dart';
 import 'admin/controllers/menu_controller.dart' as MyMenuController;
 import 'landing/navebar/homepage.dart';
 import 'landing/splash.dart';
@@ -22,7 +23,7 @@ void main() async {
           measurementId: "G-D1CL97P6E5"),
     );
   } else {
-   await Firebase.initializeApp();
+    await Firebase.initializeApp();
   }
 
   runApp(
@@ -45,18 +46,13 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Widget homePage;
-
-    if (kIsWeb) {
-      homePage = const WebHomePage();
-    } else {
-      homePage = const MobileHomePage();
-    }
-
-    return MaterialApp(
-      title: 'My App',
-      home: homePage,
-      debugShowCheckedModeBanner: false,
+    return CalendarControllerProvider(
+      controller: EventController(),
+      child: MaterialApp(
+        title: 'My App',
+        home: kIsWeb ? const WebHomePage() : const MobileHomePage(),
+        debugShowCheckedModeBanner: false,
+      ),
     );
   }
 }
