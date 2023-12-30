@@ -28,35 +28,58 @@ class _SignUpFormStateco extends State<SignUpFormco> {
   final TextEditingController cardCvvController = TextEditingController();
 
   final FlipCardController flipCardController = FlipCardController();
+
+  // إضافة متغير لتتبع حالة ملء الحقول
+  bool allFieldsFilled = false;
+
   void payment() async {
-    if (cardNumberController.text.isNotEmpty &&
-        cardHolderNameController.text.isNotEmpty &&
-        cardExpiryDateController.text.isNotEmpty &&
-        cardCvvController.text.isNotEmpty) {
-      var regBody = {
-        "CardNumber": cardHolderNameController.text,
-        "Name": cardNumberController.text,
-        "date": cardExpiryDateController.text,
-        "CVV": cardCvvController.text
-      };
-      var response = await http.post(
-        Uri.parse(pay),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: jsonEncode(regBody),
+    if (cardNumberController.text.isEmpty ||
+        cardHolderNameController.text.isEmpty ||
+        cardExpiryDateController.text.isEmpty ||
+        cardCvvController.text.isEmpty) {
+      // إذا كانت أحد الحقول فارغة
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('الرجاء تعبئة جميع الحقول'),
+          backgroundColor: Colors.red,
+        ),
       );
-      if (response.statusCode == 200) {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) {
-              return const SignUpFormco();
-            },
-          ),
-        );
-      }
+      return;
     }
+
+    var regBody = {
+      "CardNumber": cardHolderNameController.text,
+      "Name": cardNumberController.text,
+      "date": cardExpiryDateController.text,
+      "CVV": cardCvvController.text
+    };
+    var response = await http.post(
+      Uri.parse(pay),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: jsonEncode(regBody),
+    );
+    if (response.statusCode == 200) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) {
+            return const SignUpFormco();
+          },
+        ),
+      );
+    }
+  }
+
+  // تحديث حالة ملء الحقول
+  void updateFieldsFilledStatus() {
+    setState(() {
+      allFieldsFilled = !cardNumberController.text.isEmpty &&
+          !cardHolderNameController.text.isEmpty &&
+          !cardExpiryDateController.text.isEmpty &&
+          !cardCvvController.text.isEmpty;
+    });
   }
 
   @override
@@ -77,13 +100,9 @@ class _SignUpFormStateco extends State<SignUpFormco> {
                     fill: Fill.fillFront,
                     direction: FlipDirection.HORIZONTAL,
                     controller: flipCardController,
-                    onFlip: () {
-                      print('Flip');
-                    },
+                    onFlip: () {},
                     flipOnTouch: false,
-                    onFlipDone: (isFront) {
-                      print('isFront: $isFront');
-                    },
+                    onFlipDone: (isFront) {},
                     front: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 10),
                       child: buildCreditCard(
@@ -209,6 +228,7 @@ class _SignUpFormStateco extends State<SignUpFormco> {
                                       offset: text.length),
                                   composing: TextRange.empty);
                         });
+                        updateFieldsFilledStatus();
                       },
                     ),
                   ),
@@ -246,6 +266,7 @@ class _SignUpFormStateco extends State<SignUpFormco> {
                                       offset: value.length),
                                   composing: TextRange.empty);
                         });
+                        updateFieldsFilledStatus();
                       },
                     ),
                   ),
@@ -289,6 +310,7 @@ class _SignUpFormStateco extends State<SignUpFormco> {
                                       offset: text.length),
                                   composing: TextRange.empty);
                         });
+                        updateFieldsFilledStatus();
                       },
                     ),
                   ),
@@ -338,6 +360,7 @@ class _SignUpFormStateco extends State<SignUpFormco> {
                                     TextPosition(offset: value.length + 1));
                           }
                         });
+                        updateFieldsFilledStatus();
                       },
                     ),
                   ),
@@ -345,26 +368,33 @@ class _SignUpFormStateco extends State<SignUpFormco> {
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       foregroundColor: Colors.white,
-                      backgroundColor: const Color(0xFF063970),
+                      backgroundColor: allFieldsFilled
+                          ? const Color(0xFF063970)
+                          : Colors
+                              .grey, // تعديل لتغيير لون الزر بناءً على حالة ملء الحقول
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15),
                       ),
                       minimumSize:
                           Size(MediaQuery.of(context).size.width / 1.12, 55),
                     ),
-                    onPressed: () {
-                      Future.delayed(const Duration(milliseconds: 300), () {
-                        payment();
-                        showDialog(
-                            context: context,
-                            builder: (context) => const CardAlertDialog());
-                        cardCvvController.clear();
-                        cardExpiryDateController.clear();
-                        cardHolderNameController.clear();
-                        cardNumberController.clear();
-                        flipCardController.toggleCard();
-                      });
-                    },
+                    onPressed: allFieldsFilled
+                        ? () {
+                            Future.delayed(const Duration(milliseconds: 300),
+                                () {
+                              payment();
+                              showDialog(
+                                  context: context,
+                                  builder: (context) =>
+                                      const CardAlertDialog());
+                              cardCvvController.clear();
+                              cardExpiryDateController.clear();
+                              cardHolderNameController.clear();
+                              cardNumberController.clear();
+                              flipCardController.toggleCard();
+                            });
+                          }
+                        : null, // تعديل لتعطيل الزر عندما تكون حقول فارغة
                     child: Text(
                       'Add Card'.toUpperCase(),
                       style: const TextStyle(

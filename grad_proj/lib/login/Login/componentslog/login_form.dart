@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -78,11 +79,34 @@ class _LoginFormState extends State<LoginForm> {
           emailError = "البريد الإلكتروني أو كلمة المرور غير صحيحة";
           _isLoading = false;
         });
+        Fluttertoast.showToast(
+          msg: "تأكد من بياناتك ",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0,
+          webBgColor: "#e74c3c",
+          webPosition: "center",
+          timeInSecForIosWeb: 2,
+        );
       }
     } else {
       setState(() {
         emailError = "البريد الإلكتروني وكلمة المرور مطلوبة";
+        _isLoading = false;
       });
+      Fluttertoast.showToast(
+        msg: "تأكد من بياناتك ",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0,
+        webBgColor: "#e74c3c",
+        webPosition: "center",
+        timeInSecForIosWeb: 2,
+      );
     }
   }
 
@@ -121,11 +145,34 @@ class _LoginFormState extends State<LoginForm> {
           emailError = "البريد الإلكتروني أو كلمة المرور غير صحيحة";
           _isLoading = false;
         });
+        Fluttertoast.showToast(
+          msg: "تأكد من بياناتك ",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0,
+          webBgColor: "#e74c3c",
+          webPosition: "center",
+          timeInSecForIosWeb: 2,
+        );
       }
     } else {
       setState(() {
         emailError = "البريد الإلكتروني وكلمة المرور مطلوبة";
+        _isLoading = false;
       });
+      Fluttertoast.showToast(
+        msg: "تأكد من بياناتك ",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0,
+        webBgColor: "#e74c3c",
+        webPosition: "center",
+        timeInSecForIosWeb: 2,
+      );
     }
   }
 
@@ -151,7 +198,7 @@ class _LoginFormState extends State<LoginForm> {
       if (jsonResponse['status']) {
         var myToken = jsonResponse['token'];
         var companyName = jsonResponse['userEmail'];
-        print(companyName);
+
         prefs.setString('token', myToken);
         prefs.setString('company', companyName);
         // ignore: use_build_context_synchronously
@@ -166,11 +213,34 @@ class _LoginFormState extends State<LoginForm> {
           emailError = "البريد الإلكتروني أو كلمة المرور غير صحيحة";
           _isLoading = false;
         });
+        Fluttertoast.showToast(
+          msg: "تأكد من بياناتك ",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0,
+          webBgColor: "#e74c3c",
+          webPosition: "center",
+          timeInSecForIosWeb: 2,
+        );
       }
     } else {
       setState(() {
         emailError = "البريد الإلكتروني وكلمة المرور مطلوبة";
+        _isLoading = false;
       });
+      Fluttertoast.showToast(
+        msg: "تأكد من بياناتك ",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0,
+        webBgColor: "#e74c3c",
+        webPosition: "center",
+        timeInSecForIosWeb: 2,
+      );
     }
   }
 
