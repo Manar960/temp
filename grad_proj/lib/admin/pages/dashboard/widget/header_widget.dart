@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
-import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 import '/admin/controllers/menu_controller.dart' as MyMenuController;
 import '../../../common/app_colors.dart';
@@ -11,7 +10,7 @@ import '../../../../config.dart';
 class HeaderWidget extends StatefulWidget {
   final String title;
 
-  HeaderWidget({required this.title});
+  const HeaderWidget({super.key, required this.title});
 
   @override
   _HeaderWidgetState createState() => _HeaderWidgetState();
@@ -55,7 +54,7 @@ class _HeaderWidgetState extends State<HeaderWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.all(10),
+      margin: const EdgeInsets.all(10),
       child: Row(
         children: [
           if (!AppResponsive.isDesktop(context))
@@ -81,10 +80,10 @@ class _HeaderWidgetState extends State<HeaderWidget> {
               navigationIcon(icon: Icons.notifications_none_rounded),
             ],
           ),
-          Spacer(),
+          const Spacer(),
           Text(
             widget.title,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 30,
               fontWeight: FontWeight.bold,
             ),

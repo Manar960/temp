@@ -20,7 +20,7 @@ class CommentWidget extends StatelessWidget {
       borderRadius: BorderRadius.circular(4),
       color: Colors.white,
       child: Container(
-        padding: EdgeInsets.all(20),
+        padding: const EdgeInsets.all(20),
         height: _media.height / 1.4,
         width: _media.width / 2,
         child: Column(
@@ -30,12 +30,12 @@ class CommentWidget extends StatelessWidget {
               'Recent Comments',
               style: cardTitleTextStyle,
             ),
-            SizedBox(height: 10),
-            Text(
+            const SizedBox(height: 10),
+            const Text(
               'Latest Comments on users from Material',
               style: TextStyle(fontSize: 13, color: Colors.grey),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Expanded(
               child: ListView.builder(
                 shrinkWrap: true,
@@ -52,31 +52,31 @@ class CommentWidget extends StatelessWidget {
                       ),
                       title: Text(
                         commentList[index].name ?? 'user',
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                        style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
                       subtitle: Padding(
-                        padding: EdgeInsets.only(top: 8.0),
+                        padding: const EdgeInsets.only(top: 8.0),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Text(
                               '${commentList[index].comment}',
-                              style: TextStyle(fontSize: 12),
+                              style: const TextStyle(fontSize: 12),
                             ),
-                            SizedBox(height: 5),
+                            const SizedBox(height: 5),
                             Row(
                               children: <Widget>[
                                 Text(
                                   '${commentList[index].date}',
-                                  style: TextStyle(fontSize: 12),
+                                  style: const TextStyle(fontSize: 12),
                                 ),
-                                SizedBox(width: 10),
-                                Icon(Icons.edit, size: 15, color: Colors.grey),
-                                SizedBox(width: 10),
-                                Icon(Icons.highlight_off,
+                                const SizedBox(width: 10),
+                                const Icon(Icons.edit, size: 15, color: Colors.grey),
+                                const SizedBox(width: 10),
+                                const Icon(Icons.highlight_off,
                                     size: 15, color: Colors.grey),
-                                SizedBox(width: 10),
-                                Icon(Icons.favorite_border,
+                                const SizedBox(width: 10),
+                                const Icon(Icons.favorite_border,
                                     size: 15, color: Colors.pink),
                               ],
                             ),
@@ -97,7 +97,7 @@ class CommentWidget extends StatelessWidget {
                                 : commentList[index].status?.index == 1
                                     ? 'Approved'
                                     : 'Rejected',
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 10,
                               color: Colors.white,
                               fontWeight: FontWeight.bold,

@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../components/chat_bubble.dart';
@@ -12,6 +11,8 @@ enum MessageType {
 }
 
 class ChatDetailPage extends StatefulWidget {
+  const ChatDetailPage({super.key});
+
   @override
   _ChatDetailPageState createState() => _ChatDetailPageState();
 }
@@ -45,9 +46,9 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
         builder: (context) {
           return Container(
             height: MediaQuery.of(context).size.height / 2,
-            color: Color(0xff737373),
+            color: const Color(0xff737373),
             child: Container(
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.only(
                     topRight: Radius.circular(20),
@@ -55,7 +56,7 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
               ),
               child: Column(
                 children: <Widget>[
-                  SizedBox(
+                  const SizedBox(
                     height: 16,
                   ),
                   Center(
@@ -65,16 +66,16 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
                       color: Colors.grey.shade200,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   ListView.builder(
                     itemCount: menuItems.length,
                     shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
+                    physics: const NeverScrollableScrollPhysics(),
                     itemBuilder: (context, index) {
                       return Container(
-                        padding: EdgeInsets.only(top: 10, bottom: 10),
+                        padding: const EdgeInsets.only(top: 10, bottom: 10),
                         child: ListTile(
                           leading: Container(
                             decoration: BoxDecoration(
@@ -104,14 +105,14 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: ChatDetailPageAppBar(),
+      appBar: const ChatDetailPageAppBar(),
       body: Stack(
         children: <Widget>[
           ListView.builder(
             itemCount: chatMessage.length,
             shrinkWrap: true,
-            padding: EdgeInsets.only(top: 10, bottom: 10),
-            physics: NeverScrollableScrollPhysics(),
+            padding: const EdgeInsets.only(top: 10, bottom: 10),
+            physics: const NeverScrollableScrollPhysics(),
             itemBuilder: (context, index) {
               return ChatBubble(
                 chatMessage: chatMessage[index],
@@ -121,7 +122,7 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
           Align(
             alignment: Alignment.bottomLeft,
             child: Container(
-              padding: EdgeInsets.only(left: 16, bottom: 10),
+              padding: const EdgeInsets.only(left: 16, bottom: 10),
               height: 80,
               width: double.infinity,
               color: Colors.white,
@@ -138,14 +139,14 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
                         color: Colors.blueGrey,
                         borderRadius: BorderRadius.circular(30),
                       ),
-                      child: Icon(
+                      child: const Icon(
                         Icons.add,
                         color: Colors.white,
                         size: 21,
                       ),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 16,
                   ),
                   Expanded(
@@ -163,15 +164,15 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
           Align(
             alignment: Alignment.bottomRight,
             child: Container(
-              padding: EdgeInsets.only(right: 30, bottom: 50),
+              padding: const EdgeInsets.only(right: 30, bottom: 50),
               child: FloatingActionButton(
                 onPressed: () {},
-                child: Icon(
+                backgroundColor: Colors.pink,
+                elevation: 0,
+                child: const Icon(
                   Icons.send,
                   color: Colors.white,
                 ),
-                backgroundColor: Colors.pink,
-                elevation: 0,
               ),
             ),
           )

@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:file_picker/file_picker.dart';
-import 'package:uuid/uuid.dart';
 import '../../../config.dart';
 import '../../pages/dashboard/widget/header_widget.dart';
 import '../widget/addminButoon.dart';
@@ -89,19 +88,20 @@ class _ProfilePageStatead extends State<ProfilePagead> {
     }
   }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: FutureBuilder<Map<String, dynamic>>(
         future: fetchAdminData(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
             return Center(child: Text("Error: ${snapshot.error}"));
           } else if (snapshot.hasData) {
             return buildProfileContent(snapshot.data!);
           } else {
-            return Center(child: Text("No data available."));
+            return const Center(child: Text("No data available."));
           }
         },
       ),
@@ -114,7 +114,7 @@ class _ProfilePageStatead extends State<ProfilePagead> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          HeaderWidget(
+          const HeaderWidget(
             title: 'الملف الشخصي',
           ),
           ProfileWidget(
@@ -127,7 +127,7 @@ class _ProfilePageStatead extends State<ProfilePagead> {
           const SizedBox(height: 24),
           buildUserInfo(adminData),
           const SizedBox(height: 24),
-          NumbersWidget(),
+          const NumbersWidget(),
           const SizedBox(height: 100),
           ProjectsView(
             key: UniqueKey(),

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import '../commons/theme.dart';
 
 class QuickContact extends StatelessWidget {
@@ -13,7 +12,7 @@ class QuickContact extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _formKey = GlobalKey<FormState>();
+    final formKey = GlobalKey<FormState>();
     void _showDialog() {
       showDialog(
         context: context,
@@ -49,7 +48,7 @@ class QuickContact extends StatelessWidget {
         width: _media.width / 5 - 12,
         color: Colors.white,
         child: Form(
-          key: _formKey,
+          key: formKey,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,

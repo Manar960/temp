@@ -34,7 +34,7 @@ class _HomeScreencomuState extends State<HomeScreencomu> {
 
   Widget buildMobileUI(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
+      body: const SafeArea(
         child: SingleChildScrollView(
           padding: EdgeInsets.symmetric(vertical: 16),
           child: Column(
@@ -83,7 +83,7 @@ class _HomeScreencomuState extends State<HomeScreencomu> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) {
-                    return const NearbyPage();
+                    return MapScreen();
                   }),
                 );
                 break;
@@ -173,7 +173,7 @@ class _HomeScreencomuState extends State<HomeScreencomu> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) {
-                          return const NearbyPage();
+                          return MapScreen();
                         }),
                       );
                       break;

@@ -19,8 +19,8 @@ class _DashboardState extends State<Dashboard> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.all(10),
-      padding: EdgeInsets.all(10),
+      margin: const EdgeInsets.all(10),
+      padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
         color: AppColor.bgColor,
         borderRadius: BorderRadius.circular(30),
@@ -28,7 +28,7 @@ class _DashboardState extends State<Dashboard> {
       child: Column(
         children: [
           /// Header Part
-          HeaderWidget(
+          const HeaderWidget(
             title: 'dashbord',
           ),
           Expanded(
@@ -41,17 +41,17 @@ class _DashboardState extends State<Dashboard> {
                     child: Container(
                       child: Column(
                         children: [
-                          NotificationCardWidget(),
-                          SizedBox(
+                          const NotificationCardWidget(),
+                          const SizedBox(
                             height: 20,
                           ),
                           if (AppResponsive.isMobile(context)) ...{
-                            CalendarWidget(),
-                            SizedBox(
+                            const CalendarWidget(),
+                            const SizedBox(
                               height: 20,
                             ),
                           },
-                          RecruitmentDataWidget(),
+                          const RecruitmentDataWidget(),
                         ],
                       ),
                     ),
@@ -59,11 +59,11 @@ class _DashboardState extends State<Dashboard> {
                   if (!AppResponsive.isMobile(context))
                     Expanded(
                       child: Container(
-                        margin: EdgeInsets.symmetric(horizontal: 10),
+                        margin: const EdgeInsets.symmetric(horizontal: 10),
                         child: Column(
                           children: [
-                            CalendarWidget(),
-                            SizedBox(
+                            const CalendarWidget(),
+                            const SizedBox(
                               height: 20,
                             ),
                             ProfileCardWidget(

@@ -27,8 +27,8 @@ class Product {
       images: List<String>.from(json['images'] ?? ['assets/car1.json']),
       colors: List<Color>.from(json['colors']?.map((color) => Color(color)) ??
           [
-            Color(0xFF00FF00),
-            Color(0xFF0000FF),
+            const Color(0xFF00FF00),
+            const Color(0xFF0000FF),
           ]),
       title: json['Name'] ?? '',
       rating: json['rate']?.toDouble() ?? 0.0,

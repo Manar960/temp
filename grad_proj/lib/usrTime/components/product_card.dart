@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 import '../constants.dart';
 import '../models/Product.dart';
@@ -63,14 +62,14 @@ class ProductCard extends StatelessWidget {
                     width: 24,
                     decoration: BoxDecoration(
                       color: product.isFavourite
-                          ? Color.fromARGB(255, 158, 203, 251).withOpacity(0.15)
+                          ? const Color.fromARGB(255, 158, 203, 251).withOpacity(0.15)
                           : kSecondaryColor.withOpacity(0.1),
                       shape: BoxShape.circle,
                     ),
                     child: ColorFiltered(
                       colorFilter: ColorFilter.mode(
                         product.isFavourite
-                            ? Color(0xFF063970)
+                            ? const Color(0xFF063970)
                             : const Color(0xFFDBDEE4),
                         BlendMode.srcIn,
                       ),

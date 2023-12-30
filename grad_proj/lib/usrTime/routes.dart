@@ -2,7 +2,6 @@ import 'package:flutter/widgets.dart';
 import '../timeelinee/screens/products/products_screen.dart';
 import 'screens/cart/cart_screen.dart';
 import 'screens/details/details_screen.dart';
-import 'screens/home/home_screen.dart';
 import 'screens/init_screen.dart';
 
 // We use name route

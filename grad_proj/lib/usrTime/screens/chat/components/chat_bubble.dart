@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../models/chat_message.dart';
@@ -15,7 +14,7 @@ class _ChatBubbleState extends State<ChatBubble> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(left: 16, right: 16, top: 10, bottom: 10),
+      padding: const EdgeInsets.only(left: 16, right: 16, top: 10, bottom: 10),
       child: Align(
         alignment: (widget.chatMessage.type == MessageType.Receiver
             ? Alignment.topLeft
@@ -27,7 +26,7 @@ class _ChatBubbleState extends State<ChatBubble> {
                 ? Colors.white
                 : Colors.grey.shade200),
           ),
-          padding: EdgeInsets.all(16),
+          padding: const EdgeInsets.all(16),
           child: Text(widget.chatMessage.message),
         ),
       ),

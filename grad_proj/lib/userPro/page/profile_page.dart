@@ -1,13 +1,14 @@
+import 'dart:convert';
 import 'dart:typed_data';
+import 'package:file_picker/file_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:grad_proj/timeelinee/profilecompany/%20%20%20%20model/user.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
-import '../../admin/profile/    model/user.dart';
-import '../../admin/profile/widget/button_widget.dart';
+import '../../admin/pages/dashboard/widget/header_widget.dart';
 import '../../admin/profile/widget/numbers_widget.dart';
 import '../../admin/profile/widget/profile_widget.dart';
-
-import '../utils/user_preferences.dart';
+import 'package:http/http.dart' as http;
 
 class ProfilePage extends StatefulWidget {
   final token;
@@ -23,7 +24,14 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   late String email;
   late String name;
-  Uint8List? _image;
+
+  final String pageTitle = 'الملف الشخصي';
+
+  String? _imagePath;
+
+  TextEditingController nameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
 
   @override
   void initState() {
@@ -31,53 +39,91 @@ class _ProfilePageState extends State<ProfilePage> {
     Map<String, dynamic> jwtDecodedToken = JwtDecoder.decode(widget.token);
     email = jwtDecodedToken['email'];
     name = jwtDecodedToken['userName'] ?? 'user';
+    _initImage();
   }
 
-  void selectImage() async {
-    Uint8List? img = await UserPreferences.pickImage(ImageSource.gallery);
+  Future<void> _initImage() async {
+    try {
+      ListResult result =
+          await FirebaseStorage.instance.ref().child(name).listAll();
 
-    setState(() {
-      _image = img;
-    });
+      List<Future<DateTime>> creationTimeFutures = result.items.map((file) {
+        return file
+            .getMetadata()
+            .then((metadata) => metadata.timeCreated ?? DateTime(0));
+      }).toList();
+
+      List<DateTime> creationTimes = await Future.wait(creationTimeFutures);
+
+      int latestIndex = creationTimes
+          .indexOf(creationTimes.reduce((a, b) => a.isAfter(b) ? a : b));
+
+      String latestFileURL = await result.items[latestIndex].getDownloadURL();
+
+      setState(() {
+        _imagePath = latestFileURL;
+      });
+    } catch (error) {
+      print("Error initializing image: $error");
+    }
   }
 
-  void saveprofile() async {
-    if (_image != null) {
-      // String resp = await StoreData().saveData(file: _image!);
-      // print(resp);
+  Future<void> _pickImage() async {
+    FilePickerResult? result;
+
+    result = await FilePicker.platform.pickFiles(
+      type: FileType.custom,
+      allowedExtensions: ['png', 'jpg'],
+    );
+
+    if (result != null) {
+      Uint8List? uploadFile = result.files.single.bytes;
+      String fileName = result.files.single.name;
+
+      Reference reference =
+          FirebaseStorage.instance.ref().child(name).child(fileName);
+
+      final UploadTask uploadTask = reference.putData(uploadFile!);
+
+      await uploadTask.whenComplete(() async {
+        reference.getDownloadURL().then((fileURL) {
+          setState(() {
+            _imagePath = fileURL;
+          });
+        });
+      });
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<User>(
-      future: UserPreferences.getUser(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           final user = snapshot.data;
           return Scaffold(
-            appBar: buildAppBar(context),
             body: LayoutBuilder(
               builder: (context, constraints) {
                 return SingleChildScrollView(
-                  physics: BouncingScrollPhysics(),
+                  physics: const BouncingScrollPhysics(),
                   child: ConstrainedBox(
                     constraints:
                         BoxConstraints(minHeight: constraints.maxHeight),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
+                        const HeaderWidget(title: 'الملف الشخصي'),
                         ProfileWidget(
-                          onClicked: selectImage,
-                          imagePath: user?.imagePath ?? '',
-                          imageBytes: _image,
+                          imagePath: _imagePath ??
+                              'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png',
+                          onClicked: () async {
+                            _pickImage();
+                          },
                         ),
                         const SizedBox(height: 24),
                         buildName(user),
                         const SizedBox(height: 24),
-                        Center(child: buildUpgradeButton(context)),
-                        const SizedBox(height: 24),
-                        NumbersWidget(),
+                        const NumbersWidget(),
                         const SizedBox(height: 48),
                         buildAbout(context),
                       ],
@@ -88,17 +134,9 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
           );
         } else {
-          return CircularProgressIndicator();
+          return const CircularProgressIndicator();
         }
       },
-    );
-  }
-
-  AppBar buildAppBar(BuildContext context) {
-    return AppBar(
-      title: Text('عنوان الصفحة'),
-      iconTheme: IconThemeData(color: Colors.black),
-      backgroundColor: Colors.white,
     );
   }
 
@@ -116,18 +154,11 @@ class _ProfilePageState extends State<ProfilePage> {
         ],
       );
 
-  Widget buildUpgradeButton(BuildContext context) => ButtonWidget(
-        text: 'تسجيل الخروج',
-        onClicked: () {
-          saveprofile();
-        },
-      );
-
   Widget buildAbout(BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        Card(
+        const Card(
           color: Colors.white,
           margin: EdgeInsets.symmetric(vertical: 9.0, horizontal: 20.0),
           child: ListTile(
@@ -137,7 +168,7 @@ class _ProfilePageState extends State<ProfilePage> {
               size: 30.0,
             ),
             title: Text(
-              'Heart Pirate Leader',
+              'Location Not Available',
               style: TextStyle(
                 color: Colors.black,
                 fontSize: 20.0,
@@ -146,17 +177,17 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
           ),
         ),
-        Card(
+        const Card(
           color: Colors.white,
           margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 25.0),
           child: ListTile(
             leading: Icon(
-              Icons.currency_bitcoin,
+              Icons.location_city,
               color: Colors.black,
               size: 30.0,
             ),
             title: Text(
-              '500.000.000',
+              'Location Not Available',
               style: TextStyle(
                 color: Colors.black,
                 fontSize: 20.0,
@@ -165,7 +196,87 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
           ),
         ),
+        ElevatedButton(
+          onPressed: () {
+            updateUserInformation();
+          },
+          child: const Text('تعديل المعلومات'),
+        ),
       ],
+    );
+  }
+
+  Future<void> updateUserInformation() async {
+    try {
+      Map<String, dynamic> requestBody = {
+        "userFirstName": nameController.text,
+        // "password": passwordController.text, // Uncomment if needed
+        // Add other fields as needed
+      };
+
+      var response = await http.put(
+        Uri.parse('YOUR_SERVER_API_ENDPOINT/update-user-info/$email'),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ${widget.token}',
+        },
+        body: jsonEncode(requestBody),
+      );
+
+      if (response.statusCode == 200) {
+        print('User information updated successfully');
+      } else {
+        print('Failed to update user information: ${response.body}');
+      }
+    } catch (error) {
+      print('Error updating user information: $error');
+    }
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('تحرير المعلومات'),
+          content: Column(
+            children: [
+              TextField(
+                controller: nameController,
+                decoration: const InputDecoration(
+                  labelText: 'الاسم',
+                ),
+              ),
+              TextField(
+                controller: emailController,
+                decoration: const InputDecoration(
+                  labelText: 'البريد الإلكتروني',
+                ),
+              ),
+              TextField(
+                controller: passwordController,
+                obscureText: true,
+                decoration: const InputDecoration(
+                  labelText: 'كلمة المرور',
+                ),
+              ),
+            ],
+          ),
+          actions: <Widget>[
+            ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('إلغاء'),
+            ),
+            ElevatedButton(
+              onPressed: () async {
+                // await updateUserInformation();
+                Navigator.of(context).pop(); // Close the dialog
+              },
+              child: const Text('حفظ'),
+            ),
+          ],
+        );
+      },
     );
   }
 }

@@ -43,11 +43,11 @@ class UserPreferences {
   }
 
   static Future<Uint8List?> pickImage(ImageSource source) async {
-    final ImagePicker _imagePicker = ImagePicker();
-    XFile? _file = await _imagePicker.pickImage(source: source);
+    final ImagePicker imagePicker = ImagePicker();
+    XFile? file = await imagePicker.pickImage(source: source);
 
-    if (_file != null) {
-      return await _file.readAsBytes();
+    if (file != null) {
+      return await file.readAsBytes();
     }
     print("no image :'(");
     return null;

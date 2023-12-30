@@ -12,13 +12,14 @@ import '../home/calendar/calendar.dart';
 import '../home/home_screen.dart';
 import 'package:http/http.dart' as http;
 import 'dart:io';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
 import '../stoks/stock.dart';
 
 class MyButtonsScreen extends StatefulWidget {
   static var routeName = "/mybuttons";
+
+  const MyButtonsScreen({super.key});
 
   @override
   _MyButtonsScreenState createState() => _MyButtonsScreenState();
@@ -420,10 +421,10 @@ class _MyButtonsScreenState extends State<MyButtonsScreen> {
                       }
                     }
                   },
-                  child: const Text('تم'),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFF063970),
                   ),
+                  child: const Text('تم'),
                 ),
                 const SizedBox(height: 10),
                 if (_checkBoxAdd || _checkBoxDelete || _checkBoxEdit)
@@ -463,7 +464,7 @@ class _MyButtonsScreenState extends State<MyButtonsScreen> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) {
-                    return HomeScreencom();
+                    return const HomeScreencom();
                   }),
                 );
                 break;
@@ -471,7 +472,7 @@ class _MyButtonsScreenState extends State<MyButtonsScreen> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) {
-                    return CalendarPage();
+                    return const CalendarPage();
                   }),
                 );
                 break;
@@ -479,7 +480,7 @@ class _MyButtonsScreenState extends State<MyButtonsScreen> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) {
-                    return MyButtonsScreen();
+                    return const MyButtonsScreen();
                   }),
                 );
                 break;
@@ -487,7 +488,7 @@ class _MyButtonsScreenState extends State<MyButtonsScreen> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) {
-                    return StokScreenPage();
+                    return const StokScreenPage();
                   }),
                 );
                 break;

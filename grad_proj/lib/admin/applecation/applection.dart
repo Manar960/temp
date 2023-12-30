@@ -44,14 +44,14 @@ final smtpServer = gmail('batoolsh2001@gmail.com', 'shilleh@2021');
 
 Future<void> sendEmail(String email) async {
   final message = Message()
-    ..from = Address('batoolsh2001@gmail.com', 'Batool D Shilleh')
+    ..from = const Address('batoolsh2001@gmail.com', 'Batool D Shilleh')
     ..recipients.add(email)
     ..subject = 'قبول طلبك'
     ..text = 'مبارك ! لقد أصبحت جزء من مجتمعنا سجل دخول الآن ';
 
   try {
     final sendReport = await send(message, smtpServer);
-    print('Message sent: ' + sendReport.toString());
+    print('Message sent: $sendReport');
   } catch (e) {
     print('Error sending email: $e');
   }
@@ -125,6 +125,8 @@ class Company {
 }
 
 class ApplicationList extends StatefulWidget {
+  const ApplicationList({super.key});
+
   @override
   _ApplicationListState createState() => _ApplicationListState();
 }
@@ -154,15 +156,15 @@ class _ApplicationListState extends State<ApplicationList> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.all(10),
-      padding: EdgeInsets.all(10),
+      margin: const EdgeInsets.all(10),
+      padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
         color: AppColor.bgColor,
         borderRadius: BorderRadius.circular(30),
       ),
       child: Column(
         children: [
-          HeaderWidget(
+          const HeaderWidget(
             title: 'Application',
           ),
           Expanded(
@@ -193,7 +195,7 @@ class CompanyCard extends StatelessWidget {
   final String type;
   final Function onDelete;
 
-  CompanyCard({
+  const CompanyCard({super.key, 
     required this.companyName,
     required this.email,
     required this.type,
@@ -222,7 +224,7 @@ class CompanyCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: EdgeInsets.all(10),
+      margin: const EdgeInsets.all(10),
       child: ListTile(
         title: Text(companyName),
         subtitle: Column(
@@ -239,7 +241,7 @@ class CompanyCard extends StatelessWidget {
               onPressed: () async {
                 onDelete();
               },
-              icon: Icon(Icons.close, color: Colors.red),
+              icon: const Icon(Icons.close, color: Colors.red),
             ),
             IconButton(
               onPressed: () async {
@@ -248,7 +250,7 @@ class CompanyCard extends StatelessWidget {
                 onDelete();
                 sendEmail(email);
               },
-              icon: Icon(Icons.check, color: Colors.green),
+              icon: const Icon(Icons.check, color: Colors.green),
             ),
           ],
         ),

@@ -1,7 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ChatDetailPageAppBar extends StatelessWidget implements PreferredSizeWidget{
+  const ChatDetailPageAppBar({super.key});
+
   @override
   Widget build(BuildContext context) {
     return AppBar(
@@ -10,22 +11,22 @@ class ChatDetailPageAppBar extends StatelessWidget implements PreferredSizeWidge
       backgroundColor: Colors.white,
       flexibleSpace: SafeArea(
         child: Container(
-          padding: EdgeInsets.only(right: 16),
+          padding: const EdgeInsets.only(right: 16),
           child: Row(
             children: <Widget>[
               IconButton(
                 onPressed: (){
                   Navigator.pop(context);
                 },
-                icon: Icon(Icons.arrow_back,color: Colors.black,),
+                icon: const Icon(Icons.arrow_back,color: Colors.black,),
               ),
-              SizedBox(width: 2,),
-              CircleAvatar(
+              const SizedBox(width: 2,),
+              const CircleAvatar(
                 backgroundImage: AssetImage("images/userImage1.jpeg"),
                 maxRadius: 20,
               ),
-              SizedBox(width: 12,),
-              Expanded(
+              const SizedBox(width: 12,),
+              const Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -46,5 +47,5 @@ class ChatDetailPageAppBar extends StatelessWidget implements PreferredSizeWidge
 
   @override
   // TODO: implement preferredSize
-  Size get preferredSize => Size.fromHeight(kToolbarHeight);
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }

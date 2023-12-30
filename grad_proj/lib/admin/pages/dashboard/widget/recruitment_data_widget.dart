@@ -192,7 +192,7 @@ class _RecruitmentDataWidgetState extends State<RecruitmentDataWidget> {
       margin: const EdgeInsets.symmetric(vertical: 15),
       child: Text(
         text,
-        style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
+        style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
         textDirection: TextDirection.rtl,
       ),
     );

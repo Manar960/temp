@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 import '../../../common/app_colors.dart';
 
 class NotificationCardWidget extends StatelessWidget {
+  const NotificationCardWidget({super.key});
+
   @override
   Widget build(BuildContext context) {
     final currentTime = DateTime.now();
@@ -20,7 +21,7 @@ class NotificationCardWidget extends StatelessWidget {
         color: AppColor.yellow,
         borderRadius: BorderRadius.circular(20),
       ),
-      padding: EdgeInsets.all(20),
+      padding: const EdgeInsets.all(20),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -29,7 +30,7 @@ class NotificationCardWidget extends StatelessWidget {
               imageAsset,
               height: 160,
             ),
-            SizedBox(width: 20),
+            const SizedBox(width: 20),
           },
           Expanded(
             child: Column(
@@ -42,11 +43,11 @@ class NotificationCardWidget extends StatelessWidget {
                     children: [
                       TextSpan(
                           text: greetingText,
-                          style: TextStyle(fontWeight: FontWeight.bold)),
+                          style: const TextStyle(fontWeight: FontWeight.bold)),
                     ],
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 Text(

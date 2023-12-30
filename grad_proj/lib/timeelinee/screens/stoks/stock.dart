@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'category.dart';
 
 class StokScreenPage extends StatefulWidget {
+  const StokScreenPage({super.key});
+
   @override
   _StokScreenPageState createState() => _StokScreenPageState();
 }

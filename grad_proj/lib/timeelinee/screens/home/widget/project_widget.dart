@@ -118,7 +118,7 @@ class _ProductWidgetState extends State<ProductWidget> {
         children: <Widget>[
           Text(
             title,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
               color: Colors.blue,
@@ -133,7 +133,7 @@ class _ProductWidgetState extends State<ProductWidget> {
     if (items.isNotEmpty) {
       return SingleChildScrollView(
         child: DataTable(
-          columns: [
+          columns: const [
             DataColumn(label: Text('الاسم')),
             DataColumn(label: Text('الوصف')),
             DataColumn(label: Text('الثمن')),

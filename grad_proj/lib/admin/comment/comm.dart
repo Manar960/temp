@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import '/admin/controllers/menu_controller.dart' as MyMenuController;
-import 'package:provider/provider.dart';
 
 import '../common/app_colors.dart';
 import '../common/app_responsive.dart';
 import '../pages/dashboard/widget/header_widget.dart';
 
 class CommentList extends StatelessWidget {
+  const CommentList({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -22,26 +22,26 @@ class CommentList extends StatelessWidget {
           children: [
             if (AppResponsive.isTablet(context) ||
                 AppResponsive.isDesktop(context))
-              CommentCard(
+              const CommentCard(
                 username: 'مستخدم 1',
                 comment: 'هذا تعليق رقم 1',
                 userImage: 'assets/user1.jpg',
               ),
             if (AppResponsive.isTablet(context) ||
                 AppResponsive.isDesktop(context))
-              CommentCard(
+              const CommentCard(
                 username: 'مستخدم 2',
                 comment: 'هذا تعليق رقم 2',
                 userImage: 'assets/user2.jpg',
               ),
             if (AppResponsive.isMobile(context))
-              CommentCard(
+              const CommentCard(
                 username: 'مستخدم 1',
                 comment: 'هذا تعليق رقم 1',
                 userImage: 'assets/user1.jpg',
               ),
             if (AppResponsive.isMobile(context))
-              CommentCard(
+              const CommentCard(
                 username: 'مستخدم 2',
                 comment: 'هذا تعليق رقم 2',
                 userImage: 'assets/user2.jpg',
@@ -58,7 +58,7 @@ class CommentCard extends StatelessWidget {
   final String comment;
   final String userImage;
 
-  CommentCard({
+  const CommentCard({super.key, 
     required this.username,
     required this.comment,
     required this.userImage,
@@ -75,7 +75,7 @@ class CommentCard extends StatelessWidget {
         title: Text(username),
         subtitle: Text(comment),
         trailing: IconButton(
-          icon: Icon(Icons.message),
+          icon: const Icon(Icons.message),
           onPressed: () {
             // أدخل هنا الشيفرة التي تريد تنفيذها عند النقر على الزر
           },
@@ -86,6 +86,8 @@ class CommentCard extends StatelessWidget {
 }
 
 class CommentPage extends StatefulWidget {
+  const CommentPage({super.key});
+
   @override
   _CommentPage createState() => _CommentPage();
 }
@@ -103,7 +105,7 @@ class _CommentPage extends State<CommentPage> {
       child: Column(
         children: [
           /// Header Part
-          HeaderWidget(
+          const HeaderWidget(
             title: 'Comments',
           ),
           Expanded(
@@ -116,7 +118,7 @@ class _CommentPage extends State<CommentPage> {
                     child: Container(
                       child: Column(
                         children: [
-                          CommentList(),
+                          const CommentList(),
                           const SizedBox(
                             height: 20,
                           ),

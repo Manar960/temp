@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../timeelinee/curved_navigation_bar.dart';
@@ -7,15 +6,17 @@ import '../../home/home_screen.dart';
 import 'chat_page.dart';
 
 class MainPagemsg extends StatelessWidget {
+  const MainPagemsg({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ChatPage(),
+      body: const ChatPage(),
       bottomNavigationBar: CurvedNavigationBar(
         index: 0,
-        color: Color(0xFF063970),
-        buttonBackgroundColor: Color(0xFF063970),
-        backgroundColor: Color.fromARGB(255, 255, 255, 255),
+        color: const Color(0xFF063970),
+        buttonBackgroundColor: const Color(0xFF063970),
+        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
         height: 75.0,
         items: const [
           Icon(Icons.home, size: 30, color: Colors.white),
