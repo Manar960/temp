@@ -1,5 +1,5 @@
 import 'dart:convert';
-
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter/material.dart';
 import '../../config.dart';
 import '../Login/login_screen.dart';
@@ -143,6 +143,19 @@ class _SignUpFormState extends State<SignUpForm> {
               return const SignUpFormco();
             },
           ),
+        );
+      } else {
+        // إذا كان هناك خطأ في الاستجابة من السيرفر
+        Fluttertoast.showToast(
+          msg: "تأكد من بياناتك ",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0,
+          webBgColor: "#e74c3c",
+          webPosition: "center",
+          timeInSecForIosWeb: 2,
         );
       }
     } else {

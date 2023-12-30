@@ -1,7 +1,6 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
-import 'package:grad_proj/usrTime/map/map.dart';
 import 'package:provider/provider.dart';
 import 'package:calendar_view/calendar_view.dart';
 import 'admin/controllers/menu_controller.dart' as MyMenuController;
@@ -24,10 +23,10 @@ void main() async {
           measurementId: "G-D1CL97P6E5"),
     );
   } else {
-    await Firebase.initializeApp();
-    await Firebase.initializeApp(
+    // await Firebase.initializeApp();
+    /* await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
-    );
+    );*/
   }
   FirebaseMessaging messaging = FirebaseMessaging.instance;
   await messaging.requestPermission();
