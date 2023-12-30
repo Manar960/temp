@@ -82,7 +82,7 @@ class _ProfileCardWidgetState extends State<ProfileCardWidget> {
         color: AppColor.white,
         borderRadius: BorderRadius.circular(10),
       ),
-      padding: EdgeInsets.all(10),
+      padding: const EdgeInsets.all(10),
       child: Column(
         children: [
           if (adminData != null)
@@ -96,21 +96,21 @@ class _ProfileCardWidgetState extends State<ProfileCardWidget> {
                         'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png',
                   ),
                 ),
-                SizedBox(width: 10),
+                const SizedBox(width: 10),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       adminData!['adminName'] ?? '',
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                      style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
-                    Text("Admin"),
+                    const Text("Admin"),
                   ],
                 )
               ],
             ),
           if (adminData != null)
-            Divider(
+            const Divider(
               thickness: 0.5,
               color: Colors.grey,
             ),
@@ -124,7 +124,7 @@ class _ProfileCardWidgetState extends State<ProfileCardWidget> {
 
   Widget profileListTile(text, value) {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 8),
+      margin: const EdgeInsets.symmetric(vertical: 8),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [

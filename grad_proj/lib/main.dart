@@ -1,6 +1,6 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
-import 'package:grad_proj/timeelinee/screens/home/calendar/calendar.dart';
 import 'package:grad_proj/usrTime/map/map.dart';
 import 'package:provider/provider.dart';
 import 'package:calendar_view/calendar_view.dart';
@@ -8,6 +8,7 @@ import 'admin/controllers/menu_controller.dart' as MyMenuController;
 import 'landing/navebar/homepage.dart';
 import 'landing/splash.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,16 +25,18 @@ void main() async {
     );
   } else {
     await Firebase.initializeApp();
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
   }
+  FirebaseMessaging messaging = FirebaseMessaging.instance;
+  await messaging.requestPermission();
 
   runApp(
     MultiProvider(
       providers: [
         ChangeNotifierProvider<MyMenuController.MenuController>(
           create: (context) => MyMenuController.MenuController(),
-        ),
-        ChangeNotifierProvider<UserProvider>(
-          create: (context) => UserProvider(),
         ),
       ],
       child: const MyApp(),
@@ -48,9 +51,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return CalendarControllerProvider(
       controller: EventController(),
-      child: MaterialApp(
+      child: const MaterialApp(
         title: 'My App',
-        home: kIsWeb ? const WebHomePage() : const MobileHomePage(),
+        home: kIsWeb ? WebHomePage() : MobileHomePage(),
         debugShowCheckedModeBanner: false,
       ),
     );

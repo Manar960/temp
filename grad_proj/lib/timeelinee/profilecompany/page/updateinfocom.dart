@@ -16,16 +16,16 @@ class UpdateCompanyForm extends StatefulWidget {
 
 class _UpdateCompanyFormState extends State<UpdateCompanyForm> {
   final _formKey = GlobalKey<FormState>();
-  TextEditingController _nameController = TextEditingController();
-  TextEditingController _emailController = TextEditingController();
-  TextEditingController _locationController = TextEditingController();
-  TextEditingController _aboutController = TextEditingController();
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _locationController = TextEditingController();
+  final TextEditingController _aboutController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('تحديث معلومات الشركة'),
+        title: const Text('تحديث معلومات الشركة'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -35,7 +35,7 @@ class _UpdateCompanyFormState extends State<UpdateCompanyForm> {
             children: [
               TextFormField(
                 controller: _nameController,
-                decoration: InputDecoration(labelText: 'اسم الشركة'),
+                decoration: const InputDecoration(labelText: 'اسم الشركة'),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'يرجى إدخال اسم الشركة';
@@ -45,7 +45,7 @@ class _UpdateCompanyFormState extends State<UpdateCompanyForm> {
               ),
               TextFormField(
                 controller: _emailController,
-                decoration: InputDecoration(labelText: 'البريد الإلكتروني'),
+                decoration: const InputDecoration(labelText: 'البريد الإلكتروني'),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'يرجى إدخال البريد الإلكتروني';
@@ -55,7 +55,7 @@ class _UpdateCompanyFormState extends State<UpdateCompanyForm> {
               ),
               TextFormField(
                 controller: _locationController,
-                decoration: InputDecoration(labelText: 'الموقع'),
+                decoration: const InputDecoration(labelText: 'الموقع'),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'يرجى إدخال الموقع';
@@ -65,7 +65,7 @@ class _UpdateCompanyFormState extends State<UpdateCompanyForm> {
               ),
               TextFormField(
                 controller: _aboutController,
-                decoration: InputDecoration(labelText: 'نبذة عن الشركة'),
+                decoration: const InputDecoration(labelText: 'نبذة عن الشركة'),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'يرجى إدخال نبذة عن الشركة';
@@ -73,14 +73,14 @@ class _UpdateCompanyFormState extends State<UpdateCompanyForm> {
                   return null;
                 },
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
                     _updateCompanyInfo();
                   }
                 },
-                child: Text('تحديث'),
+                child: const Text('تحديث'),
               ),
             ],
           ),
@@ -105,16 +105,16 @@ class _UpdateCompanyFormState extends State<UpdateCompanyForm> {
 
       if (response.statusCode == 200) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('تم تحديث معلومات الشركة بنجاح')),
+          const SnackBar(content: Text('تم تحديث معلومات الشركة بنجاح')),
         );
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('فشل تحديث معلومات الشركة')),
+          const SnackBar(content: Text('فشل تحديث معلومات الشركة')),
         );
       }
     } catch (error) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('حدث خطأ أثناء تحديث معلومات الشركة')),
+        const SnackBar(content: Text('حدث خطأ أثناء تحديث معلومات الشركة')),
       );
     }
   }

@@ -41,7 +41,7 @@ class _DiscountBannerState extends State<DiscountBanner> {
         textDirection: TextDirection.rtl, // توجيه النص من اليمين إلى اليسار
         child: Text.rich(
           TextSpan(
-            style: TextStyle(color: Colors.white),
+            style: const TextStyle(color: Colors.white),
             children: [
               const TextSpan(text: "مرحبا بك \n"),
               TextSpan(

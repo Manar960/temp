@@ -10,6 +10,8 @@ import '../common/app_colors.dart';
 import '../pages/dashboard/widget/header_widget.dart';
 
 class ReportPage extends StatefulWidget {
+  const ReportPage({super.key});
+
   @override
   _ReportPageState createState() => _ReportPageState();
 }
@@ -128,6 +130,7 @@ class _ReportPageState extends State<ReportPage> {
     }
   }
 
+  @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Container(
@@ -139,16 +142,16 @@ class _ReportPageState extends State<ReportPage> {
         ),
         child: Column(
           children: [
-            HeaderWidget(
+            const HeaderWidget(
               title: 'التقارير',
             ),
-            Container(
+            SizedBox(
               height: MediaQuery.of(context).size.height * 0.4,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Expanded(
-                    child: Container(
+                    child: SizedBox(
                       width: MediaQuery.of(context).size.width * 0.4,
                       child: Card(
                         shape: RoundedRectangleBorder(
@@ -231,7 +234,7 @@ class _ReportPageState extends State<ReportPage> {
                   ),
                   const SizedBox(width: 20),
                   Expanded(
-                    child: Container(
+                    child: SizedBox(
                       height: MediaQuery.of(context).size.height * 0.4,
                       child: Card(
                         shape: RoundedRectangleBorder(
@@ -391,7 +394,7 @@ class _ReportPageState extends State<ReportPage> {
     required String title,
     required String value,
   }) {
-    return Container(
+    return SizedBox(
       width: 150,
       child: Card(
         shape: RoundedRectangleBorder(

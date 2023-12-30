@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
 import '../commons/theme.dart';
 
 class CardTile extends StatelessWidget {
@@ -18,11 +17,11 @@ class CardTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _media = MediaQuery.of(context).size;
+    final media = MediaQuery.of(context).size;
     return FittedBox(
-      child: Container(
-        height: _media.height / 6,
-        width: _media.width / 7,
+      child: SizedBox(
+        height: media.height / 6,
+        width: media.width / 7,
         child: Stack(
           alignment: Alignment.bottomCenter,
           children: <Widget>[
@@ -32,8 +31,8 @@ class CardTile extends StatelessWidget {
               shadowColor: Colors.grey,
               borderRadius: BorderRadius.circular(4),
               child: Container(
-                height: _media.height / 8,
-                width: _media.width / 7,
+                height: media.height / 8,
+                width: media.width / 7,
                 padding: const EdgeInsets.only(left: 10, right: 10, top: 10),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
@@ -74,8 +73,8 @@ class CardTile extends StatelessWidget {
                     color: iconBgColor,
                     borderRadius: BorderRadius.circular(8),
                   ),
-                  height: _media.height / 18,
-                  width: _media.width / 20,
+                  height: media.height / 18,
+                  width: media.width / 20,
                   child: Icon(
                     icon,
                     size: 35,

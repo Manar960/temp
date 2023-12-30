@@ -64,7 +64,7 @@ class _SignUpFormStateco extends State<SignUpFormco> {
     return Scaffold(
       body: SafeArea(
         child: Center(
-          child: Container(
+          child: SizedBox(
             height: MediaQuery.of(context).size.height,
             width: 500,
             child: SingleChildScrollView(
@@ -85,9 +85,9 @@ class _SignUpFormStateco extends State<SignUpFormco> {
                       print('isFront: $isFront');
                     },
                     front: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 10),
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
                       child: buildCreditCard(
-                        color: Color(0xFF063970),
+                        color: const Color(0xFF063970),
                         cardExpiration: cardExpiryDateController.text.isEmpty
                             ? "08/2022"
                             : cardExpiryDateController.text,
@@ -345,7 +345,7 @@ class _SignUpFormStateco extends State<SignUpFormco> {
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       foregroundColor: Colors.white,
-                      backgroundColor: Color(0xFF063970),
+                      backgroundColor: const Color(0xFF063970),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15),
                       ),

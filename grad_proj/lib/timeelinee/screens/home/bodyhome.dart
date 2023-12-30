@@ -50,7 +50,7 @@ class _ComponantBodyState extends State<ComponantBody> {
   }
 
   Future<void> visetorCount() async {
-    Timer.periodic(Duration(hours: 3), (Timer timer) {
+    Timer.periodic(const Duration(hours: 3), (Timer timer) {
       // زيادة قيمة العداد بمقدار 5
       setState(() {
         counterValue += 5;
@@ -153,8 +153,9 @@ class _ComponantBodyState extends State<ComponantBody> {
     }
   }
 
+  @override
   Widget build(BuildContext context) {
-    final _media = MediaQuery.of(context).size;
+    final media = MediaQuery.of(context).size;
     totalSP = serv + prodact;
     print('totalSP$totalSP');
     totalBR = ordars + booking;
@@ -248,19 +249,19 @@ class _ComponantBodyState extends State<ComponantBody> {
               FractionallySizedBox(
                 widthFactor: 0.8,
                 child: ChartCardTile(
-                  cardColor: Color(0xFF7560ED),
+                  cardColor: const Color(0xFF7560ED),
                   cardTitle: 'عدد الزوار',
                   icon: Icons.people,
                   typeText: counterValue.toString(),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 40,
               ),
               FractionallySizedBox(
                 widthFactor: 0.9,
                 child: ProductWidget(
-                  media: _media,
+                  media: media,
                 ),
               ),
             ],
@@ -269,13 +270,13 @@ class _ComponantBodyState extends State<ComponantBody> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   ChartCardTile(
-                    cardColor: Color(0xFF7560ED),
+                    cardColor: const Color(0xFF7560ED),
                     cardTitle: 'عدد الزوار',
                     icon: Icons.people,
                     typeText: counterValue.toString(),
                   ),
                   ProductWidget(
-                    media: _media,
+                    media: media,
                   ),
                 ],
               ),
@@ -290,6 +291,8 @@ class _ComponantBodyState extends State<ComponantBody> {
 }
 
 class ResponsiveComponantBody extends StatelessWidget {
+  const ResponsiveComponantBody({super.key});
+
   @override
   Widget build(BuildContext context) {
     return const ResponsiveWidget(

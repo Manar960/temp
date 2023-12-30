@@ -1,3 +1,4 @@
 {
-    "cmake.sourceDirectory": "/home/batool/Documents/GitHub/cars_grad_prog_front_end/grad_proj/linux/flutter"
+    "cmake.sourceDirectory": "/home/batool/Documents/GitHub/cars_grad_prog_front_end/grad_proj/linux/flutter",
+    "java.configuration.updateBuildConfiguration": "interactive"
 }

@@ -1,13 +1,9 @@
 import 'dart:typed_data';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:grad_proj/timeelinee/profilecompany/page/updateinfocom.dart';
-import 'package:grad_proj/timeelinee/profilecompany/widget/about.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:file_picker/file_picker.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:uuid/uuid.dart';
 
 import '../../../admin/pages/dashboard/widget/header_widget.dart';
 import '../../../config.dart';
@@ -15,7 +11,6 @@ import '../../screens/forms/formscom.dart';
 import '../../screens/home/calendar/calendar.dart';
 import '../../screens/home/home_screen.dart';
 import '../../screens/stoks/stock.dart';
-import '../widget/addminButoon.dart';
 import '../widget/numbers_widget.dart';
 import '../widget/profile_widget.dart';
 import 'package:grad_proj/timeelinee/curved_navigation_bar.dart';
@@ -98,19 +93,20 @@ class _ProfilePageCompanyStatead extends State<ProfilePageadCompany> {
     }
   }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: FutureBuilder<Map<String, dynamic>>(
         future: fetchCompanyData(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
             return Center(child: Text("Error: ${snapshot.error}"));
           } else if (snapshot.hasData) {
             return buildProfileContent(snapshot.data!);
           } else {
-            return Center(child: Text("No data available."));
+            return const Center(child: Text("No data available."));
           }
         },
       ),
@@ -135,7 +131,7 @@ class _ProfilePageCompanyStatead extends State<ProfilePageadCompany> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) {
-                    return HomeScreencom();
+                    return const HomeScreencom();
                   }),
                 );
                 break;
@@ -143,7 +139,7 @@ class _ProfilePageCompanyStatead extends State<ProfilePageadCompany> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) {
-                    return CalendarPage();
+                    return const CalendarPage();
                   }),
                 );
                 break;
@@ -151,7 +147,7 @@ class _ProfilePageCompanyStatead extends State<ProfilePageadCompany> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) {
-                    return MyButtonsScreen();
+                    return const MyButtonsScreen();
                   }),
                 );
                 break;
@@ -159,7 +155,7 @@ class _ProfilePageCompanyStatead extends State<ProfilePageadCompany> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) {
-                    return StokScreenPage();
+                    return const StokScreenPage();
                   }),
                 );
                 break;
@@ -186,7 +182,7 @@ class _ProfilePageCompanyStatead extends State<ProfilePageadCompany> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          HeaderWidget(
+          const HeaderWidget(
             title: 'الملف الشخصي',
           ),
           ProfileWidget(
@@ -199,7 +195,7 @@ class _ProfilePageCompanyStatead extends State<ProfilePageadCompany> {
           const SizedBox(height: 24),
           buildUserInfo(companyData),
           const SizedBox(height: 24),
-          NumbersWidget(),
+          const NumbersWidget(),
           const SizedBox(height: 100),
           buildAbout(context), // تم استبدال هنا
         ],
@@ -268,7 +264,7 @@ class _ProfilePageCompanyStatead extends State<ProfilePageadCompany> {
       children: <Widget>[
         Card(
           color: Colors.white,
-          margin: EdgeInsets.symmetric(vertical: 9.0, horizontal: 20.0),
+          margin: const EdgeInsets.symmetric(vertical: 9.0, horizontal: 20.0),
           child: ListTile(
             leading: const Icon(
               Icons.work,
@@ -287,7 +283,7 @@ class _ProfilePageCompanyStatead extends State<ProfilePageadCompany> {
         ),
         Card(
           color: Colors.white,
-          margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 25.0),
+          margin: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 25.0),
           child: ListTile(
             leading: const Icon(
               Icons.location_city,
@@ -308,7 +304,7 @@ class _ProfilePageCompanyStatead extends State<ProfilePageadCompany> {
           onPressed: () {
             showEditProfileDialog(context);
           },
-          child: Text('تعديل المعلومات'),
+          child: const Text('تعديل المعلومات'),
         ),
       ],
     );
@@ -323,25 +319,25 @@ class _ProfilePageCompanyStatead extends State<ProfilePageadCompany> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('تحرير المعلومات'),
+          title: const Text('تحرير المعلومات'),
           content: Column(
             children: [
               TextField(
                 controller: nameController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'الاسم',
                 ),
               ),
               TextField(
                 controller: emailController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'البريد الإلكتروني',
                 ),
               ),
               TextField(
                 controller: passwordController,
                 obscureText: true,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'كلمة المرور',
                 ),
               ),
@@ -352,7 +348,7 @@ class _ProfilePageCompanyStatead extends State<ProfilePageadCompany> {
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text('إلغاء'),
+              child: const Text('إلغاء'),
             ),
             ElevatedButton(
               // Handle the editing logic here
@@ -373,7 +369,7 @@ class _ProfilePageCompanyStatead extends State<ProfilePageadCompany> {
 
                 Navigator.of(context).pop(); // Close the dialog
               },
-              child: Text('حفظ'),
+              child: const Text('حفظ'),
             ),
           ],
         );

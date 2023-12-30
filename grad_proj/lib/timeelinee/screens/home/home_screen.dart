@@ -85,7 +85,7 @@ class _HomeScreencomState extends State<HomeScreencom> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) {
-                    return CalendarPage();
+                    return const CalendarPage();
                   }),
                 );
                 break;
@@ -93,7 +93,7 @@ class _HomeScreencomState extends State<HomeScreencom> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) {
-                    return MyButtonsScreen();
+                    return const MyButtonsScreen();
                   }),
                 );
                 break;
@@ -101,7 +101,7 @@ class _HomeScreencomState extends State<HomeScreencom> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) {
-                    return StokScreenPage();
+                    return const StokScreenPage();
                   }),
                 );
 
@@ -171,7 +171,7 @@ class _HomeScreencomState extends State<HomeScreencom> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) {
-                          return CalendarPage();
+                          return const CalendarPage();
                         }),
                       );
                       break;
@@ -179,7 +179,7 @@ class _HomeScreencomState extends State<HomeScreencom> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) {
-                          return MyButtonsScreen();
+                          return const MyButtonsScreen();
                         }),
                       );
                       break;
@@ -187,7 +187,7 @@ class _HomeScreencomState extends State<HomeScreencom> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) {
-                          return StokScreenPage();
+                          return const StokScreenPage();
                         }),
                       );
                       break;

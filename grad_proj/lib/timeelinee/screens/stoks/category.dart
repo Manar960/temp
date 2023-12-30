@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:grad_proj/timeelinee/screens/stoks/stock.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
@@ -139,7 +138,7 @@ class _StokScreenState extends State<StokScreen> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) {
-                        return CalendarPage();
+                        return const CalendarPage();
                       }),
                     );
                     break;
@@ -147,7 +146,7 @@ class _StokScreenState extends State<StokScreen> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) {
-                        return MyButtonsScreen();
+                        return const MyButtonsScreen();
                       }),
                     );
                     break;
@@ -155,7 +154,7 @@ class _StokScreenState extends State<StokScreen> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) {
-                        return MyButtonsScreen();
+                        return const MyButtonsScreen();
                       }),
                     );
                     break;
@@ -182,7 +181,7 @@ class _StokScreenState extends State<StokScreen> {
         children: <Widget>[
           Text(
             title,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
               color: Colors.blue,
@@ -198,7 +197,7 @@ class _StokScreenState extends State<StokScreen> {
       return Expanded(
         child: SingleChildScrollView(
           child: DataTable(
-            columns: [
+            columns: const [
               DataColumn(label: Text('الاسم')),
               DataColumn(label: Text('بار كود')),
               DataColumn(label: Text('المخزون')),

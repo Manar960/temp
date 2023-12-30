@@ -10,7 +10,6 @@ import 'views/home_view.dart';
 import 'views/projects_view.dart';
 import 'widgets/bottom_bar.dart';
 import 'widgets/custom_tab.dart';
-import 'widgets/custom_tab_bar.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -71,7 +70,7 @@ class _HomePageState extends State<HomePage>
     // ignore: avoid_print
     print('Height: $screenHeight');
     return Scaffold(
-      backgroundColor: Color.fromARGB(0, 255, 255, 255),
+      backgroundColor: const Color.fromARGB(0, 255, 255, 255),
       key: scaffoldKey,
       endDrawer: drawer(),
       body: Padding(
@@ -110,7 +109,7 @@ class _HomePageState extends State<HomePage>
         ),
 
         /// Bottom Bar as part of the Row
-        Row(
+        const Row(
           children: [
             BottomBar(
               key: Key('21'),

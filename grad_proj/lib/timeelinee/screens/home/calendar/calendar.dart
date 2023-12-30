@@ -13,6 +13,8 @@ import '../../stoks/stock.dart';
 import '../home_screen.dart';
 
 class CalendarPage extends StatefulWidget {
+  const CalendarPage({super.key});
+
   @override
   _CalendarPageState createState() => _CalendarPageState();
 }
@@ -41,14 +43,14 @@ class _CalendarPageState extends State<CalendarPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Event Calendar'),
+        title: const Text('Event Calendar'),
       ),
-      body: MonthView(),
+      body: const MonthView(),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           _showEventDialog(context);
         },
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
       ),
       bottomNavigationBar: Container(
         color: const Color(0xFF063970),
@@ -71,7 +73,7 @@ class _CalendarPageState extends State<CalendarPage> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) {
-                    return HomeScreencom();
+                    return const HomeScreencom();
                   }),
                 );
                 break;
@@ -84,7 +86,7 @@ class _CalendarPageState extends State<CalendarPage> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) {
-                    return MyButtonsScreen();
+                    return const MyButtonsScreen();
                   }),
                 );
                 break;
@@ -93,7 +95,7 @@ class _CalendarPageState extends State<CalendarPage> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) {
-                    return StokScreenPage();
+                    return const StokScreenPage();
                   }),
                 );
                 break;
@@ -120,23 +122,23 @@ class _CalendarPageState extends State<CalendarPage> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Add Event'),
+          title: const Text('Add Event'),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               TextField(
-                decoration: InputDecoration(labelText: 'Event Title'),
+                decoration: const InputDecoration(labelText: 'Event Title'),
                 onChanged: (title) {
                   // Handle title changes
                 },
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               ElevatedButton(
                 onPressed: () {
                   _addEvent();
                   Navigator.pop(context);
                 },
-                child: Text('Add Event'),
+                child: const Text('Add Event'),
               ),
             ],
           ),

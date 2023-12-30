@@ -7,7 +7,7 @@ import '../../models/Product.dart';
 import '../details/details_screen.dart';
 
 class ProductsScreen extends StatefulWidget {
-  const ProductsScreen({Key? key});
+  const ProductsScreen({super.key});
 
   static String routeName = "/products";
 
@@ -44,7 +44,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
           future: futureProducts,
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return CircularProgressIndicator();
+              return const CircularProgressIndicator();
             } else if (snapshot.hasError) {
               return Text('Error: ${snapshot.error}');
             } else {

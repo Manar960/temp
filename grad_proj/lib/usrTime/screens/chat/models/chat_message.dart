@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 
 import '../modules/chat_detail_page.dart';
 

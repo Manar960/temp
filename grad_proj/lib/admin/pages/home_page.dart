@@ -54,11 +54,11 @@ class _HomePageadminState extends State<HomePageadmin> {
                             adminEmail: widget.adminEmail,
                           )
                         : currentPage == "Application"
-                            ? ApplicationList()
+                            ? const ApplicationList()
                             : currentPage == "Reports"
-                                ? ReportPage()
+                                ? const ReportPage()
                                 : currentPage == "Comment"
-                                    ? CommentPage()
+                                    ? const CommentPage()
                                     : Dashboard(
                                         adminEmail:
                                             widget.adminEmail), // وهنا أيضا

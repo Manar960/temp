@@ -64,11 +64,13 @@ dependencies:
   countries_world_map: ^1.1.1
   file_picker: ^6.1.1
   uuid:
-  firebase_core: 
+  firebase_core: ^2.24.2 
   firebase_storage: 
   firebase_analytics: ^10.0.0
   calendar_view:
   connectivity: ^3.0.6
+  firebase_messaging: ^14.7.9
+
 
     #cupertino_icons: ^1.0.2
 
