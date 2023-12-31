@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import '../../../../login/Login/login_screen.dart';
 import '/admin/controllers/menu_controller.dart' as MyMenuController;
 import '../../../common/app_colors.dart';
 import '../../../common/app_responsive.dart';
@@ -72,7 +73,12 @@ class _HeaderWidgetState extends State<HeaderWidget> {
             children: [
               GestureDetector(
                 onTap: () {
-                  logout();
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) {
+                      return const LoginScreen();
+                    }),
+                  );
                 },
                 child: navigationIcon(icon: Icons.logout),
               ),
