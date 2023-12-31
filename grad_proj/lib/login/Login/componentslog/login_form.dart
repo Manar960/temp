@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -22,6 +21,8 @@ class LoginForm extends StatefulWidget {
 class _LoginFormState extends State<LoginForm> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  TextEditingController codeController = TextEditingController();
+  TextEditingController sendResetCodeUrl = TextEditingController();
   String? emailError;
   String? passwordError;
   bool _isLoading = false;
@@ -42,11 +43,226 @@ class _LoginFormState extends State<LoginForm> {
     prefs = await SharedPreferences.getInstance();
   }
 
+  void forgotPassword() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          content: Container(
+            padding: const EdgeInsets.all(16.0),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(16.0),
+              color: Colors.white,
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                const Text(
+                  "نسيت كلمة المرور؟",
+                  style: TextStyle(
+                    fontSize: 15.0,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.blue, // Customize color
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 16.0),
+                Directionality(
+                  textDirection: TextDirection.rtl,
+                  child: TextFormField(
+                    controller: emailController,
+                    textAlign: TextAlign.right,
+                    decoration: InputDecoration(
+                      labelText: "البريد الإلكتروني",
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 16.0),
+                ElevatedButton(
+                  onPressed: () {
+                    sendResetCode(emailController.text);
+                    Navigator.pop(context);
+                    _showPasswordField();
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.blue, // Customize button color
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                  ),
+                  child: const Text(
+                    "إرسال الرمز",
+                    style: TextStyle(
+                      fontSize: 16.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  void _showPasswordField() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          content: Container(
+            padding: const EdgeInsets.all(16.0),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(16.0),
+              color: Colors.white,
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                const Text(
+                  "إعادة تعيين كلمة المرور",
+                  style: TextStyle(
+                    fontSize: 15.0,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.blue, // Customize color
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 16.0),
+                Directionality(
+                  textDirection: TextDirection.rtl,
+                  child: TextField(
+                    controller: codeController,
+                    textAlign: TextAlign.right,
+                    decoration: InputDecoration(
+                      labelText: "الرمز",
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                      filled: true,
+                      fillColor: Colors.grey[200], // Customize fill color
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 16.0),
+                Directionality(
+                  textDirection: TextDirection.rtl,
+                  child: TextField(
+                    controller: passwordController,
+                    obscureText: !_isPasswordVisible,
+                    textAlign: TextAlign.right,
+                    decoration: InputDecoration(
+                      labelText: "كلمة المرور الجديدة",
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          _isPasswordVisible
+                              ? Icons.visibility
+                              : Icons.visibility_off,
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            _isPasswordVisible = !_isPasswordVisible;
+                          });
+                        },
+                      ),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                      filled: true,
+                      fillColor: Colors.grey[200], // Customize fill color
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 16.0),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                    resetPassword(codeController.text, passwordController.text);
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.blue, // Customize button color
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                  ),
+                  child: const Text(
+                    "تأكيد",
+                    style: TextStyle(
+                      fontSize: 16.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Future<void> sendResetCode(String email) async {
+    try {
+      var response = await http.post(
+        Uri.parse(code),
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+        body: jsonEncode({'email': email}),
+      );
+
+      var jsonResponse = jsonDecode(response.body);
+      if (!jsonResponse['status']) {
+        // ignore: avoid_print
+        print("Failed to send reset code.");
+      }
+    } catch (error) {
+      // ignore: avoid_print
+      print("Error sending reset code: $error");
+    }
+  }
+
+  Future<void> resetPassword(String code, String newPassword) async {
+    try {
+      var response = await http.post(
+        Uri.parse(resetPasswordUrl),
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+        body: jsonEncode({
+          'code': code,
+          'newPassword': newPassword,
+        }),
+      );
+
+      var jsonResponse = jsonDecode(response.body);
+      if (!jsonResponse['status']) {
+      } else {
+        // ignore: use_build_context_synchronously
+        Navigator.pop(context);
+        // ignore: avoid_print
+        print("Password reset successfully");
+      }
+    } catch (error) {
+      // ignore: avoid_print
+      print("Error resetting password: $error");
+    }
+  }
+
   Future<void> loginAdmin() async {
     if (emailController.text.isNotEmpty && passwordController.text.isNotEmpty) {
       setState(() {
         _isLoading = true;
       });
+      // ignore: unused_local_variable
       String admeal = emailController.text;
       var regBody = {
         "email": emailController.text,
@@ -79,34 +295,11 @@ class _LoginFormState extends State<LoginForm> {
           emailError = "البريد الإلكتروني أو كلمة المرور غير صحيحة";
           _isLoading = false;
         });
-        Fluttertoast.showToast(
-          msg: "تأكد من بياناتك ",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          backgroundColor: Colors.red,
-          textColor: Colors.white,
-          fontSize: 16.0,
-          webBgColor: "#e74c3c",
-          webPosition: "center",
-          timeInSecForIosWeb: 2,
-        );
       }
     } else {
       setState(() {
         emailError = "البريد الإلكتروني وكلمة المرور مطلوبة";
-        _isLoading = false;
       });
-      Fluttertoast.showToast(
-        msg: "تأكد من بياناتك ",
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.BOTTOM,
-        backgroundColor: Colors.red,
-        textColor: Colors.white,
-        fontSize: 16.0,
-        webBgColor: "#e74c3c",
-        webPosition: "center",
-        timeInSecForIosWeb: 2,
-      );
     }
   }
 
@@ -145,34 +338,11 @@ class _LoginFormState extends State<LoginForm> {
           emailError = "البريد الإلكتروني أو كلمة المرور غير صحيحة";
           _isLoading = false;
         });
-        Fluttertoast.showToast(
-          msg: "تأكد من بياناتك ",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          backgroundColor: Colors.red,
-          textColor: Colors.white,
-          fontSize: 16.0,
-          webBgColor: "#e74c3c",
-          webPosition: "center",
-          timeInSecForIosWeb: 2,
-        );
       }
     } else {
       setState(() {
         emailError = "البريد الإلكتروني وكلمة المرور مطلوبة";
-        _isLoading = false;
       });
-      Fluttertoast.showToast(
-        msg: "تأكد من بياناتك ",
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.BOTTOM,
-        backgroundColor: Colors.red,
-        textColor: Colors.white,
-        fontSize: 16.0,
-        webBgColor: "#e74c3c",
-        webPosition: "center",
-        timeInSecForIosWeb: 2,
-      );
     }
   }
 
@@ -198,7 +368,8 @@ class _LoginFormState extends State<LoginForm> {
       if (jsonResponse['status']) {
         var myToken = jsonResponse['token'];
         var companyName = jsonResponse['userEmail'];
-
+        // ignore: avoid_print
+        print(companyName);
         prefs.setString('token', myToken);
         prefs.setString('company', companyName);
         // ignore: use_build_context_synchronously
@@ -213,34 +384,11 @@ class _LoginFormState extends State<LoginForm> {
           emailError = "البريد الإلكتروني أو كلمة المرور غير صحيحة";
           _isLoading = false;
         });
-        Fluttertoast.showToast(
-          msg: "تأكد من بياناتك ",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          backgroundColor: Colors.red,
-          textColor: Colors.white,
-          fontSize: 16.0,
-          webBgColor: "#e74c3c",
-          webPosition: "center",
-          timeInSecForIosWeb: 2,
-        );
       }
     } else {
       setState(() {
         emailError = "البريد الإلكتروني وكلمة المرور مطلوبة";
-        _isLoading = false;
       });
-      Fluttertoast.showToast(
-        msg: "تأكد من بياناتك ",
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.BOTTOM,
-        backgroundColor: Colors.red,
-        textColor: Colors.white,
-        fontSize: 16.0,
-        webBgColor: "#e74c3c",
-        webPosition: "center",
-        timeInSecForIosWeb: 2,
-      );
     }
   }
 
@@ -387,6 +535,24 @@ class _LoginFormState extends State<LoginForm> {
                     style: const TextStyle(color: Colors.white),
                   ),
                 ),
+          const SizedBox(height: defaultPadding),
+          Container(
+            margin: const EdgeInsets.only(top: defaultPadding),
+            child: TextButton(
+              onPressed: () {
+                WidgetsBinding.instance!.addPostFrameCallback((_) {
+                  forgotPassword();
+                });
+              },
+              child: const Text(
+                "هل نسيت كلمة المرور؟",
+                style: TextStyle(
+                  color: kPrimaryColor,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          ),
           const SizedBox(height: defaultPadding),
           AlreadyHaveAnAccountCheck(
             login: true,

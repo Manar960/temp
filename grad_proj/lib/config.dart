@@ -95,3 +95,7 @@ const getCompanyInfo = "${url}getCompanyInfo";
 const updateCompanyInfo = "${url}updateCompanyInfo";
 
 const getbookinginfo = "${url}bookings";
+
+const code = "${url}change-password";
+
+const resetPasswordUrl = "${url}reset-password";

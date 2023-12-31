@@ -29,7 +29,6 @@ class _SignUpFormStateco extends State<SignUpFormco> {
 
   final FlipCardController flipCardController = FlipCardController();
 
-  // إضافة متغير لتتبع حالة ملء الحقول
   bool allFieldsFilled = false;
 
   void payment() async {
@@ -37,9 +36,8 @@ class _SignUpFormStateco extends State<SignUpFormco> {
         cardHolderNameController.text.isEmpty ||
         cardExpiryDateController.text.isEmpty ||
         cardCvvController.text.isEmpty) {
-      // إذا كانت أحد الحقول فارغة
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
+        const SnackBar(
           content: Text('الرجاء تعبئة جميع الحقول'),
           backgroundColor: Colors.red,
         ),
@@ -61,6 +59,7 @@ class _SignUpFormStateco extends State<SignUpFormco> {
       body: jsonEncode(regBody),
     );
     if (response.statusCode == 200) {
+      // ignore: use_build_context_synchronously
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -72,13 +71,12 @@ class _SignUpFormStateco extends State<SignUpFormco> {
     }
   }
 
-  // تحديث حالة ملء الحقول
   void updateFieldsFilledStatus() {
     setState(() {
-      allFieldsFilled = !cardNumberController.text.isEmpty &&
-          !cardHolderNameController.text.isEmpty &&
-          !cardExpiryDateController.text.isEmpty &&
-          !cardCvvController.text.isEmpty;
+      allFieldsFilled = cardNumberController.text.isNotEmpty &&
+          cardHolderNameController.text.isNotEmpty &&
+          cardExpiryDateController.text.isNotEmpty &&
+          cardCvvController.text.isNotEmpty;
     });
   }
 
@@ -370,8 +368,7 @@ class _SignUpFormStateco extends State<SignUpFormco> {
                       foregroundColor: Colors.white,
                       backgroundColor: allFieldsFilled
                           ? const Color(0xFF063970)
-                          : Colors
-                              .grey, // تعديل لتغيير لون الزر بناءً على حالة ملء الحقول
+                          : Colors.grey,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15),
                       ),
@@ -394,7 +391,7 @@ class _SignUpFormStateco extends State<SignUpFormco> {
                               flipCardController.toggleCard();
                             });
                           }
-                        : null, // تعديل لتعطيل الزر عندما تكون حقول فارغة
+                        : null,
                     child: Text(
                       'Add Card'.toUpperCase(),
                       style: const TextStyle(
