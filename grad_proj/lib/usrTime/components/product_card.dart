@@ -1,83 +1,56 @@
 import 'package:flutter/material.dart';
 
-import '../constants.dart';
-import '../models/Product.dart';
-
 class ProductCard extends StatelessWidget {
   const ProductCard({
     Key? key,
-    this.width = 140,
-    this.aspectRetio = 1.02,
-    required this.product,
-    required this.onPress,
+    required this.image,
+    required this.title,
+    required this.price,
+    required this.press,
+    required this.bgColor,
   }) : super(key: key);
-
-  final double width, aspectRetio;
-  final Product product;
-  final VoidCallback onPress;
+  final String image, title;
+  final VoidCallback press;
+  final int price;
+  final Color bgColor;
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: width,
-      child: GestureDetector(
-        onTap: onPress,
+    return GestureDetector(
+      onTap: press,
+      child: Container(
+        width: 300,
+        padding: const EdgeInsets.all(16 / 2),
+        decoration: const BoxDecoration(
+          color: Color.fromARGB(255, 254, 247, 247),
+          borderRadius: BorderRadius.all(Radius.circular(16)),
+        ),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            AspectRatio(
-              aspectRatio: 1.02,
-              child: Container(
-                padding: const EdgeInsets.all(20),
-                decoration: BoxDecoration(
-                  color: kSecondaryColor.withOpacity(0.1),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Image.asset(product.images[0]),
+            Container(
+              width: double.infinity,
+              decoration: BoxDecoration(
+                color: bgColor,
+                borderRadius: const BorderRadius.all(Radius.circular(16)),
+              ),
+              child: Image.asset(
+                image,
+                height: 132,
               ),
             ),
-            const SizedBox(height: 8),
-            Text(
-              product.title,
-              style: Theme.of(context).textTheme.bodyMedium,
-              maxLines: 2,
-            ),
+            const SizedBox(height: 16 / 2),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  "\$${product.price}",
-                  style: const TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600,
-                    color: kPrimaryColor,
+                Expanded(
+                  child: Text(
+                    title,
+                    style: const TextStyle(color: Colors.black),
                   ),
                 ),
-                InkWell(
-                  borderRadius: BorderRadius.circular(50),
-                  onTap: () {},
-                  child: Container(
-                    padding: const EdgeInsets.all(6),
-                    height: 24,
-                    width: 24,
-                    decoration: BoxDecoration(
-                      color: product.isFavourite
-                          ? const Color.fromARGB(255, 158, 203, 251).withOpacity(0.15)
-                          : kSecondaryColor.withOpacity(0.1),
-                      shape: BoxShape.circle,
-                    ),
-                    child: ColorFiltered(
-                      colorFilter: ColorFilter.mode(
-                        product.isFavourite
-                            ? const Color(0xFF063970)
-                            : const Color(0xFFDBDEE4),
-                        BlendMode.srcIn,
-                      ),
-                      child: Image.asset(
-                        "assets/icon/icons8-heart-50.png",
-                      ),
-                    ),
-                  ),
+                const SizedBox(width: 16 / 4),
+                Text(
+                  "\$" + price.toString(),
+                  style: Theme.of(context).textTheme.subtitle2,
                 ),
               ],
             )

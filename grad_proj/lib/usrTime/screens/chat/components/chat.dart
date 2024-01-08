@@ -25,11 +25,11 @@ class _ChatUsersListState extends State<ChatUsersList> {
     return GestureDetector(
       onTap: () {
         Navigator.push(context, MaterialPageRoute(builder: (context) {
-          return const ChatDetailPage();
+          return ChatDetailPage();
         }));
       },
       child: Container(
-        padding: const EdgeInsets.only(left: 16, right: 16, top: 10, bottom: 10),
+        padding: EdgeInsets.only(left: 16, right: 16, top: 10, bottom: 10),
         child: Row(
           children: <Widget>[
             Expanded(
@@ -39,7 +39,7 @@ class _ChatUsersListState extends State<ChatUsersList> {
                     backgroundImage: AssetImage(widget.image),
                     maxRadius: 30,
                   ),
-                  const SizedBox(
+                  SizedBox(
                     width: 16,
                   ),
                   Expanded(
@@ -49,7 +49,7 @@ class _ChatUsersListState extends State<ChatUsersList> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text(widget.text),
-                          const SizedBox(
+                          SizedBox(
                             height: 6,
                           ),
                           Text(
@@ -69,7 +69,7 @@ class _ChatUsersListState extends State<ChatUsersList> {
               style: TextStyle(
                   fontSize: 12,
                   color: widget.isMessageRead
-                      ? const Color(0xFF063970)
+                      ? Color(0xFF063970)
                       : Colors.grey.shade500),
             ),
           ],

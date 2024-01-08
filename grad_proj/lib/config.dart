@@ -99,3 +99,59 @@ const getbookinginfo = "${url}bookings";
 const code = "${url}change-password";
 
 const resetPasswordUrl = "${url}reset-password";
+
+const getLoginHistoryEndpoint = "${url}getLoginHistory";
+
+const addComm = "${url}comment";
+
+const adminComm = "${url}complaintsAdmin";
+
+const adminnote = "${url}Note";
+
+const adminnotedelet = "${url}Notedelet";
+
+const adminnotget = "${url}Notesshow";
+
+const getuserbooking = "${url}bookings";
+
+const bookingUrl = "${url}Booking";
+
+const checkTimeAndDay = "${url}check-time-and-day/time";
+
+const checkTimeAndDayCom = "${url}check-time-and-day";
+
+const deleteBooking = url;
+
+const cartProdCount = "${url}getcount";
+
+const cartProdDelete = "${url}removeFromCart/oneitem";
+
+const addToCartPro = "${url}addToCart";
+
+const priseCart = "${url}getprice";
+
+const cartItem = "${url}getallitemcarts";
+
+const deleteCart = "${url}cart/removeallCart";
+
+const ordar = "${url}Ordar";
+
+const showordar = "${url}getOrdar";
+
+const deleteordar = "${url}order/delete-ordar";
+
+const deleteordarCart = "${url}cart/order-remove";
+
+const addToFav = "${url}Fav";
+
+const deleteToFav = "${url}deletefav";
+
+const showService = "${url}getservices";
+
+const showNewPro = "${url}get-new-pro";
+
+const showNewProp = "${url}get-pop-pro/product";
+
+const showcars = "${url}getpro";
+
+const deleteFav = "${url}deletefav";

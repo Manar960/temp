@@ -1,3 +1,4 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -258,6 +259,10 @@ class _LoginFormState extends State<LoginForm> {
   }
 
   Future<void> loginAdmin() async {
+    String? tokenAdmin = await FirebaseMessaging.instance.getToken();
+    FirebaseMessaging.instance.getToken().then((value) {
+      String? tokenAdmin = value;
+    });
     if (emailController.text.isNotEmpty && passwordController.text.isNotEmpty) {
       setState(() {
         _isLoading = true;
@@ -304,6 +309,10 @@ class _LoginFormState extends State<LoginForm> {
   }
 
   Future<void> loginUser() async {
+    String? tokenUser = await FirebaseMessaging.instance.getToken();
+    FirebaseMessaging.instance.getToken().then((value) {
+      String? tokenUser = value;
+    });
     if (emailController.text.isNotEmpty && passwordController.text.isNotEmpty) {
       setState(() {
         _isLoading = true;
@@ -323,14 +332,15 @@ class _LoginFormState extends State<LoginForm> {
       var jsonResponse = jsonDecode(response.body);
       if (jsonResponse['status']) {
         var myToken = jsonResponse['token'];
+        var username = jsonResponse['userName'];
         prefs.setString('token', myToken);
         prefs.setString('email', emailController.text);
-
+        prefs.setString('userName', username);
         // ignore: use_build_context_synchronously
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) {
-            return const HomeScreencomu();
+            return const HomeScreenu();
           }),
         );
       } else {
@@ -347,6 +357,10 @@ class _LoginFormState extends State<LoginForm> {
   }
 
   Future<void> loginCompany() async {
+    String? tokenCom = await FirebaseMessaging.instance.getToken();
+    FirebaseMessaging.instance.getToken().then((value) {
+      String? tokenCom = value;
+    });
     if (emailController.text.isNotEmpty && passwordController.text.isNotEmpty) {
       setState(() {
         _isLoading = true;

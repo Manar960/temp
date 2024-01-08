@@ -104,7 +104,7 @@ class _ProfileCardWidgetState extends State<ProfileCardWidget> {
                       adminData!['adminName'] ?? '',
                       style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
-                    const Text("Admin"),
+                    const Text("مسؤول"),
                   ],
                 )
               ],
@@ -115,8 +115,9 @@ class _ProfileCardWidgetState extends State<ProfileCardWidget> {
               color: Colors.grey,
             ),
           if (adminData != null)
-            profileListTile("Joined Date", adminData!['createdAt']),
-          if (adminData != null) profileListTile("Projects", widget.adminEmail),
+            profileListTile(adminData!['createdAt'], "وقت الانضمام"),
+          if (adminData != null)
+            profileListTile(widget.adminEmail, "البريد الالكتروني"),
         ],
       ),
     );

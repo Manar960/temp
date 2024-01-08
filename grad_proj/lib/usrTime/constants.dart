@@ -9,7 +9,7 @@ const kPrimaryGradientColor = LinearGradient(
 );
 const kSecondaryColor = Color(0xFF979797);
 const kTextColor = Colors.black;
-
+const kSubTextStyle = TextStyle(fontSize: 16, color: Color(0xFF959595));
 const kAnimationDuration = Duration(milliseconds: 200);
 
 const headingStyle = TextStyle(
@@ -46,3 +46,16 @@ OutlineInputBorder outlineInputBorder() {
     borderSide: const BorderSide(color: kTextColor),
   );
 }
+
+const kMaxWidth = 1232.0;
+const kPadding = 20.0;
+final kDefaultCardShadow = BoxShadow(
+  offset: Offset(0, 20),
+  blurRadius: 50,
+  color: Colors.black.withOpacity(0.1),
+);
+final kDefualtShadow = BoxShadow(
+  offset: Offset(5, 5),
+  blurRadius: 10,
+  color: Color(0xFFE9E9E9).withOpacity(0.56),
+);

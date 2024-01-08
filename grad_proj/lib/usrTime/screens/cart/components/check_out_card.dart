@@ -1,15 +1,69 @@
+// ignore_for_file: unnecessary_brace_in_string_interps
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import '../../../../config.dart';
+import '../../../models/user.dart';
+import '../../checkout/checoutpage.dart';
+import '../../dialog.dart';
 
-import '../../../constants.dart';
-
-class CheckoutCard extends StatelessWidget {
+class CheckoutCard extends StatefulWidget {
   const CheckoutCard({
     Key? key,
   }) : super(key: key);
 
   @override
+  _CheckoutCardState createState() => _CheckoutCardState();
+}
+
+late int itemsprice = 0;
+String? username = AuthProvider.userData?.userName;
+
+class _CheckoutCardState extends State<CheckoutCard> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  Future<int> getCartItemprice(String userName) async {
+    const String apiUrl = 'http://localhost:4000/getprice';
+
+    try {
+      final response = await http.post(
+        Uri.parse(priseCart),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({'UserName': userName}),
+      );
+
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> responseData = jsonDecode(response.body);
+        return responseData['total'] as int;
+      } else {
+        throw Exception('Failed to load price');
+      }
+    } catch (error) {
+      print('Error: $error');
+      throw Exception('Failed to connect to the server');
+    }
+  }
+
+  Future<void> fetchCartItemprice() async {
+    try {
+      final price = await getCartItemprice(username!);
+      print('Fetched price: $price');
+      setState(() {
+        itemsprice = price;
+      });
+    } catch (error) {
+      print('Error fetching price: $error');
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
+    fetchCartItemprice();
     return Container(
       padding: const EdgeInsets.symmetric(
         vertical: 16,
@@ -45,28 +99,22 @@ class CheckoutCard extends StatelessWidget {
                     color: const Color(0xFFF5F6F9),
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  child: SvgPicture.asset("assets/icons/receipt.svg"),
+                  child: SvgPicture.asset("assets/icon/receipt.svg"),
                 ),
                 const Spacer(),
-                const Text("Add voucher code"),
-                const SizedBox(width: 8),
-                const Icon(
-                  Icons.arrow_forward_ios,
-                  size: 12,
-                  color: kTextColor,
-                )
               ],
             ),
             const SizedBox(height: 16),
             Row(
               children: [
-                const Expanded(
+                Expanded(
                   child: Text.rich(
                     TextSpan(
-                      text: "Total:\n",
+                      text: "المجموع:\n",
                       children: [
                         TextSpan(
-                          text: "\$337.15",
+                          text: " ${itemsprice}",
+                          // ignore: prefer_const_constructors
                           style: TextStyle(fontSize: 16, color: Colors.black),
                         ),
                       ],
@@ -76,10 +124,25 @@ class CheckoutCard extends StatelessWidget {
                 Expanded(
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFF063970),
+                      backgroundColor: const Color.fromARGB(255, 231, 97, 97),
                     ),
-                    onPressed: () {},
-                    child: const Text("أكمل عملية الدفع"),
+                    onPressed: () {
+                      if (itemsprice == 0) {
+                        showCards(context, "assets/no.json",
+                            "ليس هناك اي قطعة في سلتك");
+                      } else {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) {
+                            return const checkout();
+                          }),
+                        );
+                      }
+                    },
+                    child: const Text(
+                      "أكمل عملية الدفع",
+                      style: TextStyle(color: Colors.white),
+                    ),
                   ),
                 ),
               ],

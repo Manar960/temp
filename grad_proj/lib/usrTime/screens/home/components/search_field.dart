@@ -29,7 +29,7 @@ class SearchField extends StatelessWidget {
             border: searchOutlineInputBorder,
             focusedBorder: searchOutlineInputBorder,
             enabledBorder: searchOutlineInputBorder,
-            hintText: "البحث في المنتجات",
+            hintText: "البحث ",
             hintStyle: const TextStyle(color: Colors.grey),
             prefixIcon: const Icon(Icons.search, color: Colors.grey),
           ),

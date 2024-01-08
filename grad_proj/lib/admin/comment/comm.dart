@@ -1,11 +1,50 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
+import '../../config.dart';
 import '../common/app_colors.dart';
 import '../common/app_responsive.dart';
 import '../pages/dashboard/widget/header_widget.dart';
 
-class CommentList extends StatelessWidget {
-  const CommentList({super.key});
+class CommentList extends StatefulWidget {
+  const CommentList({Key? key}) : super(key: key);
+
+  @override
+  _CommentListState createState() => _CommentListState();
+}
+
+class _CommentListState extends State<CommentList> {
+  List<Map<String, String>> comments = [];
+
+  @override
+  void initState() {
+    super.initState();
+    fetchComments();
+  }
+
+  Future<void> fetchComments() async {
+    try {
+      final response = await http.get(Uri.parse("$adminComm/a"));
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> decodedData = json.decode(response.body);
+        final List<dynamic> commentsData = decodedData['comments'];
+
+        setState(() {
+          comments =
+              List<Map<String, String>>.from(commentsData.map((dynamic item) {
+            return Map<String, String>.from(item.map((key, value) {
+              return MapEntry(key, value.toString());
+            }));
+          }));
+        });
+      } else {
+        throw Exception('Failed to load comments');
+      }
+    } catch (e) {
+      print('Error fetching comments: $e');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -13,38 +52,19 @@ class CommentList extends StatelessWidget {
       margin: const EdgeInsets.all(10),
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
-        color: AppColor.bgColor,
+        color: Colors.grey[200],
         borderRadius: BorderRadius.circular(30),
       ),
       child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            if (AppResponsive.isTablet(context) ||
-                AppResponsive.isDesktop(context))
-              const CommentCard(
-                username: 'مستخدم 1',
-                comment: 'هذا تعليق رقم 1',
-                userImage: 'assets/user1.jpg',
-              ),
-            if (AppResponsive.isTablet(context) ||
-                AppResponsive.isDesktop(context))
-              const CommentCard(
-                username: 'مستخدم 2',
-                comment: 'هذا تعليق رقم 2',
-                userImage: 'assets/user2.jpg',
-              ),
-            if (AppResponsive.isMobile(context))
-              const CommentCard(
-                username: 'مستخدم 1',
-                comment: 'هذا تعليق رقم 1',
-                userImage: 'assets/user1.jpg',
-              ),
-            if (AppResponsive.isMobile(context))
-              const CommentCard(
-                username: 'مستخدم 2',
-                comment: 'هذا تعليق رقم 2',
-                userImage: 'assets/user2.jpg',
+            for (var comment in comments)
+              CommentCard(
+                username: comment['UserEmail'] ?? '',
+                comment: comment['Comment'] ?? '',
+                // userImage:
+                // 'assets/default_user_image.jpg', // Replace with actual image path
               ),
           ],
         ),
@@ -56,29 +76,36 @@ class CommentList extends StatelessWidget {
 class CommentCard extends StatelessWidget {
   final String username;
   final String comment;
-  final String userImage;
+  // final String userImage;
 
-  const CommentCard({super.key, 
+  const CommentCard({
+    Key? key,
     required this.username,
     required this.comment,
-    required this.userImage,
-  });
+    //required this.userImage,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Card(
       margin: const EdgeInsets.all(10),
       child: ListTile(
-        leading: CircleAvatar(
-          backgroundImage: AssetImage(userImage),
-        ),
-        title: Text(username),
-        subtitle: Text(comment),
-        trailing: IconButton(
+        leading: IconButton(
           icon: const Icon(Icons.message),
           onPressed: () {
-            // أدخل هنا الشيفرة التي تريد تنفيذها عند النقر على الزر
+            // Add the code you want to execute when the button is pressed
           },
+        ),
+        trailing: CircleAvatar(
+          backgroundImage: AssetImage(""),
+        ),
+        title: Text(
+          username,
+          textDirection: TextDirection.rtl,
+        ),
+        subtitle: Text(
+          comment,
+          textDirection: TextDirection.rtl,
         ),
       ),
     );
@@ -104,7 +131,6 @@ class _CommentPage extends State<CommentPage> {
       ),
       child: Column(
         children: [
-          /// Header Part
           const HeaderWidget(
             title: 'Comments',
           ),

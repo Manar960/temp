@@ -4,14 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 
-class MapScreen extends StatefulWidget {
-  const MapScreen({Key? key}) : super(key: key);
+class MapPage extends StatefulWidget {
+  const MapPage({Key? key}) : super(key: key);
 
   @override
-  State<MapScreen> createState() => _MapScreenState();
+  State<MapPage> createState() => _MapPageState();
 }
 
-class _MapScreenState extends State<MapScreen> {
+class _MapPageState extends State<MapPage> {
   Completer<GoogleMapController> _googleMapController = Completer();
   CameraPosition? _cameraPosition;
   Location? _location;
@@ -26,77 +26,99 @@ class _MapScreenState extends State<MapScreen> {
   _init() async {
     _location = Location();
     _cameraPosition = CameraPosition(
-        target: LatLng(
-            0, 0), // this is just the example lat and lng for initializing
+        target: LatLng(0.0, 0.0), // Default lat and lng for initialization
         zoom: 15);
-    _initLocation();
+    await _initLocation();
   }
 
-  //function to listen when we move position
-  _initLocation() {
-    //use this to go to current location instead
-    _location?.getLocation().then((location) {
-      _currentLocation = location;
-    });
+  // Function to initialize location services
+  Future<void> _initLocation() async {
+    bool serviceEnabled = await _location?.serviceEnabled() ?? false;
+    if (!serviceEnabled) {
+      serviceEnabled = await _location?.requestService() ?? false;
+      if (!serviceEnabled) {
+        // Handle case where location service is still not enabled
+        return;
+      }
+    }
+
+    _currentLocation = await _location?.getLocation();
+    if (_currentLocation != null) {
+      moveToPosition(LatLng(_currentLocation!.latitude ?? 0.0,
+          _currentLocation!.longitude ?? 0.0));
+    }
+
     _location?.onLocationChanged.listen((newLocation) {
-      _currentLocation = newLocation;
-      moveToPosition(LatLng(
-          _currentLocation?.latitude ?? 0, _currentLocation?.longitude ?? 0));
+      if (newLocation != null) {
+        _currentLocation = newLocation;
+        moveToPosition(LatLng(_currentLocation!.latitude ?? 0.0,
+            _currentLocation!.longitude ?? 0.0));
+      }
     });
   }
 
-  moveToPosition(LatLng latLng) async {
+  // Function to move the camera to a specific position
+  Future<void> moveToPosition(LatLng latLng) async {
     GoogleMapController mapController = await _googleMapController.future;
     mapController.animateCamera(CameraUpdate.newCameraPosition(
-        CameraPosition(target: latLng, zoom: 15)));
+      CameraPosition(target: latLng, zoom: 15),
+    ));
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _buildBody(),
+      body: Container(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
+        child: _buildBody(),
+      ),
     );
   }
 
   Widget _buildBody() {
-    return _getMap();
+    return Stack(
+      children: [
+        _getMap(),
+        Positioned.fill(
+          child: Align(alignment: Alignment.center, child: _getMarker()),
+        ),
+      ],
+    );
   }
 
   Widget _getMarker() {
     return Container(
-      width: 40,
-      height: 40,
+      width: MediaQuery.of(context).size.width * 0.1,
+      height: MediaQuery.of(context).size.width * 0.1,
       padding: EdgeInsets.all(2),
       decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(100),
-          boxShadow: [
-            BoxShadow(
-                color: Colors.grey,
-                offset: Offset(0, 3),
-                spreadRadius: 4,
-                blurRadius: 6)
-          ]),
-      child: ClipOval(child: Image.asset("assets/profile.jpg")),
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(
+          MediaQuery.of(context).size.width * 0.05,
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey,
+            offset: Offset(0, 3),
+            spreadRadius: 4,
+            blurRadius: 6,
+          ),
+        ],
+      ),
+      child: ClipOval(child: Image.asset("assets/addadm.png")),
     );
   }
 
   Widget _getMap() {
-    return Stack(
-      children: [
-        GoogleMap(
-          initialCameraPosition: _cameraPosition!,
-          mapType: MapType.normal,
-          onMapCreated: (GoogleMapController controller) {
-            // now we need a variable to get the controller of google map
-            if (!_googleMapController.isCompleted) {
-              _googleMapController.complete(controller);
-            }
-          },
-        ),
-        Positioned.fill(
-            child: Align(alignment: Alignment.center, child: _getMarker()))
-      ],
+    return GoogleMap(
+      initialCameraPosition: _cameraPosition!,
+      mapType: MapType.normal,
+      onMapCreated: (GoogleMapController controller) {
+        if (!_googleMapController.isCompleted) {
+          _googleMapController.complete(controller);
+        }
+      },
     );
   }
 }

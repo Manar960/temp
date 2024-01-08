@@ -22,15 +22,39 @@ void main() async {
           appId: "1:988806572251:web:e179b7f837efd2f7c8c4fe",
           measurementId: "G-D1CL97P6E5"),
     );
+    FirebaseMessaging messaging = FirebaseMessaging.instance;
+    await messaging.requestPermission(
+        alert: true,
+        announcement: false,
+        badge: true,
+        carPlay: false,
+        criticalAlert: false,
+        provisional: false,
+        sound: true);
+
+    String? fcmToken = await messaging.getToken(
+        vapidKey:
+            'BLiekrxh3FPfzML-K23lSb-bKVinHkEMwzOrw8G402mdiWRnxQ6YEzTDutMGzcdDaDxukq_K-dJOCxvby0I_BYQ');
+    print("FCM Token: $fcmToken");
   } else {
     // await Firebase.initializeApp();
     /* await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
     );*/
-  }
-  FirebaseMessaging messaging = FirebaseMessaging.instance;
-  await messaging.requestPermission();
+    FirebaseMessaging messaging = FirebaseMessaging.instance;
+    await messaging.requestPermission(
+        alert: true,
+        announcement: false,
+        badge: true,
+        carPlay: false,
+        criticalAlert: false,
+        provisional: false,
+        sound: true);
 
+    String? fcmToken = await messaging.getToken();
+    print("FCM Token: $fcmToken");
+  }
+  /*;*/
   runApp(
     MultiProvider(
       providers: [
@@ -43,8 +67,31 @@ void main() async {
   );
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
+
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  @override
+  void initState() {
+    super.initState();
+    /*FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      if (message.notification != null) {
+        print("don notefecation ");
+        print(message.notification!.title);
+        print(message.notification!.body);
+      }
+    });*/
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      print('Got a message whilst in the foreground!');
+      print('Message data: ${message.data}');
+
+      // Add your notification handling logic here
+    });
+  }
 
   @override
   Widget build(BuildContext context) {

@@ -2,16 +2,66 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import '../../../../login/Login/login_screen.dart';
 import '/admin/controllers/menu_controller.dart' as MyMenuController;
 import '../../../common/app_colors.dart';
 import '../../../common/app_responsive.dart';
 import '../../../../config.dart';
 
+// Step 1: Create a NotificationModel class
+class NotificationModel {
+  final String message;
+  final DateTime timestamp;
+
+  NotificationModel({required this.message, required this.timestamp});
+}
+
+// Step 2: Create a NotificationScreen widget
+class NotificationScreen extends StatelessWidget {
+  final List<NotificationModel> notifications;
+
+  const NotificationScreen({required this.notifications});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Notifications'),
+      ),
+      body: ListView.builder(
+        itemCount: notifications.length,
+        itemBuilder: (context, index) {
+          final notification = notifications[index];
+          return ListTile(
+            title: Text(notification.message),
+            subtitle: Text('${notification.timestamp}'),
+          );
+        },
+      ),
+    );
+  }
+}
+
+// Step 3: Create a NotificationIcon widget
+class NotificationIcon extends StatelessWidget {
+  final VoidCallback onTap;
+
+  const NotificationIcon({required this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Icon(Icons.notifications_none_rounded, color: AppColor.black),
+    );
+  }
+}
+
 class HeaderWidget extends StatefulWidget {
   final String title;
 
-  const HeaderWidget({super.key, required this.title});
+  const HeaderWidget({Key? key, required this.title}) : super(key: key);
 
   @override
   _HeaderWidgetState createState() => _HeaderWidgetState();
@@ -19,6 +69,7 @@ class HeaderWidget extends StatefulWidget {
 
 class _HeaderWidgetState extends State<HeaderWidget> {
   late SharedPreferences prefs;
+  List<NotificationModel> notifications = [];
 
   Future<void> initSharedPref() async {
     prefs = await SharedPreferences.getInstance();
@@ -52,6 +103,23 @@ class _HeaderWidgetState extends State<HeaderWidget> {
     }
   }
 
+  void _showNotification() {
+    Fluttertoast.showToast(
+      msg: 'لديك إشعار جديد!',
+      backgroundColor: Colors.black,
+      textColor: Colors.white,
+    );
+
+    final newNotification = NotificationModel(
+      message: 'لديك إشعار جديد!',
+      timestamp: DateTime.now(),
+    );
+
+    setState(() {
+      notifications.add(newNotification);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -83,7 +151,25 @@ class _HeaderWidgetState extends State<HeaderWidget> {
                 child: navigationIcon(icon: Icons.logout),
               ),
               navigationIcon(icon: Icons.send),
-              navigationIcon(icon: Icons.notifications_none_rounded),
+              GestureDetector(
+                onTap: () {
+                  _showNotification();
+                  Future.delayed(Duration(seconds: 2), () {
+                    setState(() {
+                      notifications.clear();
+                    });
+                  });
+                },
+                child: NotificationIcon(onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          NotificationScreen(notifications: notifications),
+                    ),
+                  );
+                }),
+              ),
             ],
           ),
           const Spacer(),

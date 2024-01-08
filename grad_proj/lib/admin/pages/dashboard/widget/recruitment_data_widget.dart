@@ -1,200 +1,229 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-
+import 'package:fluttertoast/fluttertoast.dart';
 import '../../../../config.dart';
 
-class RecruitmentDataWidget extends StatefulWidget {
-  const RecruitmentDataWidget({Key? key}) : super(key: key);
+class TodoListApp extends StatefulWidget {
+  const TodoListApp({Key? key}) : super(key: key);
 
   @override
-  _RecruitmentDataWidgetState createState() => _RecruitmentDataWidgetState();
+  _TodoListAppState createState() => _TodoListAppState();
 }
 
-class _RecruitmentDataWidgetState extends State<RecruitmentDataWidget> {
-  List<Map<String, dynamic>> adminDataList = [];
+class _TodoListAppState extends State<TodoListApp> {
+  List<String> tasks = [];
 
   @override
   void initState() {
     super.initState();
-    fetchAdminData();
+    _getNotes();
   }
 
-  Future<void> fetchAdminData() async {
+  Future<void> _getNotes() async {
     try {
-      final response = await http.get(Uri.parse(getadmindata));
-      print('Response status code: ${response.statusCode}');
-      print('Response body: ${response.body}');
+      final List<String> notes = await getAllNotes();
+      setState(() {
+        tasks = notes;
+      });
+    } catch (e) {
+      print('Error loading notes: $e');
+      // يمكنك إضافة رسالة خطأ للمستخدم هنا
+    }
+  }
+
+  Future<List<String>> getAllNotes() async {
+    try {
+      final response = await http.get(Uri.parse(adminnotget));
 
       if (response.statusCode == 200) {
-        final Map<String, dynamic> jsonResponse = json.decode(response.body);
-
-        // Check if 'adminData' is not null and is an iterable
-        if (jsonResponse['adminData'] != null &&
-            jsonResponse['adminData'] is Iterable) {
-          setState(() {
-            adminDataList = List.from(jsonResponse['adminData']);
-          });
-        } else {
-          throw Exception(
-              'Invalid JSON response. "adminData" is null or not iterable.');
-        }
+        final List<dynamic> data = json.decode(response.body);
+        print(data);
+        final List<String> notes =
+            data.map((item) => item['Data'].toString()).toList();
+        return notes;
       } else {
-        throw Exception('Failed to load admin data');
+        throw Exception(
+            'Failed to load notes. Status code: ${response.statusCode}');
       }
-    } catch (error) {
-      print('Error fetching admin data: $error');
+    } catch (e) {
+      throw Exception('Error loading notes: $e');
     }
+  }
+
+  void _addTask(String task) async {
+    try {
+      final response = await http.post(
+        Uri.parse(adminnote),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode({'Data': task}),
+      );
+
+      if (response.statusCode == 200) {
+        setState(() {
+          tasks.add(task);
+        });
+        _showToast('تمت إضافة المهمة بنجاح', Colors.green);
+      } else {
+        _showToast('فشلت عملية إضافة المهمة. الرمز: ${response.statusCode}',
+            Colors.red);
+      }
+    } catch (e) {
+      _showToast('حدث خطأ أثناء إضافة المهمة: $e', Colors.red);
+    }
+  }
+
+  void _removeTask(int index) async {
+    try {
+      final response = await http.delete(
+        Uri.parse(adminnotedelet),
+        body: {'Data': tasks[index]},
+      );
+
+      if (response.statusCode == 200) {
+        setState(() {
+          tasks.removeAt(index);
+        });
+        _showToast('تم حذف المهمة بنجاح', Colors.green);
+      } else {
+        _showToast(
+            'فشلت عملية حذف المهمة. الرمز: ${response.statusCode}', Colors.red);
+      }
+    } catch (e) {
+      _showToast('حدث خطأ أثناء حذف المهمة: $e', Colors.red);
+    }
+  }
+
+  void _showToast(String message, Color backgroundColor) {
+    Fluttertoast.showToast(
+      msg: message,
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.BOTTOM,
+      timeInSecForIosWeb: 1,
+      backgroundColor: backgroundColor,
+      textColor: Colors.white,
+      fontSize: 16.0,
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(20),
+    return Card(
+      margin: const EdgeInsets.all(10),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(15),
       ),
-      padding: const EdgeInsets.all(20),
-      child: Column(
-        children: [
-          const Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                "المشرفون",
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                  fontSize: 22,
-                ),
-                textDirection:
-                    TextDirection.rtl, // Set text direction to right-to-left
-              ),
-            ],
-          ),
-          const Divider(
-            thickness: 0.5,
-            color: Colors.grey,
-          ),
-          Table(
-            defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-            children: [
-              /// Table Header
-              TableRow(
-                decoration: const BoxDecoration(
-                  border: Border(
-                    bottom: BorderSide(
-                      color: Colors.grey,
-                      width: 0.5,
-                    ),
-                  ),
-                ),
-                children: [
-                  tableHeader("البريد الإلكتروني"),
-                  tableHeader("وقت الانضمام"),
-                  tableHeader("الاسم الكامل"),
-                ],
-              ),
-
-              /// Table Data
-              for (final admin in adminDataList)
-                tableRow(
-                  context,
-                  name: admin['adminName'],
-                  designation: admin['createdAt'],
-                  email: admin['email'],
-                  color: Colors.yellow,
-                  image: admin['latestProfilePicture'],
-                ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-
-  TableRow tableRow(
-    context, {
-    String? name,
-    String? designation,
-    String? email,
-    Color? color,
-    String? image,
-  }) {
-    return TableRow(
-      decoration: const BoxDecoration(
-        border: Border(
-          bottom: BorderSide(
-            color: Colors.grey,
-            width: 0.5,
-          ),
-        ),
-      ),
-      children: [
-        // Status
-        Row(
-          textDirection: TextDirection.rtl,
+      elevation: 3,
+      child: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Container(
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: color ?? Colors.grey,
+            const Text(
+              'Todo List',
+              style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.blue),
+            ),
+            const SizedBox(height: 20),
+            const Divider(
+              color: Colors.grey,
+              thickness: 1,
+            ),
+            const SizedBox(height: 20),
+            if (tasks.isEmpty) const Center(child: Text('لا شيء لعرضه.')),
+            if (tasks.isNotEmpty)
+              ListView.builder(
+                shrinkWrap: true,
+                itemCount: tasks.length,
+                itemBuilder: (context, index) {
+                  return Dismissible(
+                    key: Key(tasks[index]),
+                    onDismissed: (direction) => _removeTask(index),
+                    background: Container(
+                      color: Colors.red,
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      alignment: AlignmentDirectional.centerStart,
+                      child: const Icon(Icons.delete, color: Colors.white),
+                    ),
+                    secondaryBackground: Container(
+                      color: Colors.red,
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      alignment: AlignmentDirectional.centerEnd,
+                      child: const Icon(Icons.delete, color: Colors.white),
+                    ),
+                    child: ListTile(
+                      title: Text(tasks[index], textAlign: TextAlign.end),
+                    ),
+                  );
+                },
               ),
-              height: 10,
-              width: 10,
-            ),
-            const SizedBox(
-              width: 10,
-            ),
-            Text(
-              email ?? '',
-              textDirection: TextDirection.rtl,
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () => _showAddTaskDialog(context),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.blue,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15),
+                ),
+              ),
+              child: const Padding(
+                padding: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Center(child: Icon(Icons.add)),
+                  ],
+                ),
+              ),
             ),
           ],
         ),
-        // Designation
-        Text(
-          designation ?? '',
-          textDirection: TextDirection.rtl,
-        ),
-        // Full Name with Image
-        Container(
-          margin: const EdgeInsets.symmetric(vertical: 15),
-          child: Row(
-            textDirection: TextDirection.rtl,
-            children: [
-              if (image != null)
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(1000),
-                  child: Image.network(
-                    image,
-                    width: 30,
-                  ),
-                ),
-              if (image != null)
-                const SizedBox(
-                  width: 10,
-                ),
-              Text(
-                name ?? '',
-                textDirection: TextDirection.rtl,
-              ),
-            ],
-          ),
-        ),
-      ],
+      ),
     );
   }
 
-  Widget tableHeader(text) {
-    return Container(
-      margin: const EdgeInsets.symmetric(vertical: 15),
-      child: Text(
-        text,
-        style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
-        textDirection: TextDirection.rtl,
-      ),
+  void _showAddTaskDialog(BuildContext context) {
+    String taskTitle = '';
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('العنوان'),
+          content: TextField(
+            onChanged: (value) {
+              taskTitle = value;
+            },
+            decoration: const InputDecoration(
+              hintText: 'أدخل الملاحظة',
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('حذف'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                if (taskTitle.isNotEmpty) {
+                  _addTask(taskTitle);
+                  Navigator.of(context).pop();
+                }
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.blue,
+              ),
+              child: const Text('إضافة'),
+            ),
+          ],
+        );
+      },
     );
   }
 }

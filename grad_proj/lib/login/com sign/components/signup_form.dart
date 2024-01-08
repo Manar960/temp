@@ -44,20 +44,23 @@ class _SignUpFormStateco extends State<SignUpFormco> {
       );
       return;
     }
-
+    String? cardNumber = cardNumberController.text;
+    int? cardCvv = int.tryParse(cardCvvController.text);
     var regBody = {
-      "CardNumber": cardHolderNameController.text,
-      "Name": cardNumberController.text,
+      "CardNumber": cardNumber,
+      "Name": cardHolderNameController.text,
       "date": cardExpiryDateController.text,
-      "CVV": cardCvvController.text
+      "CVV": cardCvv
     };
     var response = await http.post(
       Uri.parse(pay),
+      body: jsonEncode(regBody),
       headers: {
         'Content-Type': 'application/json',
       },
-      body: jsonEncode(regBody),
     );
+    print('Response status: ${response.statusCode}');
+    print('Response body: ${response.body}');
     if (response.statusCode == 200) {
       // ignore: use_build_context_synchronously
       Navigator.push(

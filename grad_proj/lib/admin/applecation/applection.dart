@@ -195,7 +195,8 @@ class CompanyCard extends StatelessWidget {
   final String type;
   final Function onDelete;
 
-  const CompanyCard({super.key, 
+  const CompanyCard({
+    super.key,
     required this.companyName,
     required this.email,
     required this.type,
@@ -226,15 +227,24 @@ class CompanyCard extends StatelessWidget {
     return Card(
       margin: const EdgeInsets.all(10),
       child: ListTile(
-        title: Text(companyName),
+        title: Text(
+          companyName,
+          textDirection: TextDirection.rtl,
+        ),
         subtitle: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-            Text('Email: $email'),
-            Text('Type: $type'),
+            Text(
+              'البريد الإلكتروني : $email',
+              textDirection: TextDirection.rtl,
+            ),
+            Text(
+              'النوع: $type',
+              textDirection: TextDirection.rtl,
+            ),
           ],
         ),
-        trailing: Row(
+        leading: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
             IconButton(

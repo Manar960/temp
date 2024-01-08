@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../cart/cart_screen.dart';
 import '../../chat/modules/main_page.dart';
 import 'icon_btn_with_counter.dart';
 import 'search_field.dart';
@@ -23,7 +24,7 @@ class HomeHeader extends StatelessWidget {
               press: () => Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) {
-                      return const MainPagemsg();
+                      return MainPagemsg();
                     }),
                   )),
           const SizedBox(width: 8),
