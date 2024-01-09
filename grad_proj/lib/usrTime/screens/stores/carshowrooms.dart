@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import '../../../login/responsive.dart';
-import '../detailstore/store4/homescreen.dart';
+import '../detailstore1/store4/homescreen.dart';
 import '../home/components/section_title.dart';
 import 'storecards.dart';
 
