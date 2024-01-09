@@ -1,24 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:grad_proj/constants.dart';
 
-import '../../constants.dart';
-
-class ProductCard extends StatefulWidget {
-  const ProductCard({
+class CatCard extends StatefulWidget {
+  const CatCard({
     Key? key,
     required this.image,
-    required this.title,
-    required this.price,
+    required this.name,
     required this.press,
   }) : super(key: key);
-  final String image, title;
+  final String image, name;
   final VoidCallback press;
-  final int price;
+
 
   @override
-  _ProductCardState createState() => _ProductCardState();
+  _CatCardState createState() => _CatCardState();
 }
 
-class _ProductCardState extends State<ProductCard>
+class _CatCardState extends State<CatCard>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _scaleAnimation;
@@ -55,36 +53,40 @@ class _ProductCardState extends State<ProductCard>
               color: bluebasic,
               borderRadius: BorderRadius.all(Radius.circular(16)),
             ),
-            child: Column(
-              children: [
-                Container(
-                  width: 400,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.all(Radius.circular(16)),
+            child: Center(
+              child: Column(
+                children: [
+                  Container(
+                    width: double.infinity,
+                    decoration: const BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.all(Radius.circular(16)),
+                    ),
+                    child: Image.asset(
+                      widget.image,
+                      height: 125,
+                      width: 100,
+
+                    ),
                   ),
-                  child: Image.asset(
-                    widget.image,
-                    height: 125,
-                  ),
-                ),
-                const SizedBox(height: 15),
-                Row(
-                  children: [
-                    Expanded(
-                      child: Text(
-                        widget.title,
-                        style: const TextStyle(color: Colors.white),
+                  const SizedBox(height: 16 / 2),
+                Center(
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Center(
+                          child: Text(
+                            widget.name,
+                            style: const TextStyle(color: Colors.white),
+                          ),
+                        ),
                       ),
-                    ),
-                    const SizedBox(width: 16 / 4),
-                    Text(
-                      "${widget.price}₪",
-                      style: const TextStyle(color: Colors.white),
-                    ),
-                  ],
+                     
+                    ],
+                  ),
                 )
-              ],
+                ],
+              ),
             ),
           ),
         ),

@@ -5,9 +5,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import '../../../../config.dart';
+import '../../../../dialog.dart';
 import '../../../models/user.dart';
 import '../../checkout/checoutpage.dart';
-import '../../dialog.dart';
 
 class CheckoutCard extends StatefulWidget {
   const CheckoutCard({
