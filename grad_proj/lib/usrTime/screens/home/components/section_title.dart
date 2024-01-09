@@ -5,29 +5,27 @@ class SectionTitle extends StatelessWidget {
     Key? key,
     required this.title,
     required this.press,
-    this.showSeeAllButton = true, 
-
+    this.showSeeAllButton = true,
   }) : super(key: key);
 
   final String title;
   final GestureTapCallback press;
-  final bool showSeeAllButton; 
-
+  final bool showSeeAllButton;
 
   @override
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-          Visibility(
-          visible: showSeeAllButton, // Set visibility based on the boolean property
+        Visibility(
+          visible:
+              showSeeAllButton, // Set visibility based on the boolean property
           child: TextButton(
             onPressed: press,
             child: const Text(
               "عرض المزيد",
-            
             ),
-           style:  TextButton.styleFrom(foregroundColor: Colors.grey),
+            style: TextButton.styleFrom(foregroundColor: Colors.grey),
           ),
         ),
         Text(

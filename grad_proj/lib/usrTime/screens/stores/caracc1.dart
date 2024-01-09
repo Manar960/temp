@@ -28,7 +28,8 @@ class _caraccState extends State<caracc> {
   Future<void> getstore() async {
     try {
       var response = await http.get(
-        Uri.parse('http://localhost:4000/getsametypecompany/Car%20accessories'),
+        Uri.parse(
+            'https://gp-back-gp.onrender.com/getsametypecompany/Car%20accessories'),
         headers: {"Content-Type": "application/json"},
       );
       if (response.statusCode == 200) {

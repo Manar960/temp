@@ -176,7 +176,6 @@ class _ComplaintDialogState extends State<ComplaintDialog> {
       actions: [
         ElevatedButton(
           onPressed: () {
-            // إرسال الكومنت إلى الخادم
             _sendCommentToServer();
             Navigator.of(context).pop();
           },

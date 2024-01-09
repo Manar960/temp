@@ -32,7 +32,8 @@ class _carsetingState extends State<carseting> {
   Future<void> getstore() async {
     try {
       var response = await http.get(
-        Uri.parse('http://localhost:4000/getsametypecompany/Car%20Seting'),
+        Uri.parse(
+            'https://gp-back-gp.onrender.com/getsametypecompany/Car%20Seting'),
         headers: {"Content-Type": "application/json"},
       );
 

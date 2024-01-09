@@ -8,7 +8,6 @@ import '../home/components/store_card.dart';
 import '../detailstore/store4/homescreen.dart';
 import 'storecards.dart';
 
-
 class carshowrooms extends StatefulWidget {
   const carshowrooms({Key? key}) : super(key: key);
 
@@ -29,10 +28,10 @@ class _carshowroomsState extends State<carshowrooms> {
   Future<void> getstore() async {
     try {
       var response = await http.get(
-        Uri.parse('http://localhost:4000/getsametypecompany/Car%20showrooms'),
+        Uri.parse(
+            'https://gp-back-gp.onrender.com/getsametypecompany/Car%20showrooms'),
         headers: {"Content-Type": "application/json"},
       );
-
 
       if (response.statusCode == 200) {
         var jsonResponse = jsonDecode(response.body);
@@ -46,7 +45,7 @@ class _carshowroomsState extends State<carshowrooms> {
       print('Error during API request: $e');
     }
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -55,19 +54,19 @@ class _carshowroomsState extends State<carshowrooms> {
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: SectionTitle(
             title: "معارض السيارات",
-            press: () {
-            },
+            press: () {},
             showSeeAllButton: false,
-            
           ),
         ),
-            SizedBox(height: 25,),
-         GridView.builder(
+        SizedBox(
+          height: 25,
+        ),
+        GridView.builder(
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: Responsive.isDesktop(context)?2:1, 
+            crossAxisCount: Responsive.isDesktop(context) ? 2 : 1,
             crossAxisSpacing: 10,
             mainAxisSpacing: 20,
-            childAspectRatio: 3, 
+            childAspectRatio: 3,
           ),
           itemCount: item?.length ?? 0,
           shrinkWrap: true,
@@ -86,7 +85,7 @@ class _carshowroomsState extends State<carshowrooms> {
                   ),
                 );
               },
-               cardColor: index % 2 == 0 ? Color(0xFFE7E8D1) : Color(0xFFA7BEAE),
+              cardColor: index % 2 == 0 ? Color(0xFFE7E8D1) : Color(0xFFA7BEAE),
             );
           },
         ),

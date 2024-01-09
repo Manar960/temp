@@ -7,7 +7,6 @@ import '../home/components/section_title.dart';
 import '../home/components/store_card.dart';
 import 'storecards.dart';
 
-
 class carcolors extends StatefulWidget {
   const carcolors({Key? key}) : super(key: key);
 
@@ -28,7 +27,8 @@ class _carcolorsState extends State<carcolors> {
   Future<void> getstore() async {
     try {
       var response = await http.get(
-        Uri.parse('http://localhost:4000/getsametypecompany/Car%20color'),
+        Uri.parse(
+            'https://gp-back-gp.onrender.com/getsametypecompany/Car%20color'),
         headers: {"Content-Type": "application/json"},
       );
 
@@ -44,7 +44,7 @@ class _carcolorsState extends State<carcolors> {
       print('Error during API request: $e');
     }
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -53,19 +53,19 @@ class _carcolorsState extends State<carcolors> {
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: SectionTitle(
             title: "دهان السيارات",
-            press: () {
-            },
+            press: () {},
             showSeeAllButton: false,
-            
           ),
         ),
-            SizedBox(height: 25,),
-         GridView.builder(
+        SizedBox(
+          height: 25,
+        ),
+        GridView.builder(
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: Responsive.isDesktop(context)?2:1, 
+            crossAxisCount: Responsive.isDesktop(context) ? 2 : 1,
             crossAxisSpacing: 10,
             mainAxisSpacing: 20,
-            childAspectRatio: 3, 
+            childAspectRatio: 3,
           ),
           itemCount: item?.length ?? 0,
           shrinkWrap: true,
@@ -84,7 +84,7 @@ class _carcolorsState extends State<carcolors> {
                 //   ),
                 // );
               },
-               cardColor: index % 2 == 0 ? Color(0xFFE7E8D1) : Color(0xFFA7BEAE),
+              cardColor: index % 2 == 0 ? Color(0xFFE7E8D1) : Color(0xFFA7BEAE),
             );
           },
         ),
