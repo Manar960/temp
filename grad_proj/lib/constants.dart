@@ -6,6 +6,8 @@ const bluecolor = Color(0xFF1e81b0);
 const pagecolor = Color(0xFFeeeee4);
 const orangecolor = Color(0xFFe28743);
 const deepbrowncolor = Color(0xFF21130d);
+const bluebasic = Color(0xFF063970);
+
 final kDefaultCardShadow = BoxShadow(
   offset: Offset(0, 20),
   blurRadius: 50,

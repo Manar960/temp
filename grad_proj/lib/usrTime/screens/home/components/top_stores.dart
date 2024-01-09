@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../../../components/product_card.dart';
 import '../../stores/store_screen.dart';
 import 'store_card.dart';
 import 'section_title.dart';
@@ -14,7 +13,6 @@ class topstore extends StatefulWidget {
 
 class _topstoreState extends State<topstore> {
   List? item;
-  late bool isnew;
 
   @override
   void initState() {
@@ -68,8 +66,7 @@ class _topstoreState extends State<topstore> {
                 ...List.generate(
                   item!.length,
                   (index) {
-                    var product = item![index];
-                    return Padding(
+                     return Padding(
                       padding: const EdgeInsets.only(left: 20),
                       child: Store(
                         title:item![index]['Name'].toString(), 
@@ -77,7 +74,9 @@ class _topstoreState extends State<topstore> {
                         onPress: (){},
                         rating: item![index]['rate'],
                       ),
+                      
                     );
+                    
                   },
                 ),
               const SizedBox(width: 20),
