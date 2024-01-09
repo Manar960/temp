@@ -37,7 +37,7 @@ class _StorseState extends State<Storse> {
         height: 320,
         width: 540,
         decoration: BoxDecoration(
-          color: widget.cardColor,
+          color: kPrimaryColor,
           borderRadius: BorderRadius.circular(15),
           boxShadow: [if (isHover) kDefaultCardShadow],
         ),
@@ -45,7 +45,10 @@ class _StorseState extends State<Storse> {
           children: [
             Row(
               children: [
-                Image.asset(widget.image),
+                 CircleAvatar(
+                  radius: 70,
+                  backgroundImage: Image.asset(widget.image).image,
+                ),
                 Expanded(
                   child: Padding(
                     padding: EdgeInsets.symmetric(horizontal: 20),
@@ -71,12 +74,12 @@ class _StorseState extends State<Storse> {
             ),
             Positioned(
               bottom: 10,
-              right: 10,
+              left: 10,
               child: FloatingActionButton(
                 onPressed: widget.press,
-                child: const Icon(CupertinoIcons.chevron_right,
-                    color: Color.fromARGB(255, 246, 121, 121)),
-                backgroundColor: Colors.white,
+                child: const Icon(CupertinoIcons.chevron_left,
+                    color: Colors.white),
+                backgroundColor: bluebasic,
               ),
             ),
           ],

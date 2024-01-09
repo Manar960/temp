@@ -27,12 +27,50 @@ class StoresScreen extends StatelessWidget {
             SizedBox(height: 15),
             HomeHeader(),
             SizedBox(height: 20),
+            Padding(
+                    padding: EdgeInsets.symmetric(vertical: 15),
+                    child: Divider(
+                      height: 4,
+                    ),
+                  ),
+                   SizedBox(height: 20),
             caracc(),
-            SizedBox(height: 20),
+             SizedBox(height: 20),
+            Padding(
+                    padding: EdgeInsets.symmetric(vertical: 15),
+                    child: Divider(
+                      height: 4,
+                    ),
+                  ),
+          
+                   SizedBox(height: 20),
             carseting(),
-            SizedBox(height: 20),
+             SizedBox(height: 20),
+             Padding(
+                    padding: EdgeInsets.symmetric(vertical: 15),
+                    child: Divider(
+                      height: 4,
+                    ),
+                  ),
+           
+                   SizedBox(height: 20),
             carshowrooms(),
+             SizedBox(height: 20),
+             Padding(
+                    padding: EdgeInsets.symmetric(vertical: 15),
+                    child: Divider(
+                      height: 4,
+                    ),
+                  ),
+                   SizedBox(height: 20),
             carcolors(),
+             SizedBox(height: 20),
+             Padding(
+                    padding: EdgeInsets.symmetric(vertical: 15),
+                    child: Divider(
+                      height: 4,
+                    ),
+                  ),
           ],
         ),
       ),
