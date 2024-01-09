@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 import '../../../../config.dart';
+import '../../favorite/favorite_screen.dart';
+import 'insurance_dialog.dart';
 
 class Categories extends StatelessWidget {
   // ignore: use_key_in_widget_constructors
@@ -15,7 +17,7 @@ class Categories extends StatelessWidget {
   Widget build(BuildContext context) {
     List<Map<String, dynamic>> categories = [
       {"icon": "assets/icon/icons8-service-50.png", "text": "خدمات"},
-      {"icon": "assets/icon/icons8-product-50.png", "text": "منتجات"},
+      {"icon": "assets/icon/Heart Icon_2.svg", "text": "المفضلة"},
       {"icon": "assets/icon/icons8-car-service-50.png", "text": "Denemo"},
       {"icon": "assets/icon/icons8-document-30.png", "text": "خدمات حكومية"},
       {"icon": "assets/icon/icons8-comment-50.png", "text": "تقديم شكوى"},
@@ -33,6 +35,21 @@ class Categories extends StatelessWidget {
             press: () {
               if (index == 4) {
                 _showComplaintDialog(context);
+              }
+              if (index == 3) {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => GovernmentServicesPage()),
+                );
+              }
+              if (index == 1) {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) {
+                    return const favScreen();
+                  }),
+                );
               } else {}
             },
           ),

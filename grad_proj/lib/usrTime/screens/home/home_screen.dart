@@ -99,8 +99,7 @@ class HomeScreenu extends StatelessWidget {
           items: const [
             Icon(Icons.home, size: 30, color: Colors.white),
             Icon(Icons.book, size: 30, color: Colors.white),
-            Icon(Icons.add, size: 30, color: Colors.white),
-            Icon(Icons.favorite, size: 30, color: Colors.white),
+            Icon(Icons.map_outlined, size: 30, color: Colors.white),
             Icon(Icons.shopping_cart, size: 30, color: Colors.white),
             Icon(Icons.person, size: 30, color: Colors.white),
           ],
@@ -131,15 +130,8 @@ class HomeScreenu extends StatelessWidget {
                   }),
                 );
                 break;
+
               case 3:
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(builder: (context) {
-                //     return const CartScreen();
-                //   }),
-                // );
-                break;
-              case 4:
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) {
@@ -231,7 +223,6 @@ class HomeScreenu extends StatelessWidget {
                   Icon(Icons.home, size: 30, color: Colors.white),
                   Icon(Icons.book, size: 30, color: Colors.white),
                   Icon(Icons.map, size: 30, color: Colors.white),
-                  Icon(Icons.favorite, size: 30, color: Colors.white),
                   Icon(Icons.shopping_cart, size: 30, color: Colors.white),
                   Icon(Icons.person, size: 30, color: Colors.white),
                 ],
@@ -262,15 +253,8 @@ class HomeScreenu extends StatelessWidget {
                         }),
                       );
                       break;
+
                     case 3:
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) {
-                          return const favScreen();
-                        }),
-                      );
-                      break;
-                    case 4:
                       Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) {
