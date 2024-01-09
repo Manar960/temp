@@ -48,31 +48,34 @@ class _SubcatState extends State<Subcat> {
                 child: Column(
                   children: [
                  
-                   GridView.builder(
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: Responsive.isDesktop(context)?3:2, 
-                crossAxisSpacing: 20,
-                mainAxisSpacing: 20,
-                childAspectRatio: Responsive.isDesktop(context)?2:1, 
-              ),
-              itemCount:widget.item!.length ,
-              shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
-              itemBuilder: (context, index) {
-              return CatCard(
-                              name:widget.item![index]['categoryName'],
-                              image: widget.item![index]['categoryImage'],
-                              press: () {
-                                 Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => Productsub(item: widget.item![index]['products']),
-                                  ),
-                                );
-                              },
-                            );
-              },
-                       ),
+                   Directionality(
+                     textDirection: TextDirection.rtl,
+                     child: GridView.builder(
+                                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                                     crossAxisCount: Responsive.isDesktop(context)?3:2, 
+                                     crossAxisSpacing: 20,
+                                     mainAxisSpacing: 20,
+                                     childAspectRatio: Responsive.isDesktop(context)?2:1, 
+                                   ),
+                                   itemCount:widget.item!.length ,
+                                   shrinkWrap: true,
+                                   physics: NeverScrollableScrollPhysics(),
+                                   itemBuilder: (context, index) {
+                                   return CatCard(
+                                name:widget.item![index]['categoryName'],
+                                image: widget.item![index]['categoryImage'],
+                                press: () {
+                                   Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => Productsub(item: widget.item![index]['products']),
+                                    ),
+                                  );
+                                },
+                              );
+                                   },
+                         ),
+                   ),
                    
                   ],
                 ),
@@ -108,7 +111,7 @@ class _ProductsubState extends State<Productsub> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              " المنجات",
+              " المنتجات",
               style: Theme.of(context).textTheme.bodyText1,
             ),
           ],
@@ -126,32 +129,35 @@ class _ProductsubState extends State<Productsub> {
                 child: Column(
                   children: [
                  
-                   GridView.builder(
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: Responsive.isDesktop(context)?3:2, 
-                crossAxisSpacing: 20,
-                mainAxisSpacing: 20,
-                childAspectRatio: Responsive.isDesktop(context)?2:1, 
-              ),
-              itemCount:widget.item!.length ,
-              shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
-              itemBuilder: (context, index) {
-              return ProductCard(
-                              title:widget.item![index]['Name'],
-                              image: widget.item![index]['proimage'],
-                              price:  widget.item![index]['price'],
-                              press: () {
-                                //  Navigator.push(
-                                //   context,
-                                //   MaterialPageRoute(
-                                //     builder: (context) => Detailsproduct(item: widget.item[index]),
-                                //   ),
-                                // );
-                              },
-                            );
-                           },
-                       ),
+                   Directionality(
+                     textDirection: TextDirection.rtl,
+                     child: GridView.builder(
+                                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                                     crossAxisCount: Responsive.isDesktop(context)?3:2, 
+                                     crossAxisSpacing: 20,
+                                     mainAxisSpacing: 20,
+                                     childAspectRatio: Responsive.isDesktop(context)?2:1, 
+                                   ),
+                                   itemCount:widget.item!.length ,
+                                   shrinkWrap: true,
+                                   physics: NeverScrollableScrollPhysics(),
+                                   itemBuilder: (context, index) {
+                                   return ProductCard(
+                                title:widget.item![index]['Name'],
+                                image: widget.item![index]['proimage'],
+                                price:  widget.item![index]['price'],
+                                press: () {
+                                  //  Navigator.push(
+                                  //   context,
+                                  //   MaterialPageRoute(
+                                  //     builder: (context) => Detailsproduct(item: widget.item[index]),
+                                  //   ),
+                                  // );
+                                },
+                              );
+                             },
+                         ),
+                   ),
                   
                   ],
                 ),

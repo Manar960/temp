@@ -26,14 +26,15 @@ class _CategoriesviweState extends State<Categoriesviwe> {
 
 Future<void> fetchWheelProductsForStore(String name) async {
     var response = await http.get(
-      Uri.parse('http://localhost:4000/pro/cat/$name'),
+      Uri.parse('http://localhost:4000/brand-product/cat/$name/section'),
       headers: {"Content-Type": "application/json"},
     );
 
     if (response.statusCode == 200) {
       var jsonResponse = jsonDecode(response.body);
       setState(() {
-        item = jsonResponse['Category1'];
+        item = jsonResponse['Brand1'];
+        print(item);
       });
     } else {
       print('Request failed with status: ${response.statusCode}');
@@ -55,31 +56,34 @@ Future<void> fetchWheelProductsForStore(String name) async {
         ),
            Padding(
              padding: const EdgeInsets.all(30),
-             child: GridView.builder(
-                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: Responsive.isDesktop(context)?3:2, 
-              crossAxisSpacing: 20,
-              mainAxisSpacing: 20,
-              childAspectRatio: Responsive.isDesktop(context)?2:1, 
-                       ),
-                       itemCount: item?.length ?? 0,
-                       shrinkWrap: true,
-                       physics: const NeverScrollableScrollPhysics(),
-                       itemBuilder: (context, index) {
-                     return  CatCard(
-                    name: item![index]['categoryName'],
-                    image: item![index]['categoryImage'],
-                    press: () {
-                            Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => Subcat(item: item![index]['subcategories']),
-                      ),
+             child: Directionality(
+               textDirection: TextDirection.rtl,
+               child: GridView.builder(
+                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: Responsive.isDesktop(context)?3:2, 
+                crossAxisSpacing: 20,
+                mainAxisSpacing: 20,
+                childAspectRatio: Responsive.isDesktop(context)?2:1, 
+                         ),
+                         itemCount: item?.length ?? 0,
+                         shrinkWrap: true,
+                         physics: const NeverScrollableScrollPhysics(),
+                         itemBuilder: (context, index) {
+                       return  CatCard(
+                      name: item![index]['categoryName'],
+                      image: item![index]['categoryImage'],
+                      press: () {
+                              Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => Subcat(item: item![index]['subcategories']),
+                        ),
+                      );
+                      },
                     );
-                    },
-                  );
-                       },
-                     ),
+                         },
+                       ),
+             ),
            ),
       ],
     );
