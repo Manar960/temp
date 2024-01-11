@@ -20,19 +20,15 @@ class DiscountBanner extends StatelessWidget {
         color: bluebasic,
         borderRadius: BorderRadius.circular(20),
       ),
-      child: const Text.rich(
-        TextSpan(
-          style: TextStyle(color: Colors.white),
-          children: [
-            TextSpan(text: "أهلا فيك\n"),
-            TextSpan(
-              text: "كل اللي بدك اياه عنا",
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ],
+      child: const Directionality(
+        textDirection: TextDirection.rtl,
+        child: Text(
+          "أهلا فيك\nكل اللي بدك اياه عنا",
+          style: TextStyle(
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+          ),
         ),
       ),
     );

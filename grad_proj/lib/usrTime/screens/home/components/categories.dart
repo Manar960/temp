@@ -1,13 +1,11 @@
 import 'dart:convert';
-
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-
 import '../../../../config.dart';
 import '../../favorite/favorite_screen.dart';
+import 'DenemoDialog.dart';
 import 'insurance_dialog.dart';
+import 'toaria/Learning.dart';
 
 class Categories extends StatelessWidget {
   // ignore: use_key_in_widget_constructors
@@ -16,9 +14,9 @@ class Categories extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<Map<String, dynamic>> categories = [
-      {"icon": "assets/icon/icons8-service-50.png", "text": "خدمات"},
-      {"icon": "assets/icon/Heart Icon_2.svg", "text": "المفضلة"},
-      {"icon": "assets/icon/icons8-car-service-50.png", "text": "Denemo"},
+      {"icon": "assets/icon/d.png", "text": "تؤوريا"},
+      {"icon": "assets/icon/h.png", "text": "المفضلة"},
+      {"icon": "assets/icon/icons8-car-service-50.png", "text": "دنيمو ميتر"},
       {"icon": "assets/icon/icons8-document-30.png", "text": "خدمات حكومية"},
       {"icon": "assets/icon/icons8-comment-50.png", "text": "تقديم شكوى"},
     ];
@@ -43,12 +41,21 @@ class Categories extends StatelessWidget {
                       builder: (context) => GovernmentServicesPage()),
                 );
               }
+              if (index == 2) {
+                _showDenemoDialog(context);
+              }
               if (index == 1) {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) {
                     return const favScreen();
                   }),
+                );
+              }
+              if (index == 0) {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => LearningPage()),
                 );
               } else {}
             },
@@ -66,6 +73,15 @@ class Categories extends StatelessWidget {
       },
     );
   }
+}
+
+void _showDenemoDialog(BuildContext context) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return DenemoDialog();
+    },
+  );
 }
 
 class ComplaintDialog extends StatefulWidget {
