@@ -7,13 +7,14 @@ import 'package:intl/intl.dart';
 
 import '../../../booking/boking_screen.dart';
 
-
-
 class DatePage extends StatefulWidget {
-  const DatePage({Key? key, required this.name,required this.image, required this.user}) : super(key: key);
-  final String name,image,user;
+  const DatePage(
+      {Key? key, required this.name, required this.image, required this.user})
+      : super(key: key);
+  final String name, image, user;
 
   @override
+  // ignore: library_private_types_in_public_api
   _DatePageState createState() => _DatePageState();
 }
 
@@ -26,107 +27,105 @@ class _DatePageState extends State<DatePage> {
   DateTime? _selectedDay;
   DateTime? combinedDateTime;
   late DateTime formattedDateTime;
-  bool bookingStatus=false;
+  bool bookingStatus = false;
   @override
   void initState() {
     super.initState();
     booking(widget.name);
-
   }
- List? Avalid;
-Future booking(String storeName) async {
-  final url = 'http://localhost:4000/get-time-and-day/$storeName';
 
-  final response = await http.get(
-    Uri.parse(url),
-    headers: {'Content-Type': 'application/json'},
-  );
+  List? Avalid;
+  Future booking(String storeName) async {
+    final url = 'http://localhost:4000/get-time-and-day/$storeName';
 
+    final response = await http.get(
+      Uri.parse(url),
+      headers: {'Content-Type': 'application/json'},
+    );
 
-if (response.statusCode == 200) {
+    if (response.statusCode == 200) {
       var jsonResponse = jsonDecode(response.body);
       setState(() {
         Avalid = jsonResponse['Avalid'];
       });
-  
     } else {
       print('Request failed with status: ${response.statusCode}');
     }
- 
-}
-
-
-Future Booking(String StoreName, String userName, String Storeimage, DateTime date,String time) async {
-  final url = 'http://localhost:4000/Booking';
-
-  final response = await http.post(
-    Uri.parse(url),
-    headers: {'Content-Type': 'application/json'},
-    body: jsonEncode({
-      'StoreName': StoreName,
-      'UserName': userName,
-      'Storeimage': Storeimage,
-      'date': date.toUtc().toIso8601String(),
-      'time':time
-    }),
-  );
-
-  if (response.statusCode == 200) {
-    print("ok");
-  } else {
-    print('Failed to make booking. Status code: ${response.statusCode}');
- 
   }
-}
-List<String> getAvailableTimesForSelectedDay() {
-  if (Avalid != null && _selectedDay != null) {
-    var selectedDayEntry = Avalid!.firstWhere(
-      (entry) => entry['day'] == DateFormat('EEEE').format(_selectedDay!),
-      orElse: () => null,
+
+  Future Booking(String StoreName, String userName, String Storeimage,
+      DateTime date, String time) async {
+    final url = 'http://localhost:4000/Booking';
+
+    final response = await http.post(
+      Uri.parse(url),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({
+        'StoreName': StoreName,
+        'UserName': userName,
+        'Storeimage': Storeimage,
+        'date': date.toUtc().toIso8601String(),
+        'time': time
+      }),
     );
 
-    if (selectedDayEntry != null) {
-      return List<String>.from(selectedDayEntry['hours'].map((timeEntry) => timeEntry['time']));
+    if (response.statusCode == 200) {
+      print("ok");
+    } else {
+      print('Failed to make booking. Status code: ${response.statusCode}');
     }
   }
 
-  return []; 
-}
+  List<String> getAvailableTimesForSelectedDay() {
+    if (Avalid != null && _selectedDay != null) {
+      var selectedDayEntry = Avalid!.firstWhere(
+        (entry) => entry['day'] == DateFormat('EEEE').format(_selectedDay!),
+        orElse: () => null,
+      );
 
-Future<bool> findDate(String storeName, String userName, DateTime date, String time) async {
-  String formattedDate = date.toUtc().toIso8601String();
-  print(formattedDate);
-  final url = 'http://localhost:4000/check-time-and-day/time';    
-  try {
-    final response = await http.post(
-    Uri.parse(url),
-    headers: {'Content-Type': 'application/json'},
-    body: jsonEncode({
-      'StoreName': storeName,
-      'UserName': userName,
-      'date': date.toUtc().toIso8601String(),
-      'time':time
-    }),
-  );
-   if (response.statusCode == 200) {
-    final Map<String, dynamic> responseData = jsonDecode(response.body);
-    final bool status = responseData['status'];
+      if (selectedDayEntry != null) {
+        return List<String>.from(
+            selectedDayEntry['hours'].map((timeEntry) => timeEntry['time']));
+      }
+    }
 
-    return status;
-  } else {
-    print('Failed to make booking. Status code: ${response.statusCode}');
-    return false;
+    return [];
   }
-  } catch (error) {
-    print('Error: $error');
-    return false;
-  }
-}
 
+  Future<bool> findDate(
+      String storeName, String userName, DateTime date, String time) async {
+    String formattedDate = date.toUtc().toIso8601String();
+    print(formattedDate);
+    final url = 'http://localhost:4000/check-time-and-day/time';
+    try {
+      final response = await http.post(
+        Uri.parse(url),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({
+          'StoreName': storeName,
+          'UserName': userName,
+          'date': date.toUtc().toIso8601String(),
+          'time': time
+        }),
+      );
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> responseData = jsonDecode(response.body);
+        final bool status = responseData['status'];
+
+        return status;
+      } else {
+        print('Failed to make booking. Status code: ${response.statusCode}');
+        return false;
+      }
+    } catch (error) {
+      print('Error: $error');
+      return false;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-  List<String> availableTimes = getAvailableTimesForSelectedDay();   
+    List<String> availableTimes = getAvailableTimesForSelectedDay();
 
     return Scaffold(
       appBar: AppBar(
@@ -163,10 +162,9 @@ Future<bool> findDate(String storeName, String userName, DateTime date, String t
                     setState(() {
                       _selectedDay = selectedDay;
                       _focusedDay = focusedDay;
-                      _dateController.text = selectedDay.toLocal().toString().split(" ")[0];
+                      _dateController.text =
+                          selectedDay.toLocal().toString().split(" ")[0];
                     });
-                   
-                   
                   },
                 ),
                 SizedBox(height: 20),
@@ -179,18 +177,18 @@ Future<bool> findDate(String storeName, String userName, DateTime date, String t
                     ),
                   ),
                 ),
-
                 SizedBox(height: 20),
-                availableTimes.isEmpty?
-                const Center(
-                  child: Text(
-                  "لا يوجد اوقات متاحة",
-                  style: TextStyle(fontSize: 20.0, color: Colors.black),
-                 ),
-                ):
-                GridView.builder(
-                        shrinkWrap: true, 
-                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                availableTimes.isEmpty
+                    ? const Center(
+                        child: Text(
+                          "لا يوجد اوقات متاحة",
+                          style: TextStyle(fontSize: 20.0, color: Colors.black),
+                        ),
+                      )
+                    : GridView.builder(
+                        shrinkWrap: true,
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 4,
                           crossAxisSpacing: 8.0,
                           mainAxisSpacing: 8.0,
@@ -198,43 +196,40 @@ Future<bool> findDate(String storeName, String userName, DateTime date, String t
                         ),
                         itemCount: getAvailableTimesForSelectedDay().length,
                         itemBuilder: (BuildContext context, int index) {
-                        return  InkWell(
-                                  onTap: () async {
-                                    setState(() {
-                                      selectedTimeIndex = index;
-                                    });
-                                    bookingStatus= await  findDate( widget.name,username!,_selectedDay!,availableTimes[index]);
-                                    if(bookingStatus){
-                                       showCards(context, "assets/booked.json", 'هذا الوقت محجوز');
-                                    }else{
-                                       time=availableTimes[index];
-                                    }
-                                    
-                                     print(time);
-                                  
+                          return InkWell(
+                            onTap: () async {
+                              setState(() {
+                                selectedTimeIndex = index;
+                              });
+                              bookingStatus = await findDate(
+                                  widget.name,
+                                  username!,
+                                  _selectedDay!,
+                                  availableTimes[index]);
+                              if (bookingStatus) {
+                                showCards(context, "assets/booked.json",
+                                    'هذا الوقت محجوز');
+                              } else {
+                                time = availableTimes[index];
+                              }
 
-                                  },
-                                 child: Card(
-                                color: selectedTimeIndex == index
-                                        ? Color.fromARGB(255, 172, 207, 244)
-                                        : Color.fromARGB(255, 208, 215, 10),
-                                child: Center(
-                                  child: Text(
-                                    availableTimes[index],
-                                    style: TextStyle(fontSize: 20.0),
-                                  ),
+                              print(time);
+                            },
+                            child: Card(
+                              color: selectedTimeIndex == index
+                                  ? Color.fromARGB(255, 172, 207, 244)
+                                  : Color.fromARGB(255, 208, 215, 10),
+                              child: Center(
+                                child: Text(
+                                  availableTimes[index],
+                                  style: TextStyle(fontSize: 20.0),
                                 ),
                               ),
-
-                               
+                            ),
                           );
-
                         },
                       ),
-
-
                 SizedBox(height: 20),
-
                 Center(
                   child: SizedBox(
                     height: 40,
@@ -244,18 +239,20 @@ Future<bool> findDate(String storeName, String userName, DateTime date, String t
                         backgroundColor: Color(0xFF063970),
                       ),
                       onPressed: () async {
-                       Booking(widget.name, widget.user, widget.image, _selectedDay!,time.toString());
-                       showCards(context, "assets/assets/sad.json", 'تم الحجز');
-                         
-                           print(bookingStatus) ;
-                           
+                        Booking(widget.name, widget.user, widget.image,
+                            _selectedDay!, time.toString());
+                        showCards(
+                            context, "assets/assets/sad.json", 'تم الحجز');
+
+                        print(bookingStatus);
+
                         _dateController.text = "";
                         selectedTimeIndex = 0;
-                       
                       },
                       child: Text(
                         "احجز",
-                        style: TextStyle(color: Colors.white, height: 1, fontSize: 20),
+                        style: TextStyle(
+                            color: Colors.white, height: 1, fontSize: 20),
                       ),
                     ),
                   ),

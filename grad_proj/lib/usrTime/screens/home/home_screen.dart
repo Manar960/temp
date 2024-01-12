@@ -5,13 +5,11 @@ import '../../curved_navigation_bar.dart';
 import '../../map/map.dart';
 import '../booking/boking_screen.dart';
 import '../cart/cart_screen.dart';
-import '../favorite/favorite_screen.dart';
 import '../stores/counter.dart';
 import 'components/banner.dart';
 import 'components/categories.dart';
 import 'components/discount_banner.dart';
 import 'components/home_header.dart';
-import 'components/popular_product.dart';
 import 'components/top_stores.dart';
 
 class HomeScreenu extends StatelessWidget {

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import '../../../butombar.dart';
-import '../../curved_navigation_bar.dart';
 import '../../map/map.dart';
 import '../booking/boking_screen.dart';
 import '../cart/cart_screen.dart';
@@ -28,49 +27,47 @@ class StoresScreen extends StatelessWidget {
             HomeHeader(),
             SizedBox(height: 20),
             Padding(
-                    padding: EdgeInsets.symmetric(vertical: 15),
-                    child: Divider(
-                      height: 4,
-                    ),
-                  ),
-                   SizedBox(height: 20),
+              padding: EdgeInsets.symmetric(vertical: 15),
+              child: Divider(
+                height: 4,
+              ),
+            ),
+            SizedBox(height: 20),
             caracc(),
-             SizedBox(height: 20),
+            SizedBox(height: 20),
             Padding(
-                    padding: EdgeInsets.symmetric(vertical: 15),
-                    child: Divider(
-                      height: 4,
-                    ),
-                  ),
-          
-                   SizedBox(height: 20),
+              padding: EdgeInsets.symmetric(vertical: 15),
+              child: Divider(
+                height: 4,
+              ),
+            ),
+            SizedBox(height: 20),
             carseting(),
-             SizedBox(height: 20),
-             Padding(
-                    padding: EdgeInsets.symmetric(vertical: 15),
-                    child: Divider(
-                      height: 4,
-                    ),
-                  ),
-           
-                   SizedBox(height: 20),
+            SizedBox(height: 20),
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: 15),
+              child: Divider(
+                height: 4,
+              ),
+            ),
+            SizedBox(height: 20),
             carshowrooms(),
-             SizedBox(height: 20),
-             Padding(
-                    padding: EdgeInsets.symmetric(vertical: 15),
-                    child: Divider(
-                      height: 4,
-                    ),
-                  ),
-                   SizedBox(height: 20),
+            SizedBox(height: 20),
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: 15),
+              child: Divider(
+                height: 4,
+              ),
+            ),
+            SizedBox(height: 20),
             carcolors(),
-             SizedBox(height: 20),
-             Padding(
-                    padding: EdgeInsets.symmetric(vertical: 15),
-                    child: Divider(
-                      height: 4,
-                    ),
-                  ),
+            SizedBox(height: 20),
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: 15),
+              child: Divider(
+                height: 4,
+              ),
+            ),
           ],
         ),
       ),
@@ -90,7 +87,7 @@ class StoresScreen extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) {
-                  return bookScreen();
+                  return const bookScreen();
                 }),
               );
               break;

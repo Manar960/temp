@@ -18,10 +18,10 @@ class SectionTitle extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Visibility(
-          visible:
-              showSeeAllButton, // Set visibility based on the boolean property
+          visible: showSeeAllButton,
           child: TextButton(
             onPressed: press,
+            // ignore: sort_child_properties_last
             child: const Text(
               "عرض المزيد",
             ),

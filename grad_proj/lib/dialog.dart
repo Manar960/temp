@@ -5,6 +5,7 @@ class CustomDialog extends StatelessWidget {
   final String lottieAsset;
   final String textContent;
 
+  // ignore: use_key_in_widget_constructors
   const CustomDialog({
     required this.lottieAsset,
     required this.textContent,
@@ -40,7 +41,7 @@ class CustomDialog extends StatelessWidget {
                 const SizedBox(height: 16),
                 Text(
                   textContent,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 18,
                   ),
@@ -54,7 +55,7 @@ class CustomDialog extends StatelessWidget {
             },
             child: Container(
               padding: const EdgeInsets.all(8),
-              child: Icon(
+              child: const Icon(
                 Icons.close,
                 color: Colors.black,
               ),

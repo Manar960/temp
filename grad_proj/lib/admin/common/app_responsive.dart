@@ -22,8 +22,6 @@ class AppResponsive extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Size size = MediaQuery.of(context).size;
-
     if (isDesktop(context)) {
       return desktop;
     } else if (isTablet(context)) {
@@ -31,7 +29,5 @@ class AppResponsive extends StatelessWidget {
     } else {
       return mobile;
     }
-
-    return Container();
   }
 }

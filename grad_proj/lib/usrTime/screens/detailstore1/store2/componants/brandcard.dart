@@ -1,45 +1,39 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import '../../../../../../constants.dart';
 import '../../detailpage/componant/responsive.dart';
 import 'cards.model.dart';
+
 class BrandCards extends StatelessWidget {
   const BrandCards({
     Key? key,
- 
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-  final Size _size = MediaQuery.of(context).size;
+    final Size size = MediaQuery.of(context).size;
 
     return Center(
       child: Column(
-        
-        mainAxisAlignment: MainAxisAlignment.center, 
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          
-            Responsive(
+          Responsive(
             desktop: ProductCard(
-              crossAxiscount: _size.width < 650 ? 2 : 4,
-              aspectRatio: _size.width < 650 ? .1 : 2,
+              crossAxiscount: size.width < 650 ? 2 : 4,
+              aspectRatio: size.width < 650 ? .1 : 2,
             ),
             tablet: ProductCard(
-              crossAxiscount: _size.width < 825 ? 2 : 4,
-              aspectRatio: _size.width < 825 ? 0.85 : 2,
+              crossAxiscount: size.width < 825 ? 2 : 4,
+              aspectRatio: size.width < 825 ? 0.85 : 2,
             ),
             mobile: ProductCard(
-              crossAxiscount: _size.width < 690 ? 2 : 4,
-              aspectRatio: _size.width < 560 ? 1.4 : 0.5,
+              crossAxiscount: size.width < 690 ? 2 : 4,
+              aspectRatio: size.width < 560 ? 1.4 : 0.5,
             ),
           ),
-       
-          
         ],
       ),
     );
   }
-
 }
 
 class Services1 extends StatelessWidget {
@@ -59,7 +53,7 @@ class Services1 extends StatelessWidget {
         borderRadius: BorderRadius.circular(20),
         child: Container(
           height: 150,
-          padding: EdgeInsets.all(kPadding / 2),
+          padding: const EdgeInsets.all(kPadding / 2),
           color: pagecolor,
           child: Wrap(
             alignment: WrapAlignment.start,
@@ -74,7 +68,7 @@ class Services1 extends StatelessWidget {
                   fit: BoxFit.cover,
                 ),
               ),
-              SizedBox(width: 20),
+              const SizedBox(width: 20),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -82,18 +76,20 @@ class Services1 extends StatelessWidget {
                     textDirection: TextDirection.rtl,
                     child: Text(
                       card.title,
-                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: Colors.black),
+                      style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.black),
                     ),
                   ),
-                  SizedBox(height: 10),
-                   Directionality(
+                  const SizedBox(height: 10),
+                  Directionality(
                     textDirection: TextDirection.rtl,
                     child: Text(
                       card.title2,
-                      style: TextStyle(color: Colors.black,fontSize: 12),
+                      style: const TextStyle(color: Colors.black, fontSize: 12),
                     ),
                   ),
-                  
                 ],
               ),
             ],
@@ -103,7 +99,6 @@ class Services1 extends StatelessWidget {
     );
   }
 }
-
 
 class ProductCard extends StatelessWidget {
   const ProductCard({
@@ -119,30 +114,26 @@ class ProductCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GridView.builder(
       shrinkWrap: true,
-      physics: ScrollPhysics(),
+      physics: const ScrollPhysics(),
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: crossAxiscount,
         childAspectRatio: aspectRatio,
         mainAxisSpacing: 2,
         crossAxisSpacing: 2,
       ),
-      itemBuilder: (context, index) => 
-        Services1(
-          card: cards[index],
-        ),
-      
+      itemBuilder: (context, index) => Services1(
+        card: cards[index],
+      ),
       itemCount: cards.length,
     );
   }
 
+  // ignore: unused_element
   Widget _buildCard(Widget card) {
     return Container(
       margin: const EdgeInsets.all(kPadding / 2),
       decoration: BoxDecoration(
-        border: Border.all(
-          color: Color(0xFFFBAEAE),
-          width: 2
-        ),
+        border: Border.all(color: const Color(0xFFFBAEAE), width: 2),
         borderRadius: BorderRadius.circular(20),
       ),
       child: card,

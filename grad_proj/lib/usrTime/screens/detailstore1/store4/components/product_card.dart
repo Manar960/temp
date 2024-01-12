@@ -16,6 +16,7 @@ class ProductCard extends StatefulWidget {
   final Color bgColor;
 
   @override
+  // ignore: library_private_types_in_public_api
   _ProductCardState createState() => _ProductCardState();
 }
 
@@ -29,7 +30,7 @@ class _ProductCardState extends State<ProductCard>
     super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration: Duration(milliseconds: 200),
+      duration: const Duration(milliseconds: 200),
     );
     _scaleAnimation = Tween<double>(begin: 1, end: 1.05).animate(_controller);
   }
@@ -81,95 +82,100 @@ class _ProductCardState extends State<ProductCard>
                     const SizedBox(width: 16 / 4),
                     Text(
                       "${widget.price}₪",
-                      style: Theme.of(context).textTheme.subtitle2,
+                      style: Theme.of(context).textTheme.titleSmall,
                     ),
                   ],
                 ),
                 const SizedBox(height: 16 / 2),
-             Column(
-                children: [
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Column(
-                          children: [
-                            Image.asset('assets/images/power.png', width: 30, height: 30),
-                            const SizedBox(height: 8),
-                            const Text('القوة'),
-                            const SizedBox(height: 8),
-                            const Text('1600'),
-                          ],
+                Column(
+                  children: [
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Column(
+                            children: [
+                              Image.asset('assets/images/power.png',
+                                  width: 30, height: 30),
+                              const SizedBox(height: 8),
+                              const Text('القوة'),
+                              const SizedBox(height: 8),
+                              const Text('1600'),
+                            ],
+                          ),
                         ),
-                      ),
-                      const SizedBox(width: 16),
-                      Expanded(
-                        child: Column(
-                          children: [
-                            Image.asset('assets/images/fuel.png', width: 30, height: 30),
-                            const SizedBox(height: 8),
-                            const Text('الوقود'),
-                            const SizedBox(height: 8),
-                            const Text('ديزل'),
-                          ],
+                        const SizedBox(width: 16),
+                        Expanded(
+                          child: Column(
+                            children: [
+                              Image.asset('assets/images/fuel.png',
+                                  width: 30, height: 30),
+                              const SizedBox(height: 8),
+                              const Text('الوقود'),
+                              const SizedBox(height: 8),
+                              const Text('ديزل'),
+                            ],
+                          ),
                         ),
-                      ),
-                      const SizedBox(width: 16),
-                      Expanded(
-                        child: Column(
-                          children: [
-                            Image.asset('assets/images/hp.png', width: 30, height: 30),
-                            const SizedBox(height: 8),
-                            const Text('عدد الاحصنة'),
-                            const SizedBox(height: 8),
-                            const Text('132'),
-                          ],
+                        const SizedBox(width: 16),
+                        Expanded(
+                          child: Column(
+                            children: [
+                              Image.asset('assets/images/hp.png',
+                                  width: 30, height: 30),
+                              const SizedBox(height: 8),
+                              const Text('عدد الاحصنة'),
+                              const SizedBox(height: 8),
+                              const Text('132'),
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 12),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Column(
-                          children: [
-                            Image.asset('assets/images/distance.png', width: 30, height: 30),
-                            const SizedBox(height: 8),
-                            const Text('المسافة'),
-                            const SizedBox(height: 8),
-                            const Text('50000'),
-                          ],
+                      ],
+                    ),
+                    const SizedBox(height: 12),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Column(
+                            children: [
+                              Image.asset('assets/images/distance.png',
+                                  width: 30, height: 30),
+                              const SizedBox(height: 8),
+                              const Text('المسافة'),
+                              const SizedBox(height: 8),
+                              const Text('50000'),
+                            ],
+                          ),
                         ),
-                      ),
-                      const SizedBox(width: 16),
-                      Expanded(
-                        child: Column(
-                          children: [
-                            Image.asset('assets/images/date.png', width: 30, height: 30),
-                            const SizedBox(height: 8),
-                            const Text('سنة الانتاج'),
-                            const SizedBox(height: 8),
-                            const Text('2021'),
-                          ],
+                        const SizedBox(width: 16),
+                        Expanded(
+                          child: Column(
+                            children: [
+                              Image.asset('assets/images/date.png',
+                                  width: 30, height: 30),
+                              const SizedBox(height: 8),
+                              const Text('سنة الانتاج'),
+                              const SizedBox(height: 8),
+                              const Text('2021'),
+                            ],
+                          ),
                         ),
-                      ),
-                      const SizedBox(width: 16),
-                      Expanded(
-                        child: Column(
-                          children: [
-                            Image.asset('assets/images/seat.png', width: 30, height: 30),
-                            const SizedBox(height: 8),
-                            const Text('عدد المقاعد'),
-                            const SizedBox(height: 8),
-                            const Text('4'),
-                          ],
+                        const SizedBox(width: 16),
+                        Expanded(
+                          child: Column(
+                            children: [
+                              Image.asset('assets/images/seat.png',
+                                  width: 30, height: 30),
+                              const SizedBox(height: 8),
+                              const Text('عدد المقاعد'),
+                              const SizedBox(height: 8),
+                              const Text('4'),
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                ],
-              )
-
+                      ],
+                    ),
+                  ],
+                )
               ],
             ),
           ),

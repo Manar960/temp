@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../../login/responsive.dart';
 
+// ignore: camel_case_types
 class foter extends StatelessWidget {
   const foter({
     Key? key,
@@ -16,17 +17,11 @@ class foter extends StatelessWidget {
             child: Center(
               child: Image.asset(
                 "assets/images/ad3.png",
-                   height: Responsive.isDesktop(context)
-                          ? 400 
-                          : 200, 
-                      width: Responsive.isDesktop(context)
-                          ? 1230 
-                          : 500,
+                height: Responsive.isDesktop(context) ? 400 : 200,
+                width: Responsive.isDesktop(context) ? 1230 : 500,
                 fit: BoxFit.fill,
               ),
             )),
-       
-       
       ],
     );
   }

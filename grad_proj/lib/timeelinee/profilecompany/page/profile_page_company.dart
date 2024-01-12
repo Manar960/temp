@@ -195,7 +195,7 @@ class _ProfilePageCompanyStatead extends State<ProfilePageadCompany> {
           const SizedBox(height: 24),
           buildUserInfo(companyData),
           const SizedBox(height: 24),
-          const NumbersWidget(),
+          NumbersWidget(),
           const SizedBox(height: 100),
           buildAbout(context), // تم استبدال هنا
         ],

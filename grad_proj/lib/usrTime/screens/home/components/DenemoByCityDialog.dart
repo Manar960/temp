@@ -1,9 +1,11 @@
+// ignore: file_names
 import 'package:flutter/material.dart';
 import '../../../models/denemo.dart';
 
 class DenemoByCityDialog extends StatelessWidget {
   final List<DenemoModel> denemoList;
 
+  // ignore: prefer_const_constructors_in_immutables, use_key_in_widget_constructors
   DenemoByCityDialog({required this.denemoList});
 
   @override

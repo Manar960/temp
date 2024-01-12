@@ -1,27 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
-
 import 'cat.dart';
 import 'pro.dart';
 
 class Categories extends StatefulWidget {
   const Categories({Key? key, required this.item}) : super(key: key);
-   final Map<String, dynamic> item;
+  final Map<String, dynamic> item;
 
   @override
+  // ignore: library_private_types_in_public_api
   _CategoriesState createState() => _CategoriesState();
 }
 
-
 class _CategoriesState extends State<Categories> {
-  TextEditingController _date = TextEditingController();
-       String? selectedType; 
-     String? selectedModel;
-     String? selectedFuelType;
+  final TextEditingController _date = TextEditingController();
+  String? selectedType;
+  String? selectedModel;
+  String? selectedFuelType;
   @override
   Widget build(BuildContext context) {
-    final Size _size = MediaQuery.of(context).size;
+    final Size size = MediaQuery.of(context).size;
 
     return Container(
       alignment: Alignment.center,
@@ -29,7 +28,7 @@ class _CategoriesState extends State<Categories> {
         shrinkWrap: true,
         physics: const ScrollPhysics(),
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: _size.width < 650 ? 1 : 2,
+          crossAxisCount: size.width < 650 ? 1 : 2,
           childAspectRatio: 3,
           mainAxisSpacing: 2,
           crossAxisSpacing: 2,
@@ -38,13 +37,13 @@ class _CategoriesState extends State<Categories> {
           icon: demo_categories[index].icon,
           title: demo_categories[index].title,
           press: () {
-              if (index == 0) {
+            if (index == 0) {
               Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => productstore2(item: widget.item),
-              ),
-            );
+                context,
+                MaterialPageRoute(
+                  builder: (context) => productstore2(item: widget.item),
+                ),
+              );
             }
             if (index == 1) {
               _showPopup(context);
@@ -61,10 +60,10 @@ class _CategoriesState extends State<Categories> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Car Maintenance'),
-          contentPadding: EdgeInsets.all(16.0),
+          title: const Text('Car Maintenance'),
+          contentPadding: const EdgeInsets.all(16.0),
           content: SingleChildScrollView(
-            child: Container(
+            child: SizedBox(
               width: double.maxFinite,
               child: Column(
                 mainAxisSize: MainAxisSize.min,
@@ -75,52 +74,59 @@ class _CategoriesState extends State<Categories> {
                     children: [
                       Expanded(
                         child: DropdownMenu<String>(
-                      initialSelection: list.first,
-                      onSelected: (String? value) {
-                        setState(() {
-                          selectedModel = value!;
-                        });
-                      },
-                      dropdownMenuEntries: list.map<DropdownMenuEntry<String>>((String value) {
-                        return DropdownMenuEntry<String>(value: value, label: value);
-                      }).toList(),
-                    ),
+                          initialSelection: list.first,
+                          onSelected: (String? value) {
+                            setState(() {
+                              selectedModel = value!;
+                            });
+                          },
+                          dropdownMenuEntries: list
+                              .map<DropdownMenuEntry<String>>((String value) {
+                            return DropdownMenuEntry<String>(
+                                value: value, label: value);
+                          }).toList(),
+                        ),
                       ),
-                      SizedBox(width: 10),
+                      const SizedBox(width: 10),
                       Expanded(
-                        child:DropdownMenu<String>(
-                      initialSelection: list1.first,
-                      onSelected: (String? value) {
-                        setState(() {
-                          selectedModel = value!;
-                        });
-                      },
-                      dropdownMenuEntries: list1.map<DropdownMenuEntry<String>>((String value) {
-                        return DropdownMenuEntry<String>(value: value, label: value);
-                      }).toList(),
-                    ),
+                        child: DropdownMenu<String>(
+                          initialSelection: list1.first,
+                          onSelected: (String? value) {
+                            setState(() {
+                              selectedModel = value!;
+                            });
+                          },
+                          dropdownMenuEntries: list1
+                              .map<DropdownMenuEntry<String>>((String value) {
+                            return DropdownMenuEntry<String>(
+                                value: value, label: value);
+                          }).toList(),
+                        ),
                       ),
                     ],
                   ),
-                  SizedBox(height: 15,),
+                  const SizedBox(
+                    height: 15,
+                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Expanded(
-                      child:DropdownMenu<String>(
-                        
-                      initialSelection: list2.first,
-                      onSelected: (String? value) {
-                        setState(() {
-                          selectedModel = value!;
-                        });
-                      },
-                      dropdownMenuEntries: list2.map<DropdownMenuEntry<String>>((String value) {
-                        return DropdownMenuEntry<String>(value: value, label: value);
-                      }).toList(),
-                    ),
-                  ),
-                      SizedBox(width: 10),
+                        child: DropdownMenu<String>(
+                          initialSelection: list2.first,
+                          onSelected: (String? value) {
+                            setState(() {
+                              selectedModel = value!;
+                            });
+                          },
+                          dropdownMenuEntries: list2
+                              .map<DropdownMenuEntry<String>>((String value) {
+                            return DropdownMenuEntry<String>(
+                                value: value, label: value);
+                          }).toList(),
+                        ),
+                      ),
+                      const SizedBox(width: 10),
                       Expanded(
                         child: TextField(
                           controller: _date,
@@ -143,7 +149,9 @@ class _CategoriesState extends State<Categories> {
                       ),
                     ],
                   ),
-                  SizedBox(height: 15,),
+                  const SizedBox(
+                    height: 15,
+                  ),
                   const Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -164,7 +172,9 @@ class _CategoriesState extends State<Categories> {
                       ),
                     ],
                   ),
-                  SizedBox(height: 15,),
+                  const SizedBox(
+                    height: 15,
+                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
@@ -172,7 +182,7 @@ class _CategoriesState extends State<Categories> {
                         onPressed: () {
                           // Implement the logic for the calculate button
                         },
-                        child: Text('Calculate'),
+                        child: const Text('Calculate'),
                       ),
                     ],
                   ),
@@ -186,21 +196,20 @@ class _CategoriesState extends State<Categories> {
   }
 
   Future<void> _selectDate(BuildContext context) async {
-    DateTime? _picked = await showDatePicker(
+    DateTime? picked = await showDatePicker(
       context: context,
       initialDate: DateTime.now(),
       firstDate: DateTime(2000),
       lastDate: DateTime(2100),
     );
 
-    if (_picked != null) {
+    if (picked != null) {
       setState(() {
-        _date.text = _picked.toString().split(" ")[0];
+        _date.text = picked.toString().split(" ")[0];
       });
     }
   }
 }
-
 
 class CategoryCard extends StatelessWidget {
   const CategoryCard({
@@ -220,7 +229,7 @@ class CategoryCard extends StatelessWidget {
       child: Container(
         height: 200,
         alignment: Alignment.center,
-        padding: EdgeInsets.symmetric(horizontal: 10),
+        padding: const EdgeInsets.symmetric(horizontal: 10),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
         ),
@@ -232,10 +241,10 @@ class CategoryCard extends StatelessWidget {
               height: 200,
               width: 200,
             ),
-            SizedBox(width: 8),
+            const SizedBox(width: 8),
             Text(
               title,
-              style: TextStyle(
+              style: const TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 16,
               ),
@@ -247,11 +256,6 @@ class CategoryCard extends StatelessWidget {
   }
 }
 
-
-
-
 const List<String> list = <String>['Type A', 'Type B', 'Type C'];
 const List<String> list1 = <String>['Model X', 'Model Y', 'Model Z'];
 const List<String> list2 = <String>['Gasoline', 'Diesel'];
-
-

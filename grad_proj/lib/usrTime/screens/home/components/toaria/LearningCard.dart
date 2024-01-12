@@ -1,3 +1,4 @@
+// ignore: file_names
 import 'package:flutter/material.dart';
 
 class LearningCard extends StatelessWidget {
@@ -15,7 +16,7 @@ class LearningCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.all(16),
+      margin: const EdgeInsets.all(16),
       child: Card(
         child: LayoutBuilder(
           builder: (context, constraints) {
@@ -41,10 +42,10 @@ class LearningCard extends StatelessWidget {
                     children: [
                       Text(
                         title,
-                        style: TextStyle(
+                        style: const TextStyle(
                             fontSize: 18, fontWeight: FontWeight.bold),
                       ),
-                      SizedBox(height: 8),
+                      const SizedBox(height: 8),
                       Directionality(
                         textDirection: TextDirection.rtl,
                         child: Text(

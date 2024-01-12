@@ -10,9 +10,10 @@ import 'seeall.dart';
 
 class NewArrivalProducts extends StatefulWidget {
   const NewArrivalProducts({Key? key, required this.item}) : super(key: key);
-final Map<String, dynamic> item;
+  final Map<String, dynamic> item;
 
   @override
+  // ignore: library_private_types_in_public_api
   _NewArrivalProductsState createState() => _NewArrivalProductsState();
 }
 
@@ -24,6 +25,7 @@ class _NewArrivalProductsState extends State<NewArrivalProducts> {
     super.initState();
     getnewProducts();
   }
+
   Future<void> getnewProducts() async {
     try {
       var response = await http.get(
@@ -36,12 +38,15 @@ class _NewArrivalProductsState extends State<NewArrivalProducts> {
           item = jsonResponse['data'];
         });
       } else {
+        // ignore: avoid_print
         print('Request failed with status: ${response.statusCode}');
       }
     } catch (e) {
+      // ignore: avoid_print
       print('Error during API request: $e');
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -51,12 +56,12 @@ class _NewArrivalProductsState extends State<NewArrivalProducts> {
           child: SectionTitle(
             title: "الجديد",
             press: () {
-                     Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => SeeAll(item: widget.item),
-                  ),
-                );
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => SeeAll(item: widget.item),
+                ),
+              );
             },
             showSeeAllButton: true,
           ),
@@ -74,14 +79,17 @@ class _NewArrivalProductsState extends State<NewArrivalProducts> {
                   title: item![index]["Name"],
                   image: item![index]["proimage"],
                   price: item![index]["price"],
-                  bgColor: index % 2 == 0 ? Color(0xFFE7E8D1) : Color(0xFFF8FEFB),
+                  bgColor: index % 2 == 0
+                      ? const Color(0xFFE7E8D1)
+                      : const Color(0xFFF8FEFB),
                   press: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => Detailsproduct(item: item![index]),
-                    ),
-                  );
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            Detailsproduct(item: item![index]),
+                      ),
+                    );
                   },
                 ),
               ),

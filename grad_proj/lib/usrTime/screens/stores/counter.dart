@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 
-import '../../constants.dart';
-
 class Counter extends StatelessWidget {
   final int number;
   final Color color;
   final String title;
   const Counter({
-    Key ?key,
+    Key? key,
     required this.number,
     required this.color,
     required this.title,
@@ -18,7 +16,7 @@ class Counter extends StatelessWidget {
     return Column(
       children: <Widget>[
         Container(
-          padding: EdgeInsets.all(6),
+          padding: const EdgeInsets.all(6),
           height: 25,
           width: 25,
           decoration: BoxDecoration(
@@ -28,7 +26,7 @@ class Counter extends StatelessWidget {
           child: Container(
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: Color.fromARGB(12, 213, 213, 213),
+              color: const Color.fromARGB(12, 213, 213, 213),
               border: Border.all(
                 color: color,
                 width: 2,
@@ -36,7 +34,7 @@ class Counter extends StatelessWidget {
             ),
           ),
         ),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         Text(
           "$number",
           style: TextStyle(
@@ -49,4 +47,3 @@ class Counter extends StatelessWidget {
     );
   }
 }
-

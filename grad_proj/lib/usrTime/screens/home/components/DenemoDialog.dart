@@ -1,10 +1,13 @@
+// ignore: file_names
 import 'package:flutter/material.dart';
 import '../../../models/denemo.dart';
 import '../../../models/denemo_service.dart';
 import 'DenemoByCityDialog.dart';
 
+// ignore: use_key_in_widget_constructors
 class DenemoDialog extends StatefulWidget {
   @override
+  // ignore: library_private_types_in_public_api
   _DenemoDialogState createState() => _DenemoDialogState();
 }
 
@@ -57,7 +60,9 @@ class _DenemoDialogState extends State<DenemoDialog> {
         ElevatedButton(
           onPressed: () async {
             _denemoList =
+                // ignore: await_only_futures
                 await DenemoService.getDenemoListByCity(_selectedCity);
+            // ignore: use_build_context_synchronously
             _showDenemoByCity(context, _denemoList);
           },
           style: ElevatedButton.styleFrom(

@@ -9,6 +9,7 @@ const deepbrowncolor = Color(0xFF21130d);
 const bluebasic = Color(0xFF063970);
 
 final kDefaultCardShadow = BoxShadow(
+  // ignore: prefer_const_constructors
   offset: Offset(0, 20),
   blurRadius: 50,
   color: Colors.black.withOpacity(0.1),

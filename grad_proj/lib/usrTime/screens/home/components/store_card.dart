@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 class Store extends StatelessWidget {
@@ -30,7 +29,7 @@ class Store extends StatelessWidget {
               child: Container(
                 padding: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
-                  color: Color.fromARGB(255, 2, 76, 172).withOpacity(0.1),
+                  color: const Color.fromARGB(255, 2, 76, 172).withOpacity(0.1),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Image.asset(image),
@@ -43,8 +42,8 @@ class Store extends StatelessWidget {
                 direction: Axis.horizontal,
                 allowHalfRating: true,
                 itemCount: 5,
-                itemPadding: EdgeInsets.symmetric(horizontal: 2.0),
-                itemBuilder: (context, _) => Icon(
+                itemPadding: const EdgeInsets.symmetric(horizontal: 2.0),
+                itemBuilder: (context, _) => const Icon(
                   Icons.star,
                   color: Colors.amber,
                 ),

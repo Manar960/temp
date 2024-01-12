@@ -7,7 +7,8 @@ import 'admin/controllers/menu_controller.dart' as MyMenuController;
 import 'landing/navebar/homepage.dart';
 import 'landing/splash.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'firebase_options.dart';
+
+import 'login/provider/UserProvider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -59,8 +60,9 @@ void main() async {
     MultiProvider(
       providers: [
         ChangeNotifierProvider<MyMenuController.MenuController>(
-          create: (context) => MyMenuController.MenuController(),
-        ),
+            create: (context) => MyMenuController.MenuController()),
+        ChangeNotifierProvider<UserProvider>(
+            create: (context) => UserProvider()),
       ],
       child: const MyApp(),
     ),

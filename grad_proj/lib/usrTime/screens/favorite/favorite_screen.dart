@@ -9,13 +9,16 @@ import '../cart/cart_screen.dart';
 import '../home/home_screen.dart';
 import 'cards.dart';
 
+// ignore: camel_case_types
 class favScreen extends StatefulWidget {
   const favScreen({Key? key}) : super(key: key);
 
   @override
+  // ignore: library_private_types_in_public_api
   _favScreenState createState() => _favScreenState();
 }
 
+// ignore: camel_case_types
 class _favScreenState extends State<favScreen> {
   List? item;
   Future<void> getfav() async {
@@ -28,12 +31,15 @@ class _favScreenState extends State<favScreen> {
         var jsonResponse = jsonDecode(response.body);
         setState(() {
           item = jsonResponse['data'];
+          // ignore: avoid_print
           print('$item');
         });
       } else {
+        // ignore: avoid_print
         print('Request failed with status: ${response.statusCode}');
       }
     } catch (e) {
+      // ignore: avoid_print
       print('Error during API request: $e');
     }
   }
@@ -48,16 +54,17 @@ class _favScreenState extends State<favScreen> {
     getfav();
     return Scaffold(
       appBar: AppBar(
-        title: Text('المفضلة'),
+        title: const Text('المفضلة'),
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.pop(context);
           },
         ),
       ),
       body: SingleChildScrollView(
-        physics: BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+        physics: const BouncingScrollPhysics(
+            parent: AlwaysScrollableScrollPhysics()),
         padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -70,7 +77,7 @@ class _favScreenState extends State<favScreen> {
                   childAspectRatio: Responsive.isDesktop(context) ? 1.5 : 1),
               itemCount: item?.length ?? 0,
               shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
+              physics: const NeverScrollableScrollPhysics(),
               itemBuilder: (context, index) {
                 return FavCard(
                   title: item![index]['ProName'],
@@ -99,7 +106,7 @@ class _favScreenState extends State<favScreen> {
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) {
-                  return bookScreen();
+                  return const bookScreen();
                 }),
               );
               break;
