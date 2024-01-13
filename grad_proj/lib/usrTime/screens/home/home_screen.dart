@@ -3,6 +3,7 @@ import '../../../constants.dart';
 import '../../../login/responsive.dart';
 import '../../curved_navigation_bar.dart';
 import '../../map/map.dart';
+import '../../profile/page/profile_page_user.dart';
 import '../booking/boking_screen.dart';
 import '../cart/cart_screen.dart';
 import '../stores/counter.dart';
@@ -137,6 +138,15 @@ class HomeScreenu extends StatelessWidget {
                   }),
                 );
                 break;
+              //
+              case 4:
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) {
+                    return const ProfilePage();
+                  }),
+                );
+                break;
             }
           },
         ),
@@ -257,6 +267,14 @@ class HomeScreenu extends StatelessWidget {
                         context,
                         MaterialPageRoute(builder: (context) {
                           return const CartScreen();
+                        }),
+                      );
+                      break;
+                    case 4:
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) {
+                          return const ProfilePage();
                         }),
                       );
                       break;

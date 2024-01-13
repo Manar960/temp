@@ -16,7 +16,7 @@ class ButtonWidget extends StatelessWidget {
           foregroundColor: Colors.white,
           backgroundColor: Colors.blue, // Set the text color here
           shape: const StadiumBorder(),
-          padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 12),
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
         ),
         onPressed: onClicked,
         child: Text(

@@ -100,7 +100,7 @@ class _MyAppState extends State<MyApp> {
     return CalendarControllerProvider(
       controller: EventController(),
       child: const MaterialApp(
-        title: 'My App',
+        title: 'WheelsWell',
         home: kIsWeb ? WebHomePage() : MobileHomePage(),
         debugShowCheckedModeBanner: false,
       ),

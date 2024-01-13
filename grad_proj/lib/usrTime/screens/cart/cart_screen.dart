@@ -5,8 +5,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:http/http.dart' as http;
 import '../../../config.dart';
-import '../../../userPro/page/profile_page.dart';
+
 import '../../curved_navigation_bar.dart';
+import '../../profile/page/profile_page_user.dart';
 import '../home/home_screen.dart';
 import 'components/cart_card.dart';
 import 'components/check_out_card.dart';
@@ -150,10 +151,7 @@ class _CartScreenState extends State<CartScreen> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) {
-                    return const ProfilePage(
-                      token: "t",
-                      userName: "n",
-                    );
+                    return const ProfilePage();
                   }),
                 );
                 break;

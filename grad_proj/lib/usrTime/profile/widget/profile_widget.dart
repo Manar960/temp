@@ -1,16 +1,16 @@
 import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 
 class ProfileWidget extends StatelessWidget {
   final String imagePath;
   final VoidCallback onClicked;
-  final Uint8List? imageBytes; // Added to handle the selected image
 
   const ProfileWidget({
     Key? key,
     required this.imagePath,
     required this.onClicked,
-    this.imageBytes, // Added this parameter
+    Uint8List? imageBytes,
   }) : super(key: key);
 
   @override
@@ -20,27 +20,25 @@ class ProfileWidget extends StatelessWidget {
     return Center(
       child: Stack(
         children: [
-          buildImage(imagePath, imageBytes),
+          buildImage(),
           Positioned(
             bottom: 0,
             right: 4,
-            child: buildEditIcon(color, onClicked),
+            child: buildEditIcon(color),
           ),
         ],
       ),
     );
   }
 
-  Widget buildImage(String imagePath, Uint8List? imageBytes) {
-    final imageProvider = imageBytes != null
-        ? MemoryImage(Uint8List.fromList(imageBytes))
-        : NetworkImage(imagePath) as ImageProvider<Object>;
+  Widget buildImage() {
+    final image = NetworkImage(imagePath);
 
     return ClipOval(
       child: Material(
         color: Colors.transparent,
         child: Ink.image(
-          image: imageProvider,
+          image: image,
           fit: BoxFit.cover,
           width: 128,
           height: 128,
@@ -50,7 +48,7 @@ class ProfileWidget extends StatelessWidget {
     );
   }
 
-  Widget buildEditIcon(Color color, VoidCallback onClicked) => buildCircle(
+  Widget buildEditIcon(Color color) => buildCircle(
         color: Colors.white,
         all: 3,
         child: buildCircle(

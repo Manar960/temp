@@ -4,46 +4,49 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:file_picker/file_picker.dart';
+import 'package:provider/provider.dart';
 
 import '../../../admin/pages/dashboard/widget/header_widget.dart';
 import '../../../config.dart';
-import '../../screens/forms/formscom.dart';
-import '../../screens/home/calendar/calendar.dart';
+
+import '../../../login/provider/UserProvider.dart';
+import '../../map/map.dart';
+import '../../screens/booking/boking_screen.dart';
+import '../../screens/cart/cart_screen.dart';
 import '../../screens/home/home_screen.dart';
-import '../../screens/stoks/stock.dart';
 import '../widget/numbers_widget.dart';
 import '../widget/profile_widget.dart';
 import 'package:grad_proj/timeelinee/curved_navigation_bar.dart';
 
-class ProfilePageadCompany extends StatefulWidget {
-  final String companyName;
-
-  const ProfilePageadCompany({Key? key, required this.companyName})
-      : super(key: key);
+class ProfilePage extends StatefulWidget {
+  const ProfilePage({Key? key}) : super(key: key);
 
   @override
-  _ProfilePageCompanyStatead createState() => _ProfilePageCompanyStatead();
+  _ProfilePageState createState() => _ProfilePageState();
 }
 
-class _ProfilePageCompanyStatead extends State<ProfilePageadCompany> {
-  Map<String, dynamic>? companyData;
+class _ProfilePageState extends State<ProfilePage> {
   final String pageTitle = 'الملف الشخصي';
   String? _imagePath;
+  late String username;
+  Map<String, dynamic>? companyData;
 
   @override
   void initState() {
     super.initState();
     _initImage();
-    fetchCompanyData();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    username = Provider.of<UserProvider>(context).username ?? "";
   }
 
   Future<void> _initImage() async {
     try {
-      print("Fetching image for ${widget.companyName}");
-      ListResult result = await FirebaseStorage.instance
-          .ref()
-          .child(widget.companyName)
-          .listAll();
+      ListResult result =
+          await FirebaseStorage.instance.ref().child(username).listAll();
 
       List<Future<DateTime>> creationTimeFutures = result.items.map((file) {
         return file
@@ -78,10 +81,8 @@ class _ProfilePageCompanyStatead extends State<ProfilePageadCompany> {
       Uint8List? uploadFile = result.files.single.bytes;
       String fileName = result.files.single.name;
 
-      Reference reference = FirebaseStorage.instance
-          .ref()
-          .child(widget.companyName)
-          .child(fileName);
+      Reference reference =
+          FirebaseStorage.instance.ref().child(username).child(fileName);
 
       final UploadTask uploadTask = reference.putData(uploadFile!);
 
@@ -123,8 +124,8 @@ class _ProfilePageCompanyStatead extends State<ProfilePageadCompany> {
           items: const [
             Icon(Icons.home, size: 30, color: Colors.white),
             Icon(Icons.book, size: 30, color: Colors.white),
-            Icon(Icons.add, size: 30, color: Colors.white),
-            Icon(Icons.factory, size: 30, color: Colors.white),
+            Icon(Icons.map_outlined, size: 30, color: Colors.white),
+            Icon(Icons.shopping_cart, size: 30, color: Colors.white),
             Icon(Icons.person, size: 30, color: Colors.white),
           ],
           onTap: (index) {
@@ -133,15 +134,16 @@ class _ProfilePageCompanyStatead extends State<ProfilePageadCompany> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) {
-                    return const HomeScreencom();
+                    return const HomeScreenu();
                   }),
                 );
                 break;
+
               case 1:
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) {
-                    return const CalendarPage();
+                    return const bookScreen();
                   }),
                 );
                 break;
@@ -149,25 +151,16 @@ class _ProfilePageCompanyStatead extends State<ProfilePageadCompany> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) {
-                    return const MyButtonsScreen();
+                    return const MapPage();
                   }),
                 );
                 break;
+
               case 3:
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) {
-                    return const StokScreenPage();
-                  }),
-                );
-                break;
-              case 4:
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) {
-                    return ProfilePageadCompany(
-                      companyName: companyData?['Name'] ?? '',
-                    );
+                    return const CartScreen();
                   }),
                 );
                 break;
@@ -209,7 +202,7 @@ class _ProfilePageCompanyStatead extends State<ProfilePageadCompany> {
     return Column(
       children: [
         Text(
-          companyData['Name'] ?? 'Company Name',
+          companyData['UserName'] ?? 'Company Name',
           style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
         ),
         const SizedBox(height: 4),
@@ -222,39 +215,35 @@ class _ProfilePageCompanyStatead extends State<ProfilePageadCompany> {
   }
 
   Future<Map<String, dynamic>> fetchCompanyData() async {
-    String companyName = widget.companyName;
+    String companyName = username;
     print("from profile $companyName");
 
     try {
       final response = await http.get(
-        Uri.parse('$getCompanyInfo/$companyName'),
+        Uri.parse('$featchuser/$companyName'),
       );
 
       if (response.statusCode == 200) {
         final Map<String, dynamic>? jsonResponse = json.decode(response.body);
 
         if (jsonResponse != null && jsonResponse['status'] == true) {
-          final Map<String, dynamic>? companyData = jsonResponse['companyInfo'];
-          String comtaype = companyData?['Type'];
+          final Map<String, dynamic>? companyData = jsonResponse['userInfo'];
+          String comtaype = companyData?['userLastName'];
 
           print("company type $comtaype");
-          String comloc = companyData?['location'];
+          String comloc = companyData?['userLastName'];
 
-          print("company location $comloc");
-
+          print("company type $comloc");
           if (companyData != null) {
-            print("Fetched company data successfully: $companyData");
             return companyData;
           } else {
-            print("Company data is null in jsonResponse: $jsonResponse");
+            print(jsonResponse);
             return {}; // Provide a default value or an empty map if 'companyInfo' is not found
           }
         } else {
-          print("Failed Request Status Code: ${response.statusCode}");
           throw Exception('Failed Request Status Code: ${response.statusCode}');
         }
       } else {
-        print("Failed Request Status Code: ${response.statusCode}");
         throw Exception('Failed Request Status Code: ${response.statusCode}');
       }
     } catch (error) {
@@ -264,7 +253,6 @@ class _ProfilePageCompanyStatead extends State<ProfilePageadCompany> {
   }
 
   Widget buildAbout(BuildContext context) {
-    print("from profile2 ${companyData?['location']}");
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
@@ -366,9 +354,9 @@ class _ProfilePageCompanyStatead extends State<ProfilePageadCompany> {
 
                 // Send a request to update company information
                 try {
-                  await updateCompanyInfo(
-                      companyData?['Name'], newName, newEmail, newPassword);
-                  print('Company information updated successfully');
+                  // await updateCompanyInfo(
+                  // "  companyData?['Name'], newName, newEmail, newPassword);"
+                  // print('Company information updated successfully');
                 } catch (error) {
                   print('Failed to update company information: $error');
                 }
