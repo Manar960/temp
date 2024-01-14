@@ -31,7 +31,7 @@ Future<void> addToCart(String proBarCode, String userName) async {
         
       }),
     );
-    if (response.statusCode == 201) {
+    if (response.statusCode == 200) {
       print('Product added to cart successfully');
     } else {
       print('Failed to add product to cart');
@@ -51,7 +51,7 @@ Future<void> removeFromCart(String proBarCode, String userName) async {
         
       }),
     );
-    if (response.statusCode == 201) {
+    if (response.statusCode == 200) {
       print('Product deleted to cart successfully');
     } else {
       print('Failed to deleted product to cart');

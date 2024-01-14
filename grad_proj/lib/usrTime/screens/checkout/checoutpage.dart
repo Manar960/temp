@@ -61,191 +61,195 @@ class _checkoutState extends State<checkout> {
       ),
       body: Container(
         padding: const EdgeInsets.all(20),
-        child: ListView(
-          children: [
-            const Text("اختر",
-                style: TextStyle(
-                    color: orangecolor,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20)),
-            const SizedBox(
-              height: 5,
-            ),
-            InkWell(
-                onTap: () {
-                  setState(() {
-                    paymentMethod = "cash";
-                  });
-                },
-                child: methoud(
-                    title: "كاش",
-                    isactive: paymentMethod == "cash" ? true : false)),
-            InkWell(
-                onTap: () {
-                  setState(() {
-                    paymentMethod = "card";
-                  });
-                },
-                child: methoud(
-                    title: "بطاقة",
-                    isactive: paymentMethod == "card" ? true : false)),
-            const SizedBox(
-              height: 20,
-            ),
-            const Text("طريقة التوصيل",
-                style: TextStyle(
-                    color: orangecolor,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20)),
-            const SizedBox(
-              height: 10,
-            ),
-            Center(
-                child: Row(
-              children: [
-                InkWell(
-                    onTap: () {
-                      setState(() {
-                        waydelivary = "delivary";
-                      });
-                    },
-                    child: waytodelivary(
-                      icon: Icons.delivery_dining,
-                      isactive: waydelivary == "delivary" ? true : false,
-                      title: "توصيل",
-                      pcolor: const Color.fromARGB(255, 231, 97, 97),
-                    )),
-                const SizedBox(
-                  width: 10,
-                ),
-                InkWell(
-                    onTap: () {
-                      setState(() {
-                        waydelivary = "store";
-                      });
-                    },
-                    child: waytodelivary(
-                      icon: Icons.drive_eta,
-                      isactive: waydelivary == "store" ? true : false,
-                      title: "من المحل",
-                      pcolor: const Color.fromARGB(255, 231, 97, 97),
-                    ))
-              ],
-            )),
-            const SizedBox(
-              height: 20,
-            ),
-            if (waydelivary == "delivary")
-              const Text("العنوان",
+        child: Directionality(
+        textDirection: TextDirection.rtl,
+          child: ListView(
+            children: [
+              const Text("اختر",
+              textDirection: TextDirection.rtl,
                   style: TextStyle(
                       color: orangecolor,
                       fontWeight: FontWeight.bold,
                       fontSize: 20)),
-            const SizedBox(
-              height: 10,
-            ),
-            if (waydelivary == "delivary")
-              Row(
+              const SizedBox(
+                height: 5,
+              ),
+              InkWell(
+                  onTap: () {
+                    setState(() {
+                      paymentMethod = "cash";
+                    });
+                  },
+                  child: methoud(
+                      title: "كاش",
+                      isactive: paymentMethod == "cash" ? true : false)),
+              InkWell(
+                  onTap: () {
+                    setState(() {
+                      paymentMethod = "card";
+                    });
+                  },
+                  child: methoud(
+                      title: "بطاقة",
+                      isactive: paymentMethod == "card" ? true : false)),
+              const SizedBox(
+                height: 20,
+              ),
+              const Text("طريقة التوصيل",
+                  style: TextStyle(
+                      color: orangecolor,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20)),
+              const SizedBox(
+                height: 10,
+              ),
+              Center(
+                  child: Row(
                 children: [
-                  Expanded(
-                    child: TextFormField(
-                      controller: addressController,
-                      decoration: InputDecoration(
-                        labelText: '',
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                          borderSide: const BorderSide(color: bluecolor),
+                  InkWell(
+                      onTap: () {
+                        setState(() {
+                          waydelivary = "delivary";
+                        });
+                      },
+                      child: waytodelivary(
+                        icon: Icons.delivery_dining,
+                        isactive: waydelivary == "delivary" ? true : false,
+                        title: "توصيل",
+                        pcolor: const Color.fromARGB(255, 231, 97, 97),
+                      )),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  InkWell(
+                      onTap: () {
+                        setState(() {
+                          waydelivary = "store";
+                        });
+                      },
+                      child: waytodelivary(
+                        icon: Icons.drive_eta,
+                        isactive: waydelivary == "store" ? true : false,
+                        title: "من المحل",
+                        pcolor: const Color.fromARGB(255, 231, 97, 97),
+                      ))
+                ],
+              )),
+              const SizedBox(
+                height: 20,
+              ),
+              if (waydelivary == "delivary")
+                const Text("العنوان",
+                    style: TextStyle(
+                        color: orangecolor,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20)),
+              const SizedBox(
+                height: 10,
+              ),
+              if (waydelivary == "delivary")
+                Row(
+                  children: [
+                    Expanded(
+                      child: TextFormField(
+                        controller: addressController,
+                        decoration: InputDecoration(
+                          labelText: '',
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                            borderSide: const BorderSide(color: bluecolor),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                            borderSide: const BorderSide(color: bluecolor),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                            borderSide: const BorderSide(color: orangecolor),
+                          ),
+                          labelStyle: const TextStyle(color: bluecolor),
                         ),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                          borderSide: const BorderSide(color: bluecolor),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                          borderSide: const BorderSide(color: orangecolor),
-                        ),
-                        labelStyle: const TextStyle(color: bluecolor),
                       ),
                     ),
-                  ),
-                  const SizedBox(width: 10),
-                  const Icon(Icons.map_outlined,
-                      size: 60, color: Color.fromARGB(255, 231, 97, 97)),
-                ],
-              ),
-            const SizedBox(
-              height: 20,
-            ),
-            Container(
-              padding: const EdgeInsets.symmetric(
-                vertical: 16,
-                horizontal: 20,
-              ),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(30),
-                  topRight: Radius.circular(30),
-                ),
-                boxShadow: [
-                  BoxShadow(
-                    offset: const Offset(0, -15),
-                    blurRadius: 20,
-                    color: const Color(0xFFDADADA).withOpacity(0.15),
-                  )
-                ],
-              ),
-              child: SafeArea(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        const Expanded(
-                          child: Text.rich(
-                            TextSpan(
-                              text: "",
-                              children: [
-                                TextSpan(
-                                  text: "",
-                                  style: TextStyle(
-                                      fontSize: 16, color: Colors.black),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor:
-                                  const Color.fromARGB(255, 231, 97, 97),
-                            ),
-                            onPressed: () {
-                              addOrder(username!, addressController.text,
-                                  paymentMethod, waydelivary);
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context) {
-                                  return orders(paymentMethod: paymentMethod);
-                                }),
-                              );
-                            },
-                            child: const Text(
-                              "أكمل عملية الدفع",
-                              style: TextStyle(
-                                  color: Colors.white, height: 1, fontSize: 20),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
+                    const SizedBox(width: 10),
+                    const Icon(Icons.map_outlined,
+                        size: 60, color: Color.fromARGB(255, 231, 97, 97)),
                   ],
                 ),
+              const SizedBox(
+                height: 20,
               ),
-            )
-          ],
+              Container(
+                padding: const EdgeInsets.symmetric(
+                  vertical: 16,
+                  horizontal: 20,
+                ),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(30),
+                    topRight: Radius.circular(30),
+                  ),
+                  boxShadow: [
+                    BoxShadow(
+                      offset: const Offset(0, -15),
+                      blurRadius: 20,
+                      color: const Color(0xFFDADADA).withOpacity(0.15),
+                    )
+                  ],
+                ),
+                child: SafeArea(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          const Expanded(
+                            child: Text.rich(
+                              TextSpan(
+                                text: "",
+                                children: [
+                                  TextSpan(
+                                    text: "",
+                                    style: TextStyle(
+                                        fontSize: 16, color: Colors.black),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor:
+                                    const Color.fromARGB(255, 231, 97, 97),
+                              ),
+                              onPressed: () {
+                                addOrder(username!, addressController.text,
+                                    paymentMethod, waydelivary);
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) {
+                                    return orders(paymentMethod: paymentMethod);
+                                  }),
+                                );
+                              },
+                              child: const Text(
+                                "أكمل عملية الدفع",
+                                style: TextStyle(
+                                    color: Colors.white, height: 1, fontSize: 20),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              )
+            ],
+          ),
         ),
       ),
       bottomNavigationBar: CustomBottomNavigationBar(

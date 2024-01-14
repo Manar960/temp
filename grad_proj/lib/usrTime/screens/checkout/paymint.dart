@@ -38,110 +38,113 @@ class _paymentMethod1State extends State<paymentMethod1> {
           },
         ),
       ),
-      body: Align(
-        alignment: Alignment.center,
-        child: Container(
-          padding: const EdgeInsets.all(20),
-          child: ListView(
-            children: [
-              Center(
-                child: Row(
-                  children: [
-                    InkWell(
-                      onTap: () {
-                        setState(() {
-                          paymentMethod = "creditcard";
-                        });
-                      },
-                      child: waytodelivary(
-                          icon: Icons.credit_card,
-                          isactive:
-                              paymentMethod == "creditcard" ? true : false,
-                          title: "بطاقة الائتمان",
-                          pcolor: bluecolor),
-                    ),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    InkWell(
+      body: Directionality(
+        textDirection: TextDirection.rtl,
+        child: Align(
+          alignment: Alignment.center,
+          child: Container(
+            padding: const EdgeInsets.all(20),
+            child: ListView(
+              children: [
+                Center(
+                  child: Row(
+                    children: [
+                      InkWell(
                         onTap: () {
                           setState(() {
-                            paymentMethod = "paypal";
+                            paymentMethod = "creditcard";
                           });
                         },
                         child: waytodelivary(
-                          icon: Icons.paypal,
-                          isactive: paymentMethod == "paypal" ? true : false,
-                          title: "باي بال",
-                          pcolor: bluecolor,
-                        )),
-                  ],
+                            icon: Icons.credit_card,
+                            isactive:
+                                paymentMethod == "creditcard" ? true : false,
+                            title: "بطاقة الائتمان",
+                            pcolor: bluecolor),
+                      ),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      InkWell(
+                          onTap: () {
+                            setState(() {
+                              paymentMethod = "paypal";
+                            });
+                          },
+                          child: waytodelivary(
+                            icon: Icons.paypal,
+                            isactive: paymentMethod == "paypal" ? true : false,
+                            title: "باي بال",
+                            pcolor: bluecolor,
+                          )),
+                    ],
+                  ),
                 ),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              if (paymentMethod == "creditcard")
-                InkWell(
-                  onTap: () {},
-                  child: Container(
-                    padding: const EdgeInsets.all(25),
-                    decoration: BoxDecoration(
-                      color: const Color.fromARGB(255, 233, 240, 246),
-                      borderRadius: BorderRadius.circular(20),
+                const SizedBox(
+                  height: 20,
+                ),
+                if (paymentMethod == "creditcard")
+                  InkWell(
+                    onTap: () {},
+                    child: Container(
+                      padding: const EdgeInsets.all(25),
+                      decoration: BoxDecoration(
+                        color: const Color.fromARGB(255, 233, 240, 246),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: const Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.add,
+                            color: Colors.black,
+                          ),
+                          SizedBox(width: 5),
+                          Text(
+                            "اضف بطاقة جديدة",
+                            style: TextStyle(color: Colors.black, fontSize: 20),
+                          ),
+                        ],
+                      ),
                     ),
-                    child: const Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
-                          Icons.add,
-                          color: Colors.black,
-                        ),
-                        SizedBox(width: 5),
-                        Text(
-                          "اضف بطاقة جديدة",
-                          style: TextStyle(color: Colors.black, fontSize: 20),
-                        ),
-                      ],
+                  ),
+                const SizedBox(
+                  height: 20,
+                ),
+                if (paymentMethod == "creditcard")
+                  const Cards(
+                    isactive: false,
+                    number: "124 258 457",
+                    title: "visa",
+                    image: "assets/visa.png",
+                  ),
+                const SizedBox(
+                  height: 20,
+                ),
+                Container(
+                  height: 40,
+                  width: 200,
+                  child: TextButton(
+                    style: TextButton.styleFrom(
+                      backgroundColor: const Color(0xFF063970),
+                    ),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) {
+                          return orders(paymentMethod: paymentMethod);
+                        }),
+                      );
+                    },
+                    child: const Text(
+                      "أكمل عملية الدفع",
+                      style:
+                          TextStyle(color: Colors.white, height: 1, fontSize: 20),
                     ),
                   ),
                 ),
-              const SizedBox(
-                height: 20,
-              ),
-              if (paymentMethod == "creditcard")
-                const Cards(
-                  isactive: false,
-                  number: "124 258 457",
-                  title: "visa",
-                  image: "assets/visa.png",
-                ),
-              const SizedBox(
-                height: 20,
-              ),
-              Container(
-                height: 40,
-                width: 200,
-                child: TextButton(
-                  style: TextButton.styleFrom(
-                    backgroundColor: const Color(0xFF063970),
-                  ),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) {
-                        return orders(paymentMethod: paymentMethod);
-                      }),
-                    );
-                  },
-                  child: const Text(
-                    "أكمل عملية الدفع",
-                    style:
-                        TextStyle(color: Colors.white, height: 1, fontSize: 20),
-                  ),
-                ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

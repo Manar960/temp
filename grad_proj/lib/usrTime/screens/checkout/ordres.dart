@@ -128,53 +128,56 @@ class _ordersState extends State<orders> {
       appBar: AppBar(
         title: Text('طلباتك'),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(20),
-        child: ListView(
-          children: [
-            GridView.builder(
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: Responsive.isDesktop(context) ? 2 : 1,
-                crossAxisSpacing: 10,
-                mainAxisSpacing: 20,
-                childAspectRatio: 3,
-              ),
-              itemCount: item?.length ?? 0,
-              shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
-              itemBuilder: (context, index) {
-                var product = item![index];
-                return orderscards(
-                  press2: () {
-                    deleteOrdar(
-                        item![index]['OrderCode'], item![index]['companyName']);
-                    removeFromCart(item![index]['CartCode']);
-                  },
-                  title: item![index]['companyName'].toString(),
-                  image: "assets/images/Magical_World.png",
-                  price: item![index]['totalPrice'].toString(),
-                  press: () {
-                    if (item![index]['waydelivary'].toString() == "store") {
-                      showcards(context);
-                      deleteOrdar(item![index]['OrderCode'],
-                          item![index]['companyName']);
+      body: Directionality(
+        textDirection: TextDirection.rtl,
+        child: Padding(
+          padding: const EdgeInsets.all(20),
+          child: ListView(
+            children: [
+              GridView.builder(
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: Responsive.isDesktop(context) ? 2 : 1,
+                  crossAxisSpacing: 10,
+                  mainAxisSpacing: 20,
+                  childAspectRatio: 3,
+                ),
+                itemCount: item?.length ?? 0,
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+                itemBuilder: (context, index) {
+                  var product = item![index];
+                  return orderscards(
+                    press2: () {
+                      deleteOrdar(
+                          item![index]['OrderCode'], item![index]['companyName']);
                       removeFromCart(item![index]['CartCode']);
-                    } else {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const paymentMethod1(),
-                        ),
-                      );
-                    }
-                  },
-                  cardColor: index % 2 == 0
-                      ? const Color(0xFFF3F8FF)
-                      : const Color(0xFFF3F8FF),
-                );
-              },
-            ),
-          ],
+                    },
+                    title: item![index]['companyName'].toString(),
+                    image: "assets/images/Magical_World.png",
+                    price: item![index]['totalPrice'].toString(),
+                    press: () {
+                      if (item![index]['waydelivary'].toString() == "store") {
+                        showcards(context);
+                        deleteOrdar(item![index]['OrderCode'],
+                            item![index]['companyName']);
+                        removeFromCart(item![index]['CartCode']);
+                      } else {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const paymentMethod1(),
+                          ),
+                        );
+                      }
+                    },
+                    cardColor: index % 2 == 0
+                        ? const Color(0xFFF3F8FF)
+                        : const Color(0xFFF3F8FF),
+                  );
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );

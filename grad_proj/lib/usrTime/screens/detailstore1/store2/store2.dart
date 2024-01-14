@@ -255,9 +255,9 @@ class _store2State extends State<store2> {
       ),
       bottomNavigationBar: CustomBottomNavigationBar(
         currentIndex: 0,
-        onTap: (index) {
-          switch (index) {
-            case 0:
+           onTap: (index) {
+            switch (index) {
+              case 0:
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) {
@@ -283,7 +283,7 @@ class _store2State extends State<store2> {
               );
               break;
             case 3:
-              Navigator.push(
+               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) {
                   return const CartScreen();
@@ -291,16 +291,12 @@ class _store2State extends State<store2> {
               );
               break;
             case 4:
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) {
-                  return const CartScreen();
-                }),
-              );
+             
               break;
-          }
-        },
-      ),
+            }
+          },
+        ),
+
     );
   }
 

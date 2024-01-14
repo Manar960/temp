@@ -26,7 +26,6 @@ class CustomBottomNavigationBar extends StatelessWidget {
           Icon(Icons.home, size: 30, color: Colors.white),
           Icon(Icons.book, size: 30, color: Colors.white),
           Icon(Icons.map, size: 30, color: Colors.white),
-          Icon(Icons.favorite, size: 30, color: Colors.white),
           Icon(Icons.shopping_cart, size: 30, color: Colors.white),
           Icon(Icons.person, size: 30, color: Colors.white),
         ],

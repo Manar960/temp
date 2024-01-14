@@ -4,12 +4,14 @@ import 'package:flutter_svg/svg.dart';
 import '../../../../../constants.dart';
 import '../../../../butombar.dart';
 import '../../../map/map.dart';
+import '../../booking/boking_screen.dart';
 import '../../cart/cart_screen.dart';
 import '../../home/home_screen.dart';
 import 'componant/addtochart.dart';
 import 'componant/button.dart';
 import 'componant/descruption.dart';
 import 'componant/mainfeater.dart';
+import 'componant/proudctsize.dart';
 
 class Detailsproduct extends StatefulWidget {
   const Detailsproduct({
@@ -35,7 +37,7 @@ class _DetailsproductState extends State<Detailsproduct> {
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor:  Color.fromARGB(255, 71, 181, 249) ,
+      backgroundColor:  bluebasic ,
       appBar: AppBar(
         backgroundColor: Colors.white ,
         elevation: 0,
@@ -65,8 +67,9 @@ class _DetailsproductState extends State<Detailsproduct> {
                       top: size.height * 0.12,
                       left: kPadding,
                       right: kPadding,
+                      
                     ),
-                    // height: 500,
+                    height: double.infinity,
                     decoration: const BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.only(
@@ -74,14 +77,19 @@ class _DetailsproductState extends State<Detailsproduct> {
                         topRight: Radius.circular(24),
                       ),
                     ),
-                    child: Column(
-                      children: <Widget>[
-                        Description(item :widget.item ),
-                        const SizedBox(height: kPadding / 2),
-                        CounterWithFavBtn(item:widget.item),
-                        const SizedBox(height: 10),
-                        AddToCart(item:widget.item)
-                      ],
+                    child: SingleChildScrollView(
+                      child: Column(
+                        children: <Widget>[
+                          const SizedBox(height: 22),
+                          BulidSize(item :widget.item),
+                          const SizedBox(height: kPadding / 2),
+                          Description(item :widget.item ),
+                          const SizedBox(height: kPadding / 2),
+                          CounterWithFavBtn(item:widget.item),
+                          const SizedBox(height: 10),
+                          AddToCart(item:widget.item)
+                        ],
+                      ),
                     ),
                   ),
                   pagedetail(item :widget.item)
@@ -96,41 +104,41 @@ class _DetailsproductState extends State<Detailsproduct> {
           onTap: (index) {
             switch (index) {
               case 0:
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) {
-                    return const HomeScreenu();
-                  }),
-                );
-                break;
-              case 1:
-                // Navigate to the report page
-                break;
-              case 2:
-                // MapPage
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) {
-                    return const MapPage();
-                  }),
-                );
-                break;
-              case 3:
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) {
-                    return const CartScreen();
-                  }),
-                );
-                break;
-              case 4:
-                Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) {
-                          return const CartScreen();
-                        }),
-                      );
-                break;
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) {
+                  return const HomeScreenu();
+                }),
+              );
+              break;
+            case 1:
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) {
+                  return const bookScreen();
+                }),
+              );
+              break;
+            case 2:
+              // MapPage
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) {
+                  return const MapPage();
+                }),
+              );
+              break;
+            case 3:
+               Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) {
+                  return const CartScreen();
+                }),
+              );
+              break;
+            case 4:
+             
+              break;
             }
           },
         ),

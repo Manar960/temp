@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 
 import '../../../config.dart';
 import '../../../dialog.dart';
+import 'boking_screen.dart';
 
 
 class Body extends StatefulWidget {
@@ -29,8 +30,8 @@ class _BodyState extends State<Body> {
     super.initState();
   }
 
-  Future<void> removebookng(String BookingCode) async {
-    final url = '$deleteBooking/$BookingCode';
+  Future<void> removebookng(String BookingCode,String userName) async {
+    final url = 'http://localhost:4000/bookings-for/user/$userName/$BookingCode';
 
     final response = await http.delete(
       Uri.parse(url),
@@ -136,7 +137,7 @@ class _BodyState extends State<Body> {
                     InkWell(
                       onTap: () {
                         showCards(context, "assets/car1.json", ' تم الالغاء');
-                        removebookng(widget.bookingcode);
+                        removebookng(widget.bookingcode,username!);
                       },
                       child: Container(
                         width: 150,
@@ -158,7 +159,7 @@ class _BodyState extends State<Body> {
                     InkWell(
                       onTap: () {
                         showCards(context, "assets/car1.json", 'تم ');
-                        removebookng(widget.bookingcode);
+                        removebookng(widget.bookingcode,username!);
                       },
                       child: Container(
                         width: 150,

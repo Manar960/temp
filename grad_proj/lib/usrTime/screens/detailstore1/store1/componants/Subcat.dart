@@ -147,12 +147,12 @@ class _ProductsubState extends State<Productsub> {
                                 image: widget.item![index]['proimage'],
                                 price:  widget.item![index]['price'],
                                 press: () {
-                                  //  Navigator.push(
-                                  //   context,
-                                  //   MaterialPageRoute(
-                                  //     builder: (context) => Detailsproduct(item: widget.item[index]),
-                                  //   ),
-                                  // );
+                                   Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => Detailsproduct(item: widget.item![index]),
+                                    ),
+                                  );
                                 },
                               );
                              },

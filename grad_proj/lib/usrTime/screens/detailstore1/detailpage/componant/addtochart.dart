@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:grad_proj/constants.dart';
 import 'package:grad_proj/dialog.dart';
 class AddToCart extends StatefulWidget {
   const AddToCart({
@@ -48,14 +49,13 @@ class _AddToCartState extends State<AddToCart> {
           Expanded(
             child: ElevatedButton(
               onPressed: () {
-                // addtocart.addToaddtocart([widget.item]);
                 showCards(context,"assets/car1.json",'تمت اضافة المنتج',);
               },
               style: ElevatedButton.styleFrom(
                 minimumSize: const Size(double.infinity, 48),
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(18)),
-                backgroundColor: Colors.black,
+                backgroundColor: orangecolor,
               ),
               child: const Text(
                 "اضف الى السلة",

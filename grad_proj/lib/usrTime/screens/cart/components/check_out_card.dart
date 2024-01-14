@@ -19,7 +19,6 @@ class CheckoutCard extends StatefulWidget {
 }
 
 late int itemsprice = 0;
-String? username = AuthProvider.userData?.userName;
 
 class _CheckoutCardState extends State<CheckoutCard> {
   @override
@@ -32,7 +31,7 @@ class _CheckoutCardState extends State<CheckoutCard> {
 
     try {
       final response = await http.post(
-        Uri.parse(priseCart),
+        Uri.parse(apiUrl),
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode({'UserName': userName}),
       );
@@ -52,7 +51,6 @@ class _CheckoutCardState extends State<CheckoutCard> {
   Future<void> fetchCartItemprice() async {
     try {
       final price = await getCartItemprice(username!);
-      print('Fetched price: $price');
       setState(() {
         itemsprice = price;
       });

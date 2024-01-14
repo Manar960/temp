@@ -28,7 +28,7 @@ class _bookScreenState extends State<bookScreen> {
   Future<void> getBookingsForUser(String userName) async {
     try {
       var response = await http.get(
-        Uri.parse('$getuserbooking/$userName'),
+        Uri.parse('http://localhost:4000/bookings-for/user/$userName'),
         headers: {"Content-Type": "application/json"},
       );
       if (response.statusCode == 200) {
@@ -47,11 +47,12 @@ class _bookScreenState extends State<bookScreen> {
   @override
   void initState() {
     super.initState();
+     getBookingsForUser(username!);
   }
 
   @override
   Widget build(BuildContext context) {
-    getBookingsForUser(username!);
+   
     return Scaffold(
       appBar: AppBar(
         title: const Text('الحجوزات'),
@@ -69,23 +70,26 @@ class _bookScreenState extends State<bookScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            GridView.builder(
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: Responsive.isDesktop(context) ? 2 : 1,
-                  crossAxisSpacing: 10,
-                  mainAxisSpacing: 20,
-                  childAspectRatio: Responsive.isDesktop(context) ? 3.5 : 2.5),
-              itemCount: item?.length ?? 0,
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemBuilder: (context, index) {
-                return Body(
-                  storeName: item![index]['StoreName'],
-                  stroeImage: item![index]['Storeimage'],
-                  date: DateTime.parse(item![index]['date']),
-                  bookingcode: item![index]['BookingCode'],
-                );
-              },
+            Directionality(
+              textDirection: TextDirection.rtl,
+              child: GridView.builder(
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: Responsive.isDesktop(context) ? 2 : 1,
+                    crossAxisSpacing: 10,
+                    mainAxisSpacing: 20,
+                    childAspectRatio: Responsive.isDesktop(context) ? 3.5 : 2.5),
+                itemCount: item?.length ?? 0,
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemBuilder: (context, index) {
+                  return Body(
+                    storeName: item![index]['CombanyName'],
+                    stroeImage: item![index]['Comimage'],
+                    date: DateTime.parse(item![index]['date']),
+                    bookingcode: item![index]['BookingCode'],
+                  );
+                },
+              ),
             ),
           ],
         ),
