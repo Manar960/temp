@@ -57,19 +57,19 @@ void main() async {
     print("FCM Token: $fcmToken");
   }
   /*;*/
-  runApp(
-    MultiProvider(
-      providers: [
-        ChangeNotifierProvider<MyMenuController.MenuController>(
-          create: (context) => MyMenuController.MenuController(),
-        ),
-            create: (context) => MyMenuController.MenuController()),
-        ChangeNotifierProvider<UserProvider>(
-            create: (context) => UserProvider()),
-      ],
-      child: const MyApp(),
-    ),
-  );
+   runApp(
+  MultiProvider(
+    providers: [
+      ChangeNotifierProvider<MyMenuController.MenuController>(
+        create: (context) => MyMenuController.MenuController(),
+      ),
+      ChangeNotifierProvider<UserProvider>(
+        create: (context) => UserProvider(),
+      ),
+    ],
+    child: const MyApp(),
+  ),
+);
 }
 
 class MyApp extends StatefulWidget {
