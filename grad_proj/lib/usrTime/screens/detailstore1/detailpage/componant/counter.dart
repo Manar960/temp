@@ -19,7 +19,7 @@ class CartCounter extends StatefulWidget {
 class _CartCounterState extends State<CartCounter> {
 
 Future<void> addToCart(String proBarCode, String userName) async {
-    final url = 'http://localhost:4000/addToCart';
+    final url = 'https://gp-back-gp.onrender.com/addToCart';
 
     final response = await http.post(
       Uri.parse(url),
@@ -39,7 +39,7 @@ Future<void> addToCart(String proBarCode, String userName) async {
   }
   
 Future<void> removeFromCart(String proBarCode, String userName) async {
-    final url = 'http://localhost:4000/removeFromCart/oneitem';
+    final url = 'https://gp-back-gp.onrender.com/removeFromCart/oneitem';
 
     final response = await http.delete(
       Uri.parse(url),

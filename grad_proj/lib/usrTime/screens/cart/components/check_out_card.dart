@@ -27,7 +27,7 @@ class _CheckoutCardState extends State<CheckoutCard> {
   }
 
   Future<int> getCartItemprice(String userName) async {
-    const String apiUrl = 'http://localhost:4000/getprice';
+    const String apiUrl = 'https://gp-back-gp.onrender.com/getprice';
 
     try {
       final response = await http.post(

@@ -40,7 +40,7 @@ class _CounterWithFavBtnState extends State<CounterWithFavBtn> {
   }
 
   Future<void> addtofav(String UserName, String ProName, String Proimage) async {
-    final url = 'http://localhost:4000/Fav';
+    final url = 'https://gp-back-gp.onrender.com/Fav';
     print(UserName);
     final response = await http.post(
       Uri.parse(url),
@@ -60,7 +60,7 @@ class _CounterWithFavBtnState extends State<CounterWithFavBtn> {
   }
 
   Future<void> removeFromfav(String proname) async {
-    final url = 'http://localhost:4000/deletefav/$proname';
+    final url = 'https://gp-back-gp.onrender.com/deletefav/$proname';
 
     final response = await http.delete(
       Uri.parse(url),

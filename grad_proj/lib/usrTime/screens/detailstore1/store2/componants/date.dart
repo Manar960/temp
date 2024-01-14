@@ -35,7 +35,7 @@ class _DatePageState extends State<DatePage> {
   }
  List? Avalid;
 Future booking(String storeName) async {
-  final url = 'http://localhost:4000/get-time-and-day/$storeName';
+  final url = 'https://gp-back-gp.onrender.com/get-time-and-day/$storeName';
 
   final response = await http.get(
     Uri.parse(url),
@@ -57,7 +57,7 @@ if (response.statusCode == 200) {
 
 
 Future Booking(String StoreName, String userName, String Storeimage, DateTime date) async {
-  final url = 'http://localhost:4000/Booking';
+  final url = 'https://gp-back-gp.onrender.com/Booking';
 print(Storeimage);
   final response = await http.post(
     Uri.parse(url),
@@ -95,7 +95,7 @@ List<String> getAvailableTimesForSelectedDay() {
 
 Future<bool> findDate(String CombanyName, String userName, DateTime date) async {
  
-  final url = 'http://localhost:4000/check-time-and-day/time';    
+  final url = 'https://gp-back-gp.onrender.com/check-time-and-day/time';    
   try {
     final response = await http.post(
     Uri.parse(url),

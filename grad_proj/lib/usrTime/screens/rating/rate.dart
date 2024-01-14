@@ -56,7 +56,7 @@ late  Map<String, dynamic> star = {
   try {
    
     var response = await http.get(
-      Uri.parse('http://localhost:4000/Rating/persantge-of-each-star/$Name'),
+      Uri.parse('https://gp-back-gp.onrender.com/Rating/persantge-of-each-star/$Name'),
       headers: {"Content-Type": "application/json"},
     );
     if (response.statusCode == 200) {

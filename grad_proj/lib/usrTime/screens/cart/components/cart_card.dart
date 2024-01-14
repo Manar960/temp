@@ -26,22 +26,11 @@ class _CartCardState extends State<CartCard> {
   void initState() {
     super.initState();
     getCartItemCount(widget.cart['ProBarCode'].toString(), username!);
-    //fetchCartItemCount();
   }
 
-  // Future<void> fetchCartItemCount() async {
-  //   try {
-  //     final count = await getCartItemCount(widget.cart['ProBarCode'], username!);
-  //     print('Fetched count: $count');
-  //     setState(() {
-  //       itemCount = count;
-  //     });
-  //   } catch (error) {
-  //     print('Error fetching count: $error');
-  //   }
-  // }
+
 Future<void> getCartItemCount(String proBarCode, String userName) async {
- const String apiUrl = 'http://localhost:4000/getcount'; 
+ const String apiUrl = 'https://gp-back-gp.onrender.com/getcount'; 
 print(proBarCode);
 print(userName);
 
@@ -68,7 +57,7 @@ print(userName);
 }
   
 Future<void> removeFromCart(String proBarCode, String userName) async {
-    final url = 'http://localhost:4000/removeFromCart/oneitem';
+    final url = 'https://gp-back-gp.onrender.com/removeFromCart/oneitem';
 
     final response = await http.delete(
       Uri.parse(url),
@@ -87,7 +76,7 @@ Future<void> removeFromCart(String proBarCode, String userName) async {
     }
   }
   Future<void> addToCart(String proBarCode, String userName) async {
-    final url = 'http://localhost:4000/addToCart';
+    final url = 'https://gp-back-gp.onrender.com/addToCart';
 
     final response = await http.post(
       Uri.parse(url),

@@ -29,7 +29,7 @@ class _PopularProductsState extends State<PopularProducts> {
   Future<void> getpopProducts() async {
     try {
       var response = await http.get(
-        Uri.parse('http://localhost:4000/get-pop-pro/product/${widget.item['Name']}'),
+        Uri.parse('https://gp-back-gp.onrender.com/get-pop-pro/product/${widget.item['Name']}'),
         headers: {"Content-Type": "application/json"},
       );
       if (response.statusCode == 200) {

@@ -31,7 +31,7 @@ class _BodyState extends State<Body> {
   }
 
   Future<void> removebookng(String BookingCode,String userName) async {
-    final url = 'http://localhost:4000/bookings-for/user/$userName/$BookingCode';
+    final url = 'https://gp-back-gp.onrender.com/bookings-for/user/$userName/$BookingCode';
 
     final response = await http.delete(
       Uri.parse(url),

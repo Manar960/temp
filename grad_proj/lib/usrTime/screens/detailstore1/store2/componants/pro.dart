@@ -27,7 +27,7 @@ class _productstore2State extends State<productstore2> {
   }
    Future<void> getProducts(String comname) async {
     var response = await http.get(
-      Uri.parse('http://localhost:4000/getpro/$comname/SET'),
+      Uri.parse('https://gp-back-gp.onrender.com/getpro/$comname/SET'),
       headers: {"Content-Type": "application/json"},
     );
 

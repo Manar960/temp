@@ -33,7 +33,7 @@ class _CartScreenState extends State<CartScreen> {
   Future<void> getallitemcarts() async {
     try {
       var response = await http.get(
-        Uri.parse('http://localhost:4000/getallitemcarts/$username'),
+        Uri.parse('https://gp-back-gp.onrender.com/getallitemcarts/$username'),
         headers: {"Content-Type": "application/json"},
       );
       if (response.statusCode == 200) {
@@ -50,7 +50,7 @@ class _CartScreenState extends State<CartScreen> {
   }
 
   Future<void> removeFromCart(String proBarCode, String userName) async {
-    final url = 'http://localhost:4000/cart/removeallCart';
+    final url = 'https://gp-back-gp.onrender.com/cart/removeallCart';
 
     final response = await http.delete(
       Uri.parse(deleteCart),
