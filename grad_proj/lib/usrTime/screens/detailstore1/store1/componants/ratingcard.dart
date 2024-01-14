@@ -23,7 +23,7 @@ final Map<String, dynamic> item;
   });
 
  Future<void> addRate( String userName,String storeName,double rate,String comment) async {
-    const url = 'http://localhost:4000/Rating/AddRating-For/Store';
+    const url = 'https://gp-back-gp.onrender.com/Rating/AddRating-For/Store';
 
     final response = await http.post(
       Uri.parse(url),

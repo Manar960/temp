@@ -31,7 +31,7 @@ class _NewArrivalProductsState extends State<NewArrivalProducts> {
   Future<void> getnewProducts() async {
     try {
       var response = await http.get(
-        Uri.parse('http://localhost:4000/get-new-pro/${widget.item['Name']}'),
+        Uri.parse('https://gp-back-gp.onrender.com/get-new-pro/${widget.item['Name']}'),
         headers: {"Content-Type": "application/json"},
       );
       if (response.statusCode == 200) {
