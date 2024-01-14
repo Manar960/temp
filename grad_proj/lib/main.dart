@@ -57,7 +57,8 @@ void main() async {
     print("FCM Token: $fcmToken");
   }
   /*;*/
-  runApp(
+   runApp(
+
   MultiProvider(
     providers: [
       ChangeNotifierProvider<MyMenuController.MenuController>(
@@ -70,7 +71,6 @@ void main() async {
     child: const MyApp(),
   ),
 );
-
 }
 
 class MyApp extends StatefulWidget {
