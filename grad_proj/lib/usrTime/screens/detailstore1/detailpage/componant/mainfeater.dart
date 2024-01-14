@@ -39,7 +39,7 @@ final Map<String, dynamic> item;
                   children: [
                     const TextSpan(text: "السعر\n",style: TextStyle(color: Colors.white)),
                     TextSpan(
-                      text: "\$${item['price']}",
+                      text: "\₪${item['price']}",
                       style: Theme.of(context)
                           .textTheme
                           .headlineSmall!

@@ -1,59 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:lottie/lottie.dart';
-
-import 'cat.dart';
-import 'pro.dart';
-
-class Categories extends StatefulWidget {
-  const Categories({Key? key, required this.item}) : super(key: key);
-  final Map<String, dynamic> item;
-
-  @override
-  // ignore: library_private_types_in_public_api
-  _CategoriesState createState() => _CategoriesState();
-}
-
-class _CategoriesState extends State<Categories> {
-  final TextEditingController _date = TextEditingController();
-  String? selectedType;
-  String? selectedModel;
-  String? selectedFuelType;
-  @override
-  Widget build(BuildContext context) {
-    final Size size = MediaQuery.of(context).size;
-
-    return Container(
-      alignment: Alignment.center,
-      child: GridView.builder(
-        shrinkWrap: true,
-        physics: const ScrollPhysics(),
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: size.width < 650 ? 1 : 2,
-          childAspectRatio: 3,
-          mainAxisSpacing: 2,
-          crossAxisSpacing: 2,
-        ),
-        itemBuilder: (context, index) => CategoryCard(
-          icon: demo_categories[index].icon,
-          title: demo_categories[index].title,
-          press: () {
-            if (index == 0) {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => productstore2(item: widget.item),
-                ),
-              );
-            }
-        
-          },
-        ),
-        itemCount: demo_categories.length,
-      ),
-    );
-  }
-
-}
 
 class CategoryCard extends StatelessWidget {
   const CategoryCard({
@@ -80,17 +27,17 @@ class CategoryCard extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            LottieBuilder.asset(
+            SvgPicture.asset(
               icon,
-              height: 200,
-              width: 200,
+              height: 50,
+              width: 50,
             ),
             const SizedBox(width: 8),
             Text(
               title,
               style: const TextStyle(
                 fontWeight: FontWeight.bold,
-                fontSize: 16,
+                fontSize: 20,
               ),
             ),
           ],
@@ -99,5 +46,8 @@ class CategoryCard extends StatelessWidget {
     );
   }
 }
+
+
+
 
 

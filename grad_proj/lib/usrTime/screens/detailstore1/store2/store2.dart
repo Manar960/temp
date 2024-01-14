@@ -6,6 +6,8 @@ import '../../../map/map.dart';
 import '../../cart/cart_screen.dart';
 import '../../home/components/home_header.dart';
 import '../../home/home_screen.dart';
+import '../../rating/Ratecard.dart';
+import '../../rating/rate.dart';
 import '../detailpage/componant/responsive.dart';
 import '../store1/componants/ratingcard.dart';
 import '../store4/components/categories.dart';
@@ -14,6 +16,7 @@ import 'componants/brandcard.dart';
 import 'componants/categury.dart';
 import 'componants/date.dart';
 import 'componants/imageslider.dart';
+import 'componants/pro.dart';
 import 'componants/service_section.dart';
 
 // ignore: camel_case_types
@@ -183,37 +186,41 @@ class _store2State extends State<store2> {
                 ],
               ),
             ),
-            Center(
-              child: Categories(item: widget.item),
-            ),
+            // Directionality(
+            //   textDirection: TextDirection.rtl,
+            //   child: CategoryCard(
+            //           icon: "assets/images/care.svg",
+            //           title: "منتجات العناية",
+            //           press: () {
+            //                 Navigator.push(
+            //     context,
+            //     MaterialPageRoute(
+            //       builder: (context) => productstore2(item: widget.item),
+            //     ),
+            //   );
+                    
+            //           },
+            //         ),
+            // ),
             const SizedBox(
               height: 10,
             ),
-            Center(
-              child: Text(
-                "البراند",
-                textAlign: TextAlign.right,
-                style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                      color: deepbrowncolor,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 21,
-                    ),
-              ),
-            ),
-            const BrandCards(),
+            const title(tile: "العلامات التجارية المشهورة",icon: Icons.no_crash_rounded),
+            const Directionality(
+              textDirection: TextDirection.rtl,
+              child: Padding(
+                padding: EdgeInsets.all(16),
+                child: BrandCards(),
+              )),
             const SizedBox(
               height: 10,
             ),
+            const title(tile: "الخدمات المتوفرة",icon: Icons.supervised_user_circle),
             ServiceSection(name: widget.item['Name']),
             const SizedBox(
               height: 20,
             ),
-            Center(
-              child: Text(
-                "من اعمالنا",
-                style: Theme.of(context).textTheme.headlineSmall,
-              ),
-            ),
+            const title(tile: "من اعمالنا",icon: Icons.workspace_premium_outlined),
             const SizedBox(
               height: 10,
             ),
@@ -221,12 +228,7 @@ class _store2State extends State<store2> {
             const SizedBox(
               height: 8,
             ),
-            Center(
-              child: Text(
-                "قبل و بعد",
-                style: Theme.of(context).textTheme.headlineSmall,
-              ),
-            ),
+           const title(tile: "قبل وبعد",icon: Icons.shape_line_outlined),
             const SizedBox(
               height: 8,
             ),
@@ -241,15 +243,14 @@ class _store2State extends State<store2> {
                 height: 4,
               ),
             ),
-            //   Ratecard(press: (){
-            //      Navigator.push(
-            //   context,
-            //   MaterialPageRoute(builder: (context) {
-            //     return  Reviwandcommint(item: widget.item,);
-            //   }),
-            // );
-            //   },
-            //   item: widget.item,)
+                Ratecard(press: (){
+                     Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) {
+                    return  Reviwandcommint(item:widget.item);
+                  }),
+                );
+                  },item: widget.item,)
           ],
         ),
       ),
@@ -313,6 +314,38 @@ class _store2State extends State<store2> {
         height: 90,
         width: 500,
         child: card,
+      ),
+    );
+  }
+}
+
+class title extends StatelessWidget {
+  const title({
+    super.key, required this.tile, required this.icon,
+  });
+final String tile;
+final IconData icon;
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(16),
+      child: Directionality(
+        textDirection: TextDirection.rtl,
+        child: Row(
+          children: [
+            Text(
+              tile,
+              textAlign: TextAlign.right,
+              style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                    color: deepbrowncolor,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 21,
+                  ),
+            ),
+            SizedBox(width: 10,),
+             Icon(icon,color: bluebasic,size: 40,)
+          ],
+        ),
       ),
     );
   }

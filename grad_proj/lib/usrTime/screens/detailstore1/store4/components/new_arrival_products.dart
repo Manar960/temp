@@ -1,8 +1,10 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:grad_proj/constants.dart';
 import '../../../home/components/section_title.dart';
 import '../../detailpage/Detailpage.dart';
+import '../../store2/store2.dart';
 import 'product_card.dart';
 import 'package:http/http.dart' as http;
 
@@ -29,7 +31,7 @@ class _NewArrivalProductsState extends State<NewArrivalProducts> {
   Future<void> getnewProducts() async {
     try {
       var response = await http.get(
-        Uri.parse('http://localhost:4000/get-new-pro'),
+        Uri.parse('http://localhost:4000/get-new-pro/${widget.item['Name']}'),
         headers: {"Content-Type": "application/json"},
       );
       if (response.statusCode == 200) {
@@ -51,20 +53,10 @@ class _NewArrivalProductsState extends State<NewArrivalProducts> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 16),
-          child: SectionTitle(
-            title: "الجديد",
-            press: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => SeeAll(item: widget.item),
-                ),
-              );
-            },
-            showSeeAllButton: true,
-          ),
+        const Padding(
+          padding: EdgeInsets.symmetric(horizontal: 20),
+          child: title(tile: "الجديد",icon: Icons.new_releases),
+
         ),
         SingleChildScrollView(
           physics: const BouncingScrollPhysics(
@@ -80,7 +72,7 @@ class _NewArrivalProductsState extends State<NewArrivalProducts> {
                   image: item![index]["proimage"],
                   price: item![index]["price"],
                   bgColor: index % 2 == 0
-                      ? const Color(0xFFE7E8D1)
+                      ? bluebasic
                       : const Color(0xFFF8FEFB),
                   press: () {
                     Navigator.push(

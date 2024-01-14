@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:grad_proj/butombar.dart';
 import 'package:grad_proj/constants.dart';
+import 'package:grad_proj/usrTime/screens/detailstore1/store4/components/seeall.dart';
 import '../../../map/map.dart';
 import '../../booking/boking_screen.dart';
 import '../../cart/cart_screen.dart';
 import '../../home/components/home_header.dart';
 import '../../home/home_screen.dart';
+import '../../rating/Ratecard.dart';
+import '../../rating/rate.dart';
 import '../detailpage/componant/responsive.dart';
 import '../store1/componants/ratingcard.dart';
 import '../store2/componants/date.dart';
+import '../store2/store2.dart';
 import 'components/categories.dart';
 import 'components/new_arrival_products.dart';
 import 'components/popular_products.dart';
@@ -180,41 +184,64 @@ class _store4State extends State<store4> {
                 ],
               ),
             ),
+               InkWell(
+              onTap: () {
+                 Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) {
+                  return  SeeAll(item: widget.item,);
+                }),
+              );
+              },
+              child: const title(tile: "جميع السيارات المتوفرة",icon: Icons.car_rental)),
+
+
+            const SizedBox(
+              height: 20,
+            ),
+            const title(tile: "العلامات التجارية",icon: Icons.supervised_user_circle),
+            const Directionality(
+              textDirection: TextDirection.rtl,
+              child: Center(child: Catforstore())),
             const SizedBox(
               height: 10,
             ),
-            const Center(child: Catforstore()),
-            const SizedBox(
-              height: 10,
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: NewArrivalProducts(item: widget.item),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            const Padding(
-              padding: EdgeInsets.all(8.0),
-              child: PopularProducts(),
+            Directionality(
+             textDirection: TextDirection.rtl,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: NewArrivalProducts(item: widget.item),
+              ),
             ),
             const SizedBox(
               height: 10,
             ),
+             Directionality(
+              textDirection: TextDirection.rtl,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: PopularProducts(item:widget.item ),
+              ),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+         
+
             const Padding(
               padding: EdgeInsets.symmetric(vertical: 15),
               child: Divider(
                 height: 4,
               ),
             ),
-            //   Ratecard(press: (){
-            //      Navigator.push(
-            //   context,
-            //   MaterialPageRoute(builder: (context) {
-            //     return  Reviwandcommint(item: widget.item,);
-            //   }),
-            // );
-            //   },item: widget.item,)
+              Ratecard(press: (){
+                 Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) {
+                return  Reviwandcommint(item: widget.item,);
+              }),
+            );
+              },item: widget.item,)
           ],
         ),
       ),

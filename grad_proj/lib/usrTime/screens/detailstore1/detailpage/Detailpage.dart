@@ -54,49 +54,52 @@ class _DetailsproductState extends State<Detailsproduct> {
         ],
       ),
       
-      body: SingleChildScrollView(
-        child: Column(
-          children: <Widget>[
-            SizedBox(
-              height: size.height,
-              child: Stack(
-                children: <Widget>[
-                  Container(
-                    margin: EdgeInsets.only(top: size.height * 0.3),
-                    padding: EdgeInsets.only(
-                      top: size.height * 0.12,
-                      left: kPadding,
-                      right: kPadding,
-                      
-                    ),
-                    height: double.infinity,
-                    decoration: const BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(24),
-                        topRight: Radius.circular(24),
+      body: Directionality(
+        textDirection: TextDirection.rtl,
+        child: SingleChildScrollView(
+          child: Column(
+            children: <Widget>[
+              SizedBox(
+                height: size.height,
+                child: Stack(
+                  children: <Widget>[
+                    Container(
+                      margin: EdgeInsets.only(top: size.height * 0.3),
+                      padding: EdgeInsets.only(
+                        top: size.height * 0.12,
+                        left: kPadding,
+                        right: kPadding,
+                        
+                      ),
+                      height: double.infinity,
+                      decoration: const BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(24),
+                          topRight: Radius.circular(24),
+                        ),
+                      ),
+                      child: SingleChildScrollView(
+                        child: Column(
+                          children: <Widget>[
+                            const SizedBox(height: 22),
+                            BulidSize(item :widget.item),
+                            const SizedBox(height: kPadding / 2),
+                            Description(item :widget.item ),
+                            const SizedBox(height: kPadding / 2),
+                            CounterWithFavBtn(item:widget.item),
+                            const SizedBox(height: 10),
+                            AddToCart(item:widget.item)
+                          ],
+                        ),
                       ),
                     ),
-                    child: SingleChildScrollView(
-                      child: Column(
-                        children: <Widget>[
-                          const SizedBox(height: 22),
-                          BulidSize(item :widget.item),
-                          const SizedBox(height: kPadding / 2),
-                          Description(item :widget.item ),
-                          const SizedBox(height: kPadding / 2),
-                          CounterWithFavBtn(item:widget.item),
-                          const SizedBox(height: 10),
-                          AddToCart(item:widget.item)
-                        ],
-                      ),
-                    ),
-                  ),
-                  pagedetail(item :widget.item)
-                ],
-              ),
-            )
-          ],
+                    pagedetail(item :widget.item)
+                  ],
+                ),
+              )
+            ],
+          ),
         ),
       ),
        bottomNavigationBar: CustomBottomNavigationBar(

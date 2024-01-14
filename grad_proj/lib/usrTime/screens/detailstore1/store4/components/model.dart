@@ -22,6 +22,7 @@ List<Category> demo_categories = [
     icon: "assets/icons/mazda.svg",
     title: "MAZDA",
   ),
+  
 ];
 
 // ignore: non_constant_identifier_names

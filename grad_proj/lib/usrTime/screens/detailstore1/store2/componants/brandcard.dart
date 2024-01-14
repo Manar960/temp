@@ -54,7 +54,7 @@ class Services1 extends StatelessWidget {
         child: Container(
           height: 150,
           padding: const EdgeInsets.all(kPadding / 2),
-          color: pagecolor,
+          color: kPrimaryColor,
           child: Wrap(
             alignment: WrapAlignment.start,
             crossAxisAlignment: WrapCrossAlignment.center,
@@ -128,15 +128,4 @@ class ProductCard extends StatelessWidget {
     );
   }
 
-  // ignore: unused_element
-  Widget _buildCard(Widget card) {
-    return Container(
-      margin: const EdgeInsets.all(kPadding / 2),
-      decoration: BoxDecoration(
-        border: Border.all(color: const Color(0xFFFBAEAE), width: 2),
-        borderRadius: BorderRadius.circular(20),
-      ),
-      child: card,
-    );
-  }
 }

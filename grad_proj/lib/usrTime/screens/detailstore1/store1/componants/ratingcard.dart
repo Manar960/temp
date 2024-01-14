@@ -30,7 +30,7 @@ final Map<String, dynamic> item;
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode({
         "UserName":userName,
-        "StoreName":storeName,
+        "Name":storeName,
         "Rateing":rate,
         "Comments":comment,
       }),

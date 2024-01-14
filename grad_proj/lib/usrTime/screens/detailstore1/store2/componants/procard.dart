@@ -68,7 +68,7 @@ class _setproductcardState extends State<setproductcard>
                   ),
                   child: Image.asset(
                     widget.image,
-                    height: 180,
+                    height: 160,
                   ),
                 ),
                 const SizedBox(height: 15),
@@ -82,10 +82,10 @@ class _setproductcardState extends State<setproductcard>
                     ),
                     const SizedBox(width: 8),
                     Text(
-                       widget.price.toString()+"شيكل",
+                        "${widget.price}₪",
                       style: Theme.of(context).textTheme.subtitle2,
                     ),
-                  ],
+                  ], 
                 ),
                 const SizedBox(height: 12),
                 Text(
