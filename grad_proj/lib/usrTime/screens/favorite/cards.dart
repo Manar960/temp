@@ -9,6 +9,7 @@ class FavCard extends StatefulWidget {
     Key? key,
     required this.image,
     required this.title,
+    
     required this.bgColor,
     required this.isActive,
   }) : super(key: key);
@@ -66,7 +67,7 @@ class _FavCardState extends State<FavCard> {
               ),
               child: Image.asset(
                 widget.image,
-                height: 132,
+              height: 130,
               ),
             ),
             const SizedBox(height: 15),
@@ -98,7 +99,8 @@ class _FavCardState extends State<FavCard> {
                   ),
                 ),
               ],
-            )
+            ),
+           
           ],
         ),
       ),

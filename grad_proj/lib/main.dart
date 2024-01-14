@@ -8,6 +8,7 @@ import 'landing/navebar/homepage.dart';
 import 'landing/splash.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
+import 'usrTime/models/notfiy.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -60,6 +61,9 @@ void main() async {
       providers: [
         ChangeNotifierProvider<MyMenuController.MenuController>(
           create: (context) => MyMenuController.MenuController(),
+        ),
+         ChangeNotifierProvider<RatingModel>(
+          create: (context) => RatingModel(),
         ),
       ],
       child: const MyApp(),

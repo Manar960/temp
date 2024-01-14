@@ -17,7 +17,7 @@ final Map<String, dynamic> item;
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Text(
+          const Text(
             "معلومات اضافية",
             style: TextStyle(color: Colors.white),
           ),
@@ -30,15 +30,14 @@ final Map<String, dynamic> item;
           ),
           
               SizedBox(
-  width: Responsive.isDesktop(context) ? kPadding*30 : kPadding*5,
-)
-,
+  width: Responsive.isDesktop(context) ? kPadding*35 : kPadding*5,
+),
           Row(
             children: <Widget>[
               RichText(
                 text: TextSpan(
                   children: [
-                    const TextSpan(text: "السعر\n"),
+                    const TextSpan(text: "السعر\n",style: TextStyle(color: Colors.white)),
                     TextSpan(
                       text: "\$${item['price']}",
                       style: Theme.of(context)
@@ -50,13 +49,13 @@ final Map<String, dynamic> item;
                   ],
                 ),
               ),
-               SizedBox(width: Responsive.isDesktop(context)?kPadding*50:kPadding*5),
+               SizedBox(width: Responsive.isDesktop(context)?kPadding*50:kPadding*7),
                  Expanded(
                   child: Hero(
                     tag: "${item['_id']}",
                     child: Container(
                       width: Responsive.isDesktop(context)?150:100,  
-                      height: Responsive.isDesktop(context)?250:200,
+                      height: Responsive.isDesktop(context)?230:200,
                       child: Image.asset(
                         item['proimage'],
                         fit: BoxFit.fill, 

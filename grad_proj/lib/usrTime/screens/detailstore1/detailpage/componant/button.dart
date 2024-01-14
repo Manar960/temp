@@ -41,7 +41,7 @@ class _CounterWithFavBtnState extends State<CounterWithFavBtn> {
 
   Future<void> addtofav(String UserName, String ProName, String Proimage) async {
     final url = 'http://localhost:4000/Fav';
-
+    print(UserName);
     final response = await http.post(
       Uri.parse(url),
       headers: {'Content-Type': 'application/json'},

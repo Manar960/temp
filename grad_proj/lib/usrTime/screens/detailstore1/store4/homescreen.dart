@@ -222,47 +222,42 @@ class _store4State extends State<store4> {
         currentIndex: 0,
           onTap: (index) {
             switch (index) {
-              case 0:
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) {
-                    return const HomeScreenu();
-                  }),
-                );
-                break;
-              case 1:
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) {
-                    return  bookScreen();
-                  }),
-                );
-                break;
-              case 2:
-                // MapPage
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) {
-                    return const MapPage();
-                  }),
-                );
-                break;
-              case 3:
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) {
-                    return const CartScreen();
-                  }),
-                );
-                break;
-              case 4:
+               case 0:
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) {
+                  return const HomeScreenu();
+                }),
+              );
+              break;
+            case 1:
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) {
+                  return const bookScreen();
+                }),
+              );
+              break;
+            case 2:
+              // MapPage
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) {
+                  return const MapPage();
+                }),
+              );
+              break;
+            case 3:
                Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) {
-                          return const CartScreen();
-                        }),
-                      );
-                break;
+                context,
+                MaterialPageRoute(builder: (context) {
+                  return const CartScreen();
+                }),
+              );
+              break;
+            case 4:
+             
+              break;
             }
           },
         ),

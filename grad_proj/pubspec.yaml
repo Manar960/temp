@@ -75,6 +75,7 @@ dependencies:
   before_after: ^3.0.0+1
   carousel_slider: ^4.2.1
   time_planner: ^0.1.2+1
+  readmore: ^2.2.0
 
 
     #cupertino_icons: ^1.0.2

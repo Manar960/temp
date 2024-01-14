@@ -7,6 +7,8 @@ import '../../../map/map.dart';
 import '../../cart/cart_screen.dart';
 import '../../home/components/home_header.dart';
 import '../../home/home_screen.dart';
+import '../../rating/Ratecard.dart';
+import '../../rating/rate.dart';
 import '../store4/components/categories.dart';
 import 'componants/Brand.dart';
 import 'componants/Categoriesviwe.dart';
@@ -149,14 +151,14 @@ class _store1State extends State<store1> {
                       height: 4,
                     ),
                   ),
-                //   Ratecard(press: (){
-                //      Navigator.push(
-                //   context,
-                //   MaterialPageRoute(builder: (context) {
-                //     return  Reviwandcommint(item:widget.item);
-                //   }),
-                // );
-                //   },item: widget.item,)
+                  Ratecard(press: (){
+                     Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) {
+                    return  Reviwandcommint(item:widget.item);
+                  }),
+                );
+                  },item: widget.item,)
 
 
           ],
@@ -167,46 +169,41 @@ class _store1State extends State<store1> {
           onTap: (index) {
             switch (index) {
               case 0:
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) {
-                    return const HomeScreenu();
-                  }),
-                );
-                break;
-              case 1:
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) {
-                    return  bookScreen();
-                  }),
-                );
-                break;
-              case 2:
-                // MapPage
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) {
-                    return const MapPage();
-                  }),
-                );
-                break;
-              case 3:
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) {
-                    return const CartScreen();
-                  }),
-                );
-                break;
-              case 4:
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) {
+                  return const HomeScreenu();
+                }),
+              );
+              break;
+            case 1:
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) {
+                  return const bookScreen();
+                }),
+              );
+              break;
+            case 2:
+              // MapPage
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) {
+                  return const MapPage();
+                }),
+              );
+              break;
+            case 3:
                Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) {
-                          return const CartScreen();
-                        }),
-                      );
-                break;
+                context,
+                MaterialPageRoute(builder: (context) {
+                  return const CartScreen();
+                }),
+              );
+              break;
+            case 4:
+             
+              break;
             }
           },
         ),

@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import '../../../../config.dart';
 import '../../../constants.dart';
 import '../../../models/user.dart';
 
@@ -19,53 +18,57 @@ class CartCard extends StatefulWidget {
 }
 
 class _CartCardState extends State<CartCard> {
-  late int itemCount = 0;
+  late int itemCount=0; 
   late int itemsprice = 0;
   String? username = AuthProvider.userData?.userName;
 
   @override
   void initState() {
     super.initState();
-    fetchCartItemCount();
+    getCartItemCount(widget.cart['ProBarCode'].toString(), username!);
+    //fetchCartItemCount();
   }
 
-  Future<void> fetchCartItemCount() async {
-    try {
-      final count =
-          await getCartItemCount(widget.cart['ProBarCode'], username!);
-      print('Fetched count: $count');
-      setState(() {
-        itemCount = count;
-      });
-    } catch (error) {
-      print('Error fetching count: $error');
+  // Future<void> fetchCartItemCount() async {
+  //   try {
+  //     final count = await getCartItemCount(widget.cart['ProBarCode'], username!);
+  //     print('Fetched count: $count');
+  //     setState(() {
+  //       itemCount = count;
+  //     });
+  //   } catch (error) {
+  //     print('Error fetching count: $error');
+  //   }
+  // }
+Future<void> getCartItemCount(String proBarCode, String userName) async {
+ const String apiUrl = 'http://localhost:4000/getcount'; 
+print(proBarCode);
+print(userName);
+
+  try {
+    final response = await http.post(
+      Uri.parse(apiUrl),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({'ProBarCode': proBarCode, 'UserName': userName}),
+    );
+
+    if (response.statusCode == 200) {
+             var jsonResponse = jsonDecode(response.body);
+           setState(() {
+          itemCount = jsonResponse['itemCount'];
+        });
+        print(itemCount);
+    } else {
+      throw Exception('Failed to load cart item count');
     }
+  } catch (error) {
+    print('Errordddd: $error');
+    throw Exception('Failed to connect to the server');
   }
-
-  Future<int> getCartItemCount(String proBarCode, String userName) async {
-    const String apiUrl = cartProdCount;
-
-    try {
-      final response = await http.post(
-        Uri.parse(apiUrl),
-        headers: {'Content-Type': 'application/json'},
-        body: jsonEncode({'ProBarCode': proBarCode, 'UserName': userName}),
-      );
-
-      if (response.statusCode == 200) {
-        final Map<String, dynamic> responseData = jsonDecode(response.body);
-        return responseData['itemCount'] as int;
-      } else {
-        throw Exception('Failed to load cart item count');
-      }
-    } catch (error) {
-      print('Error: $error');
-      throw Exception('Failed to connect to the server');
-    }
-  }
-
-  Future<void> removeFromCart(String proBarCode, String userName) async {
-    const url = cartProdDelete;
+}
+  
+Future<void> removeFromCart(String proBarCode, String userName) async {
+    final url = 'http://localhost:4000/removeFromCart/oneitem';
 
     final response = await http.delete(
       Uri.parse(url),
@@ -73,6 +76,8 @@ class _CartCardState extends State<CartCard> {
       body: jsonEncode({
         'ProBarCode': proBarCode,
         'UserName': userName,
+   
+        
       }),
     );
     if (response.statusCode == 201) {
@@ -81,22 +86,27 @@ class _CartCardState extends State<CartCard> {
       print('Failed to deleted product to cart');
     }
   }
-
   Future<void> addToCart(String proBarCode, String userName) async {
+    final url = 'http://localhost:4000/addToCart';
+
     final response = await http.post(
-      Uri.parse(addToCartPro),
+      Uri.parse(url),
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode({
         'ProBarCode': proBarCode,
         'UserName': userName,
+   
+        
       }),
     );
-    if (response.statusCode == 201) {
+    if (response.statusCode == 200) {
       print('Product added to cart successfully');
     } else {
       print('Failed to add product to cart');
     }
   }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -112,7 +122,7 @@ class _CartCardState extends State<CartCard> {
                 color: const Color(0xFFF5F6F9),
                 borderRadius: BorderRadius.circular(15),
               ),
-              child: Image.asset(widget.cart['proimage']),
+              child: Image.asset(widget.cart['proImage']),
             ),
           ),
         ),
@@ -126,6 +136,7 @@ class _CartCardState extends State<CartCard> {
               maxLines: 2,
             ),
             const SizedBox(height: 8),
+           
             Text.rich(
               TextSpan(
                 text: "\$${widget.cart['ProPrice']}",
@@ -136,52 +147,54 @@ class _CartCardState extends State<CartCard> {
               ),
             ),
             const SizedBox(height: 10),
-            Align(
-              alignment: Alignment.centerRight,
-              child: Row(
-                children: [
-                  InkWell(
-                    onTap: () {
-                      removeFromCart(widget.cart['ProBarCode'], username!);
-                      if (itemCount > 0) {
-                        setState(() {
-                          itemCount--;
-                        });
-                      }
-                    },
-                    child: Container(
-                      padding: const EdgeInsets.all(8),
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Colors.grey[200],
-                      ),
-                      child: const Icon(Icons.remove),
+             Align(
+                alignment: Alignment.centerRight,
+                child:
+            Row(
+              children: [
+                InkWell(
+                  onTap: () {
+                    removeFromCart(widget.cart['ProBarCode'].toString(), username!);
+                    if (itemCount > 0) {
+                    setState(() {
+                      itemCount--;
+                    });
+                    }
+                   
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Colors.grey[200],
                     ),
+                    child: const Icon(Icons.remove),
                   ),
-                  const SizedBox(width: 8),
-                  Text(
-                    itemCount.toString(),
-                    style: Theme.of(context).textTheme.bodyLarge,
-                  ),
-                  const SizedBox(width: 8),
-                  InkWell(
-                    onTap: () {
-                      addToCart(widget.cart['ProBarCode'], username!);
-                      setState(() {
-                        itemCount++;
-                      });
-                    },
-                    child: Container(
-                      padding: const EdgeInsets.all(8),
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Colors.grey[200],
-                      ),
-                      child: const Icon(Icons.add),
+                ),
+                const SizedBox(width: 8),
+                Text(
+                  itemCount.toString(),
+                  style: Theme.of(context).textTheme.bodyLarge,
+                ),
+                const SizedBox(width: 8),
+                InkWell(
+                  onTap: () {
+                     addToCart(widget.cart['ProBarCode'].toString(), username!);
+              setState(() {
+                itemCount++;
+              });
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Colors.grey[200],
                     ),
+                    child: const Icon(Icons.add),
                   ),
-                ],
-              ),
+                ),
+              ],
+            ),
             ),
           ],
         ),

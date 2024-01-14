@@ -90,7 +90,7 @@ class StoresScreen extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) {
-                  return bookScreen();
+                  return const bookScreen();
                 }),
               );
               break;
@@ -104,20 +104,15 @@ class StoresScreen extends StatelessWidget {
               );
               break;
             case 3:
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) {
-                  return const favScreen();
-                }),
-              );
-              break;
-            case 4:
-              Navigator.push(
+               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) {
                   return const CartScreen();
                 }),
               );
+              break;
+            case 4:
+             
               break;
           }
         },

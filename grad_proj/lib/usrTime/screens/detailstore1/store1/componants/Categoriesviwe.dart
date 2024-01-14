@@ -34,7 +34,6 @@ Future<void> fetchWheelProductsForStore(String name) async {
       var jsonResponse = jsonDecode(response.body);
       setState(() {
         item = jsonResponse['Brand1'];
-        print(item);
       });
     } else {
       print('Request failed with status: ${response.statusCode}');

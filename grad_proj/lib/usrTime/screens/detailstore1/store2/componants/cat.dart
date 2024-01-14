@@ -8,10 +8,6 @@ List<Category> demo_categories = [
   Category(
     icon: "assets/prod.json",
     title: "منتجات العناية",
-  ),
-  Category(
-    icon: "assets/cal.json",
-    title: "احسب موعد صيانتك",
-  ),
+  )
 
 ];

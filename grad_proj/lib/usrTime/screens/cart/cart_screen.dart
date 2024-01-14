@@ -4,9 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:http/http.dart' as http;
+import '../../../butombar.dart';
 import '../../../config.dart';
-import '../../../userPro/page/profile_page.dart';
-import '../../curved_navigation_bar.dart';
+import '../../map/map.dart';
+import '../booking/boking_screen.dart';
 import '../home/home_screen.dart';
 import 'components/cart_card.dart';
 import 'components/check_out_card.dart';
@@ -21,16 +22,16 @@ class CartScreen extends StatefulWidget {
 }
 
 class _CartScreenState extends State<CartScreen> {
-  List? item;
+  List? item=[];
   @override
   void initState() {
     super.initState();
-  }
+  } 
 
   Future<void> getallitemcarts() async {
     try {
       var response = await http.get(
-        Uri.parse(cartItem),
+        Uri.parse('http://localhost:4000/getallitemcarts/$username'),
         headers: {"Content-Type": "application/json"},
       );
       if (response.statusCode == 200) {
@@ -86,7 +87,7 @@ class _CartScreenState extends State<CartScreen> {
                         onDismissed: (direction) {
                           setState(() {
                             removeFromCart(
-                                item![index]['ProBarCode'], username!);
+                                item![index]['ProBarCode'].toString(), username!);
                           });
                         },
                         background: Container(
@@ -108,59 +109,53 @@ class _CartScreenState extends State<CartScreen> {
                   }),
             ),
           ),
-          CheckoutCard(),
+         const CheckoutCard(),
         ],
       ),
-      bottomNavigationBar: Container(
-        color: const Color(0xFF063970),
-        child: CurvedNavigationBar(
-          index: 3,
-          color: const Color(0xFF063970),
-          buttonBackgroundColor: const Color(0xFF063970),
-          backgroundColor: const Color.fromARGB(255, 255, 255, 255),
-          height: 75.0,
-          items: const [
-            Icon(Icons.home, size: 30, color: Colors.white),
-            Icon(Icons.book, size: 30, color: Colors.white),
-            Icon(Icons.map, size: 30, color: Colors.white),
-            Icon(Icons.shopping_cart, size: 30, color: Colors.white),
-            Icon(Icons.person, size: 30, color: Colors.white),
-          ],
+      bottomNavigationBar: 
+     CustomBottomNavigationBar(
+        currentIndex: 0,
           onTap: (index) {
             switch (index) {
               case 0:
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) {
-                    return const HomeScreenu();
-                  }),
-                );
-                break;
-              case 1:
-                // Handle book button tap
-                break;
-              case 2:
-                // Handle add button tap
-                break;
-              case 3:
-                // Handle factory button tap
-                break;
-              case 4:
-                // ProfilePage
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) {
-                    return const ProfilePage(
-                      token: "t",
-                      userName: "n",
-                    );
-                  }),
-                );
-                break;
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) {
+                  return const HomeScreenu();
+                }),
+              );
+              break;
+            case 1:
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) {
+                  return const bookScreen();
+                }),
+              );
+              break;
+            case 2:
+              // MapPage
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) {
+                  return const MapPage();
+                }),
+              );
+              break;
+            case 3:
+               Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) {
+                  return const CartScreen();
+                }),
+              );
+              break;
+            case 4:
+             
+              break;
             }
           },
         ),
-      ),
     );
   }
 }

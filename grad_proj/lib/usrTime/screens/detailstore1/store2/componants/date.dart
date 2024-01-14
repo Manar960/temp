@@ -56,18 +56,18 @@ if (response.statusCode == 200) {
 }
 
 
-Future Booking(String StoreName, String userName, String Storeimage, DateTime date,String time) async {
+Future Booking(String StoreName, String userName, String Storeimage, DateTime date) async {
   final url = 'http://localhost:4000/Booking';
-
+print(Storeimage);
   final response = await http.post(
     Uri.parse(url),
     headers: {'Content-Type': 'application/json'},
     body: jsonEncode({
-      'StoreName': StoreName,
+      'CombanyName': StoreName,
       'UserName': userName,
-      'Storeimage': Storeimage,
+      'Comimage': Storeimage,
       'date': date.toUtc().toIso8601String(),
-      'time':time
+   
     }),
   );
 
@@ -93,19 +93,18 @@ List<String> getAvailableTimesForSelectedDay() {
   return []; 
 }
 
-Future<bool> findDate(String storeName, String userName, DateTime date, String time) async {
-  String formattedDate = date.toUtc().toIso8601String();
-  print(formattedDate);
+Future<bool> findDate(String CombanyName, String userName, DateTime date) async {
+ 
   final url = 'http://localhost:4000/check-time-and-day/time';    
   try {
     final response = await http.post(
     Uri.parse(url),
     headers: {'Content-Type': 'application/json'},
     body: jsonEncode({
-      'StoreName': storeName,
+      'CombanyName': CombanyName,
       'UserName': userName,
       'date': date.toUtc().toIso8601String(),
-      'time':time
+  
     }),
   );
    if (response.statusCode == 200) {
@@ -202,15 +201,26 @@ Future<bool> findDate(String storeName, String userName, DateTime date, String t
                                   onTap: () async {
                                     setState(() {
                                       selectedTimeIndex = index;
+                                      List<String> parts = availableTimes[index].split(':');
+                                      Duration timeDuration = Duration(
+                                        hours: int.parse(parts[0]),
+                                        minutes: int.parse(parts[1]),
+                                      );
+                                       combinedDateTime = _selectedDay!.add(timeDuration);
+                                      print(combinedDateTime);
                                     });
-                                    bookingStatus= await  findDate( widget.name,username!,_selectedDay!,availableTimes[index]);
+                                     
+                                    
+                                    bookingStatus= await  findDate( widget.name,username!,combinedDateTime!);
                                     if(bookingStatus){
+                                      print("time");
                                        showCards(context, "assets/booked.json", 'هذا الوقت محجوز');
                                     }else{
                                        time=availableTimes[index];
+                                       print(time);
                                     }
                                     
-                                     print(time);
+                                     
                                   
 
                                   },
@@ -244,8 +254,14 @@ Future<bool> findDate(String storeName, String userName, DateTime date, String t
                         backgroundColor: Color(0xFF063970),
                       ),
                       onPressed: () async {
-                       Booking(widget.name, widget.user, widget.image, _selectedDay!,time.toString());
-                       showCards(context, "assets/assets/sad.json", 'تم الحجز');
+                        List<String> parts = time.split(':');
+                        Duration timeDuration = Duration(
+                          hours: int.parse(parts[0]),
+                          minutes: int.parse(parts[1]),
+                        );
+                         combinedDateTime = _selectedDay!.add(timeDuration);
+                       Booking(widget.name, widget.user, widget.image, combinedDateTime!);
+                       showCards(context, "assets/sad.json", 'تم الحجز');
                          
                            print(bookingStatus) ;
                            

@@ -1,5 +1,6 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:grad_proj/usrTime/models/user.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -343,6 +344,9 @@ class _LoginFormState extends State<LoginForm> {
             return const HomeScreenu();
           }),
         );
+         AuthProvider.setUserData(UserData(
+        userName: username,
+      ));
       } else {
         setState(() {
           emailError = "البريد الإلكتروني أو كلمة المرور غير صحيحة";

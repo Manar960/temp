@@ -3,6 +3,7 @@ import 'package:grad_proj/login/responsive.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import '../../../butombar.dart';
+import '../../../constants.dart';
 import '../../map/map.dart';
 import '../booking/boking_screen.dart';
 import '../cart/cart_screen.dart';
@@ -28,7 +29,7 @@ class _favScreenState extends State<favScreen> {
         var jsonResponse = jsonDecode(response.body);
         setState(() {
           item = jsonResponse['data'];
-          print('$item');
+     
         });
       } else {
         print('Request failed with status: ${response.statusCode}');
@@ -41,11 +42,12 @@ class _favScreenState extends State<favScreen> {
   @override
   void initState() {
     super.initState();
+       
   }
 
   @override
   Widget build(BuildContext context) {
-    getfav();
+ getfav();
     return Scaffold(
       appBar: AppBar(
         title: Text('المفضلة'),
@@ -75,7 +77,7 @@ class _favScreenState extends State<favScreen> {
                 return FavCard(
                   title: item![index]['ProName'],
                   image: item![index]['Proimage'],
-                  bgColor: const Color.fromARGB(255, 243, 229, 245),
+                  bgColor: bluebasic,
                   isActive: true,
                 );
               },
