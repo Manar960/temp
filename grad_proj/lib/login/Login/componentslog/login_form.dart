@@ -2,6 +2,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:grad_proj/usrTime/models/user.dart';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../admin/pages/home_page.dart';
@@ -11,6 +12,7 @@ import '../../../usrTime/screens/home/home_screen.dart';
 import '../../Signup/components/signup_form.dart';
 import '../../components/already_have_an_account_acheck.dart';
 import '../../constantslog.dart';
+import '../../provider/UserProvider.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({Key? key}) : super(key: key);
@@ -337,6 +339,7 @@ class _LoginFormState extends State<LoginForm> {
         prefs.setString('token', myToken);
         prefs.setString('email', emailController.text);
         prefs.setString('userName', username);
+        Provider.of<UserProvider>(context, listen: false).setUserName(username);
         // ignore: use_build_context_synchronously
         Navigator.push(
           context,

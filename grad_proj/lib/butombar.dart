@@ -15,12 +15,12 @@ class CustomBottomNavigationBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Color(0xFF063970),
+      color: const Color(0xFF063970),
       child: CurvedNavigationBar(
         index: currentIndex,
-        color: Color(0xFF063970),
-        buttonBackgroundColor: Color(0xFF063970),
-        backgroundColor: Color.fromARGB(255, 255, 255, 255),
+        color: const Color(0xFF063970),
+        buttonBackgroundColor: const Color(0xFF063970),
+        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
         height: 75.0,
         items: const [
           Icon(Icons.home, size: 30, color: Colors.white),

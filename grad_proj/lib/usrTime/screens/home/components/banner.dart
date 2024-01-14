@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import '../../../constants.dart';
 
 class BannerSection extends StatelessWidget {
   const BannerSection({
@@ -13,11 +12,11 @@ class BannerSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Expanded(
+        const Expanded(
           flex: 3,
           child: AboutSection(),
         ),
-        SizedBox(
+        const SizedBox(
           width: 20,
         ),
         Expanded(
@@ -37,6 +36,7 @@ class MobBanner extends StatefulWidget {
   const MobBanner({Key? key}) : super(key: key);
 
   @override
+  // ignore: library_private_types_in_public_api
   _MobBannerState createState() => _MobBannerState();
 }
 
@@ -67,6 +67,7 @@ class AboutSection extends StatefulWidget {
   const AboutSection({Key? key}) : super(key: key);
 
   @override
+  // ignore: library_private_types_in_public_api
   _AboutSectionState createState() => _AboutSectionState();
 }
 
@@ -78,16 +79,16 @@ class _AboutSectionState extends State<AboutSection> {
   @override
   void initState() {
     super.initState();
-    animatedText = ''; 
+    animatedText = '';
     const String fullText = "خيارك الافضل ";
 
-    timer = Timer.periodic(Duration(milliseconds: 100), (timer) {
+    timer = Timer.periodic(const Duration(milliseconds: 100), (timer) {
       setState(() {
         if (currentIndex < fullText.length) {
           animatedText += fullText[currentIndex];
           currentIndex++;
         } else {
-          timer.cancel(); 
+          timer.cancel();
         }
       });
     });
@@ -95,7 +96,7 @@ class _AboutSectionState extends State<AboutSection> {
 
   @override
   void dispose() {
-    timer.cancel(); 
+    timer.cancel();
     super.dispose();
   }
 
@@ -106,7 +107,7 @@ class _AboutSectionState extends State<AboutSection> {
         AutoSizeText(
           animatedText,
           maxLines: 1,
-          style: TextStyle(fontSize: 56, fontWeight: FontWeight.bold),
+          style: const TextStyle(fontSize: 56, fontWeight: FontWeight.bold),
         ),
       ],
     );

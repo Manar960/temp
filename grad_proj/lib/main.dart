@@ -8,7 +8,8 @@ import 'landing/navebar/homepage.dart';
 import 'landing/splash.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
-import 'usrTime/models/notfiy.dart';
+import 'login/provider/UserProvider.dart';
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -62,9 +63,9 @@ void main() async {
         ChangeNotifierProvider<MyMenuController.MenuController>(
           create: (context) => MyMenuController.MenuController(),
         ),
-         ChangeNotifierProvider<RatingModel>(
-          create: (context) => RatingModel(),
-        ),
+            create: (context) => MyMenuController.MenuController()),
+        ChangeNotifierProvider<UserProvider>(
+            create: (context) => UserProvider()),
       ],
       child: const MyApp(),
     ),
@@ -102,7 +103,7 @@ class _MyAppState extends State<MyApp> {
     return CalendarControllerProvider(
       controller: EventController(),
       child: const MaterialApp(
-        title: 'My App',
+        title: 'WheelsWell',
         home: kIsWeb ? WebHomePage() : MobileHomePage(),
         debugShowCheckedModeBanner: false,
       ),

@@ -10,6 +10,7 @@ class PopularProducts extends StatefulWidget {
   const PopularProducts({Key? key}) : super(key: key);
 
   @override
+  // ignore: library_private_types_in_public_api
   _PopularProductsState createState() => _PopularProductsState();
 }
 
@@ -21,6 +22,7 @@ class _PopularProductsState extends State<PopularProducts> {
     super.initState();
     getpopProducts();
   }
+
   Future<void> getpopProducts() async {
     try {
       var response = await http.get(
@@ -33,12 +35,15 @@ class _PopularProductsState extends State<PopularProducts> {
           item = jsonResponse['data'];
         });
       } else {
+        // ignore: avoid_print
         print('Request failed with status: ${response.statusCode}');
       }
     } catch (e) {
+      // ignore: avoid_print
       print('Error during API request: $e');
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -64,14 +69,17 @@ class _PopularProductsState extends State<PopularProducts> {
                   title: item![index]["Name"],
                   image: item![index]["proimage"],
                   price: item![index]["price"],
-                  bgColor: index % 2 == 0 ? const Color(0xFFFEFBF9) : Color.fromARGB(255, 219, 237, 167),
+                  bgColor: index % 2 == 0
+                      ? const Color(0xFFFEFBF9)
+                      : const Color.fromARGB(255, 219, 237, 167),
                   press: () {
                     Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => Detailsproduct(item: item![index]),
-                    ),
-                  );
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            Detailsproduct(item: item![index]),
+                      ),
+                    );
                   },
                 ),
               ),

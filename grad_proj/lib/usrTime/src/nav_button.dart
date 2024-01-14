@@ -7,7 +7,8 @@ class NavButton extends StatelessWidget {
   final ValueChanged<int> onTap;
   final Widget child;
 
-  NavButton({
+  // ignore: use_key_in_widget_constructors
+  const NavButton({
     required this.onTap,
     required this.position,
     required this.length,
@@ -27,7 +28,7 @@ class NavButton extends StatelessWidget {
         onTap: () {
           onTap(index);
         },
-        child: Container(
+        child: SizedBox(
             height: 75.0,
             child: Transform.translate(
               offset: Offset(

@@ -8,6 +8,8 @@ import '../../../butombar.dart';
 import '../../../config.dart';
 import '../../map/map.dart';
 import '../booking/boking_screen.dart';
+import '../../curved_navigation_bar.dart';
+import '../../profile/page/profile_page_user.dart';
 import '../home/home_screen.dart';
 import 'components/cart_card.dart';
 import 'components/check_out_card.dart';
@@ -151,8 +153,14 @@ class _CartScreenState extends State<CartScreen> {
               );
               break;
             case 4:
-             
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) {
+                    return const ProfilePage();
+                  }),
+                );
               break;
+
             }
           },
         ),

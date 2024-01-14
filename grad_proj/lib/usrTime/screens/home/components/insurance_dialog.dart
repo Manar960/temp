@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 
 import 'home_header.dart';
 
+// ignore: use_key_in_widget_constructors
 class GovernmentServicesPage extends StatefulWidget {
   @override
+  // ignore: library_private_types_in_public_api
   _GovernmentServicesPageState createState() => _GovernmentServicesPageState();
 }
 
@@ -19,7 +21,7 @@ class _GovernmentServicesPageState extends State<GovernmentServicesPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
+      appBar: const PreferredSize(
         preferredSize: Size.fromHeight(kToolbarHeight),
         child: HomeHeader(),
       ),
