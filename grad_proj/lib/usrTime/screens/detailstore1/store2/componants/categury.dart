@@ -54,21 +54,6 @@ class _CategoriesState extends State<Categories> {
     );
   }
 
-
-  Future<void> _selectDate(BuildContext context) async {
-    DateTime? _picked = await showDatePicker(
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(2000),
-      lastDate: DateTime(2100),
-    );
-
-    if (_picked != null) {
-      setState(() {
-        _date.text = _picked.toString().split(" ")[0];
-      });
-    }
-  }
 }
 
 
@@ -119,9 +104,5 @@ class CategoryCard extends StatelessWidget {
 
 
 
-
-const List<String> list = <String>['Type A', 'Type B', 'Type C'];
-const List<String> list1 = <String>['Model X', 'Model Y', 'Model Z'];
-const List<String> list2 = <String>['Gasoline', 'Diesel'];
 
 
