@@ -4,13 +4,17 @@ import 'store_card.dart';
 import 'section_title.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+
+// ignore: camel_case_types
 class topstore extends StatefulWidget {
   const topstore({Key? key}) : super(key: key);
 
   @override
+  // ignore: library_private_types_in_public_api
   _topstoreState createState() => _topstoreState();
 }
 
+// ignore: camel_case_types
 class _topstoreState extends State<topstore> {
   List? item;
 
@@ -32,9 +36,11 @@ class _topstoreState extends State<topstore> {
           item = jsonResponse['data'];
         });
       } else {
+        // ignore: avoid_print
         print('Request failed with status: ${response.statusCode}');
       }
     } catch (e) {
+      // ignore: avoid_print
       print('Error during API request: $e');
     }
   }
@@ -52,8 +58,7 @@ class _topstoreState extends State<topstore> {
                 context,
                 MaterialPageRoute(builder: (context) {
                   return const StoresScreen();
-                }
-                ),
+                }),
               );
             },
           ),
@@ -66,17 +71,15 @@ class _topstoreState extends State<topstore> {
                 ...List.generate(
                   item!.length,
                   (index) {
-                     return Padding(
+                    return Padding(
                       padding: const EdgeInsets.only(left: 20),
                       child: Store(
-                        title:item![index]['Name'].toString(), 
+                        title: item![index]['Name'].toString(),
                         image: item![index]['comimag'],
-                        onPress: (){},
+                        onPress: () {},
                         rating: item![index]['rate'],
                       ),
-                      
                     );
-                    
                   },
                 ),
               const SizedBox(width: 20),

@@ -20,6 +20,7 @@ class FavCard extends StatefulWidget {
   final bool isActive;
 
   @override
+  // ignore: library_private_types_in_public_api
   _FavCardState createState() => _FavCardState();
 }
 
@@ -35,6 +36,7 @@ class _FavCardState extends State<FavCard> {
   Future<void> removeFromfav(String proname) async {
     final url = '$deleteFav/$proname';
 
+    // ignore: unused_local_variable
     final response = await http.delete(
       Uri.parse(url),
       headers: {'Content-Type': 'application/json'},

@@ -7,17 +7,19 @@ import '../detailstore1/store1/store1.dart';
 import '../home/components/section_title.dart';
 import 'storecards.dart';
 
-
+// ignore: camel_case_types
 class caracc extends StatefulWidget {
   const caracc({Key? key}) : super(key: key);
 
   @override
+  // ignore: library_private_types_in_public_api
   _caraccState createState() => _caraccState();
 }
 
+// ignore: camel_case_types
 class _caraccState extends State<caracc> {
   List? item;
-late String name;
+  late String name;
   @override
   void initState() {
     super.initState();
@@ -27,7 +29,8 @@ late String name;
   Future<void> getstore() async {
     try {
       var response = await http.get(
-        Uri.parse('https://gp-back-gp.onrender.com/getsametypecompany/Car%20accessories'),
+        Uri.parse(
+            'https://gp-back-gp.onrender.com/getsametypecompany/Car%20accessories'),
         headers: {"Content-Type": "application/json"},
       );
       if (response.statusCode == 200) {
@@ -35,11 +38,12 @@ late String name;
         setState(() {
           item = jsonResponse['data'];
         });
-        
       } else {
+        // ignore: avoid_print
         print('Request failed with status: ${response.statusCode}');
       }
     } catch (e) {
+      // ignore: avoid_print
       print('Error during API request: $e');
     }
   }
@@ -56,38 +60,38 @@ late String name;
             showSeeAllButton: false,
           ),
         ),
-        const SizedBox(height: 25,),
-           Directionality(
-            textDirection: TextDirection.rtl,
-             child: GridView.builder(
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: Responsive.isDesktop(context)?3:1, 
-                crossAxisSpacing: 10,
-                mainAxisSpacing: 20,
-                childAspectRatio: 3, 
-              ),
-              itemCount: item?.length ?? 0,
-              shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
-              itemBuilder: (context, index) {
-                return Storse(
-                  title: item![index]['Name'].toString(),
-                  image: item![index]['comimag'],
-                  location: item![index]['location'].toString(),
-                  press: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => store1(item: item![index]),
-                      ),
-                    );
-                  },
-                  
-                );
-              },
-                       ),
-           ),
-       
+        const SizedBox(
+          height: 25,
+        ),
+        Directionality(
+          textDirection: TextDirection.rtl,
+          child: GridView.builder(
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: Responsive.isDesktop(context) ? 3 : 1,
+              crossAxisSpacing: 10,
+              mainAxisSpacing: 20,
+              childAspectRatio: 3,
+            ),
+            itemCount: item?.length ?? 0,
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemBuilder: (context, index) {
+              return Storse(
+                title: item![index]['Name'].toString(),
+                image: item![index]['comimag'],
+                location: item![index]['location'].toString(),
+                press: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => store1(item: item![index]),
+                    ),
+                  );
+                },
+              );
+            },
+          ),
+        ),
       ],
     );
   }

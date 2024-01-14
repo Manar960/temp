@@ -84,8 +84,10 @@ void _showDenemoDialog(BuildContext context) {
   );
 }
 
+// ignore: use_key_in_widget_constructors
 class ComplaintDialog extends StatefulWidget {
   @override
+  // ignore: library_private_types_in_public_api
   _ComplaintDialogState createState() => _ComplaintDialogState();
 }
 
@@ -228,7 +230,7 @@ class _ComplaintDialogState extends State<ComplaintDialog> {
   }
 
   void _sendCommentToServer() async {
-    final url = addComm;
+    const url = addComm;
     late String t;
     late String companyName;
     if (_selectedComplaintType == 'شكوى عن الخدمات') {
@@ -251,8 +253,10 @@ class _ComplaintDialogState extends State<ComplaintDialog> {
     );
 
     if (response.statusCode == 200) {
+      // ignore: avoid_print
       print('تم إرسال الكومنت بنجاح.');
     } else {
+      // ignore: avoid_print
       print('خطأ في إرسال الكومنت: ${response.statusCode}');
     }
   }
@@ -290,7 +294,7 @@ class CategoryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: 100,
       height: 150,
       child: ElevatedButton(

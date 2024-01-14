@@ -155,3 +155,5 @@ const showNewProp = "${url}get-pop-pro/product";
 const showcars = "${url}getpro";
 
 const deleteFav = "${url}deletefav";
+
+const featchuser = "${url}getUserInfo";

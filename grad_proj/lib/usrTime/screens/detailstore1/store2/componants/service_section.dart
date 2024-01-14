@@ -47,12 +47,12 @@ class _ServiceSectionState extends State<ServiceSection> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return Directionality(
+      textDirection: TextDirection.rtl,
       child: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
-          mainAxisSize: MainAxisSize.min,
           children: List.generate(
             services!.length,
             (index) => ServiceCard(index: index, services: services),

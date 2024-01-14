@@ -17,6 +17,7 @@ class Storse extends StatefulWidget {
   final Color? cardColor;
 
   @override
+  // ignore: library_private_types_in_public_api
   _StorseState createState() => _StorseState();
 }
 
@@ -33,7 +34,7 @@ class _StorseState extends State<Storse> {
         });
       },
       child: AnimatedContainer(
-        duration: Duration(milliseconds: 200),
+        duration: const Duration(milliseconds: 200),
         height: 320,
         width: 540,
         decoration: BoxDecoration(
@@ -45,19 +46,19 @@ class _StorseState extends State<Storse> {
           children: [
             Row(
               children: [
-                 CircleAvatar(
+                CircleAvatar(
                   radius: 70,
                   backgroundImage: Image.asset(widget.image).image,
                 ),
                 Expanded(
                   child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 20),
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(widget.location),
-                        SizedBox(height: 10),
+                        const SizedBox(height: 10),
                         Text(
                           widget.title,
                           style: Theme.of(context)
@@ -65,7 +66,7 @@ class _StorseState extends State<Storse> {
                               .headlineSmall!
                               .copyWith(height: 1.5),
                         ),
-                        SizedBox(height: 15),
+                        const SizedBox(height: 15),
                       ],
                     ),
                   ),
@@ -77,9 +78,9 @@ class _StorseState extends State<Storse> {
               left: 10,
               child: FloatingActionButton(
                 onPressed: widget.press,
+                backgroundColor: bluebasic,
                 child: const Icon(CupertinoIcons.chevron_left,
                     color: Colors.white),
-                backgroundColor: bluebasic,
               ),
             ),
           ],

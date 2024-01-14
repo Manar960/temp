@@ -20,8 +20,7 @@ class Catforstore extends StatelessWidget {
             title: demo_categories[index].title,
             press: () {},
           ),
-          separatorBuilder: (context, index) =>
-              const SizedBox(width: 16),
+          separatorBuilder: (context, index) => const SizedBox(width: 16),
         ),
       ),
     );
@@ -49,15 +48,19 @@ class CategoryCardforstore extends StatelessWidget {
         ),
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(
-        vertical: 16 / 4, horizontal: 16 / 4),
+        padding:
+            const EdgeInsets.symmetric(vertical: 16 / 4, horizontal: 16 / 4),
         child: Column(
           children: [
-            SvgPicture.asset(icon,height: 38,width: 50,),
+            SvgPicture.asset(
+              icon,
+              height: 38,
+              width: 50,
+            ),
             const SizedBox(height: 5),
             Text(
               title,
-              style: Theme.of(context).textTheme.subtitle2,
+              style: Theme.of(context).textTheme.titleSmall,
             )
           ],
         ),

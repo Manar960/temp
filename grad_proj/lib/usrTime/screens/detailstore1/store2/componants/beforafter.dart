@@ -3,9 +3,10 @@ import 'package:before_after/before_after.dart';
 
 import '../../detailpage/componant/responsive.dart';
 
-
+// ignore: use_key_in_widget_constructors
 class EffectHorizontalWidget extends StatefulWidget {
   @override
+  // ignore: library_private_types_in_public_api
   _EffectHorizontalWidgetState createState() => _EffectHorizontalWidgetState();
 }
 
@@ -31,7 +32,7 @@ class _EffectHorizontalWidgetState extends State<EffectHorizontalWidget> {
         onHover: (event) {
           if (isDragging) {
             setState(() {
-              thumbPosition = event.localPosition.dx / 300; // 300 is the width of the BeforeAfter widget
+              thumbPosition = event.localPosition.dx / 300;
               thumbPosition = thumbPosition.clamp(0.0, 1.0);
             });
           }
@@ -53,11 +54,12 @@ class _EffectHorizontalWidgetState extends State<EffectHorizontalWidget> {
   }
 }
 
-
-
+// ignore: use_key_in_widget_constructors
 class EffectHorizontalWidget2 extends StatefulWidget {
   @override
-  _EffectHorizontalWidgetState2 createState() => _EffectHorizontalWidgetState2();
+  // ignore: library_private_types_in_public_api
+  _EffectHorizontalWidgetState2 createState() =>
+      _EffectHorizontalWidgetState2();
 }
 
 class _EffectHorizontalWidgetState2 extends State<EffectHorizontalWidget2> {
@@ -70,7 +72,7 @@ class _EffectHorizontalWidgetState2 extends State<EffectHorizontalWidget2> {
       child: GestureDetector(
         onHorizontalDragUpdate: (details) {
           setState(() {
-            thumbPosition += details.primaryDelta! / 300; 
+            thumbPosition += details.primaryDelta! / 300;
             thumbPosition = thumbPosition.clamp(0.0, 1.0);
           });
         },
@@ -90,6 +92,7 @@ class _EffectHorizontalWidgetState2 extends State<EffectHorizontalWidget2> {
     );
   }
 }
+
 Widget horizontalWidgetBasedOnScreenType(BuildContext context) {
   if (Responsive.isDesktop(context)) {
     return Center(
@@ -100,7 +103,5 @@ Widget horizontalWidgetBasedOnScreenType(BuildContext context) {
       child: EffectHorizontalWidget2(),
     );
   }
-  return Container(); 
+  return Container();
 }
-
-

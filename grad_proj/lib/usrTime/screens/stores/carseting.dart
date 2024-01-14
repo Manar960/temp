@@ -7,14 +7,16 @@ import '../home/components/section_title.dart';
 
 import 'storecards.dart';
 
-
+// ignore: camel_case_types
 class carseting extends StatefulWidget {
   const carseting({Key? key}) : super(key: key);
 
   @override
+  // ignore: library_private_types_in_public_api
   _carsetingState createState() => _carsetingState();
 }
 
+// ignore: camel_case_types
 class _carsetingState extends State<carseting> {
   List? item;
 
@@ -27,7 +29,8 @@ class _carsetingState extends State<carseting> {
   Future<void> getstore() async {
     try {
       var response = await http.get(
-        Uri.parse('https://gp-back-gp.onrender.com/getsametypecompany/Car%20Seting'),
+        Uri.parse(
+            'https://gp-back-gp.onrender.com/getsametypecompany/Car%20Seting'),
         headers: {"Content-Type": "application/json"},
       );
 
@@ -35,18 +38,17 @@ class _carsetingState extends State<carseting> {
         var jsonResponse = jsonDecode(response.body);
         setState(() {
           item = jsonResponse['data'];
-
         });
-
-      
       } else {
+        // ignore: avoid_print
         print('Request failed with status: ${response.statusCode}');
       }
     } catch (e) {
+      // ignore: avoid_print
       print('Error during API request: $e');
     }
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -55,27 +57,26 @@ class _carsetingState extends State<carseting> {
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: SectionTitle(
             title: "تجليس السيارات",
-            press: () {
-            },
+            press: () {},
             showSeeAllButton: false,
-            
           ),
         ),
-            SizedBox(height: 25,),
-         Directionality(
-           textDirection: TextDirection.rtl,
-           child: GridView.builder(
+        const SizedBox(
+          height: 25,
+        ),
+        Directionality(
+          textDirection: TextDirection.rtl,
+          child: GridView.builder(
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: Responsive.isDesktop(context)?3:1, 
+              crossAxisCount: Responsive.isDesktop(context) ? 3 : 1,
               crossAxisSpacing: 10,
               mainAxisSpacing: 20,
-              childAspectRatio: 3, 
+              childAspectRatio: 3,
             ),
             itemCount: item?.length ?? 0,
             shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
+            physics: const NeverScrollableScrollPhysics(),
             itemBuilder: (context, index) {
-              var product = item![index];
               return Storse(
                 title: item![index]['Name'].toString(),
                 image: item![index]['comimag'],
@@ -90,8 +91,8 @@ class _carsetingState extends State<carseting> {
                 },
               );
             },
-                   ),
-         ),
+          ),
+        ),
       ],
     );
   }
