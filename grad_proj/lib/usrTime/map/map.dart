@@ -13,91 +13,106 @@ class MapPage extends StatefulWidget {
 }
 
 class _MapPageState extends State<MapPage> {
-  Completer<GoogleMapController> _googleMapController = Completer();
-  CameraPosition? _cameraPosition;
-  Location? _location;
-  LocationData? _currentLocation;
+  static const _initialCameraPosition = CameraPosition(
+    target: LatLng(37.773972, -122.431297),
+    zoom: 11.5,
+  );
+  late GoogleMapController _googleMapController;
+  late Marker _origin;
+  late Marker _destination;
+  //late Directions _info;
+
+  @override
+  void dispose() {
+    _googleMapController.dispose();
+    super.dispose();
+  }
 
   @override
   void initState() {
-    _init();
     super.initState();
-  }
-
-  _init() async {
-    _location = Location();
-    _cameraPosition = CameraPosition(
-        target: LatLng(
-            0, 0), // this is just the example lat and lng for initializing
-        zoom: 15);
-    _initLocation();
-  }
-
-  //function to listen when we move position
-  _initLocation() {
-    //use this to go to current location instead
-    _location?.getLocation().then((location) {
-      _currentLocation = location;
-    });
-    _location?.onLocationChanged.listen((newLocation) {
-      _currentLocation = newLocation;
-      moveToPosition(LatLng(
-          _currentLocation?.latitude ?? 0, _currentLocation?.longitude ?? 0));
-    });
-  }
-
-  moveToPosition(LatLng latLng) async {
-    GoogleMapController mapController = await _googleMapController.future;
-    mapController.animateCamera(CameraUpdate.newCameraPosition(
-        CameraPosition(target: latLng, zoom: 15)));
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _buildBody(),
-    );
-  }
-
-  Widget _buildBody() {
-    return _getMap();
-  }
-
-  Widget _getMarker() {
-    return Container(
-      width: 40,
-      height: 40,
-      padding: EdgeInsets.all(2),
-      decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(100),
-          boxShadow: [
-            BoxShadow(
-                color: Colors.grey,
-                offset: Offset(0, 3),
-                spreadRadius: 4,
-                blurRadius: 6)
-          ]),
-      child: ClipOval(child: Image.asset("assets/profile.jpg")),
-    );
-  }
-
-  Widget _getMap() {
-    return Stack(
-      children: [
-        GoogleMap(
-          initialCameraPosition: _cameraPosition!,
-          mapType: MapType.normal,
-          onMapCreated: (GoogleMapController controller) {
-            // now we need a variable to get the controller of google map
-            if (!_googleMapController.isCompleted) {
-              _googleMapController.complete(controller);
-            }
-          },
+        appBar: AppBar(
+          centerTitle: false,
+          title: const Text('Google Maps'),
+          actions: [
+            if (_origin != null)
+              TextButton(
+                onPressed: () => _googleMapController.animateCamera(
+                  CameraUpdate.newCameraPosition(
+                    CameraPosition(
+                      target: _origin.position,
+                      zoom: 14.5,
+                      tilt: 50.0,
+                    ),
+                  ),
+                ),
+                style: TextButton.styleFrom(
+                  primary: Colors.green,
+                  textStyle: const TextStyle(fontWeight: FontWeight.w600),
+                ),
+                child: const Text('ORIGIN'),
+              ),
+            if (_destination != null)
+              TextButton(
+                onPressed: () => _googleMapController.animateCamera(
+                  CameraUpdate.newCameraPosition(
+                    CameraPosition(
+                      target: _destination.position,
+                      zoom: 14.5,
+                      tilt: 50.0,
+                    ),
+                  ),
+                ),
+                style: TextButton.styleFrom(
+                  primary: Colors.blue,
+                  textStyle: const TextStyle(fontWeight: FontWeight.w600),
+                ),
+                child: const Text('DEST'),
+              )
+          ],
         ),
-        Positioned.fill(
-            child: Align(alignment: Alignment.center, child: _getMarker()))
-      ],
-    );
+        body: GoogleMap(
+          myLocationButtonEnabled: false,
+          zoomControlsEnabled: false,
+          initialCameraPosition: _initialCameraPosition,
+          onMapCreated: (controller) => _googleMapController = controller,
+          markers: {
+            if (_origin != null) _origin,
+            if (_destination != null) _destination
+          },
+          onLongPress: _addMarker,
+        ));
+  }
+
+  void _addMarker(LatLng pos) async {
+    if (_origin == null || (_origin != null && _destination != null)) {
+      setState(() {
+        _origin = Marker(
+          markerId: const MarkerId('origin'),
+          infoWindow: const InfoWindow(title: 'Origin'),
+          icon:
+              BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueGreen),
+          position: pos,
+        );
+
+        //_destination = null;
+
+        //  _info = null;
+      });
+    } else {
+      setState(() {
+        _destination = Marker(
+          markerId: const MarkerId('destination'),
+          infoWindow: const InfoWindow(title: 'Destination'),
+          icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue),
+          position: pos,
+        );
+      });
+    }
   }
 }
