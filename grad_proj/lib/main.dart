@@ -8,8 +8,8 @@ import 'landing/navebar/homepage.dart';
 import 'landing/splash.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
+import 'login/provider/CompanyProvider.dart';
 import 'login/provider/UserProvider.dart';
-
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -57,20 +57,22 @@ void main() async {
     print("FCM Token: $fcmToken");
   }
   /*;*/
-   runApp(
-
-  MultiProvider(
-    providers: [
-      ChangeNotifierProvider<MyMenuController.MenuController>(
-        create: (context) => MyMenuController.MenuController(),
-      ),
-      ChangeNotifierProvider<UserProvider>(
-        create: (context) => UserProvider(),
-      ),
-    ],
-    child: const MyApp(),
-  ),
-);
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider<MyMenuController.MenuController>(
+          create: (context) => MyMenuController.MenuController(),
+        ),
+        ChangeNotifierProvider<UserProvider>(
+          create: (context) => UserProvider(),
+        ),
+        ChangeNotifierProvider<CompanyProvider>(
+          create: (context) => CompanyProvider(),
+        ),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatefulWidget {

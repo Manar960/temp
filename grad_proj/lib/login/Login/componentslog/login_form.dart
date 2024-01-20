@@ -12,6 +12,7 @@ import '../../../usrTime/screens/home/home_screen.dart';
 import '../../Signup/components/signup_form.dart';
 import '../../components/already_have_an_account_acheck.dart';
 import '../../constantslog.dart';
+import '../../provider/CompanyProvider.dart';
 import '../../provider/UserProvider.dart';
 
 class LoginForm extends StatefulWidget {
@@ -347,9 +348,9 @@ class _LoginFormState extends State<LoginForm> {
             return const HomeScreenu();
           }),
         );
-         AuthProvider.setUserData(UserData(
-        userName: username,
-      ));
+        AuthProvider.setUserData(UserData(
+          userName: username,
+        ));
       } else {
         setState(() {
           emailError = "البريد الإلكتروني أو كلمة المرور غير صحيحة";
@@ -388,11 +389,15 @@ class _LoginFormState extends State<LoginForm> {
       var jsonResponse = jsonDecode(response.body);
       if (jsonResponse['status']) {
         var myToken = jsonResponse['token'];
-        var companyName = jsonResponse['userEmail'];
+        var companyName = jsonResponse['comaname'];
+        var companyname = jsonResponse['userEmail'];
+        Provider.of<CompanyProvider>(context, listen: false)
+            .setCompanyName(companyName);
         // ignore: avoid_print
         print(companyName);
         prefs.setString('token', myToken);
         prefs.setString('company', companyName);
+        prefs.setString('company', companyname);
         // ignore: use_build_context_synchronously
         Navigator.push(
           context,

@@ -5,6 +5,8 @@ import '../../../../config.dart';
 import '../../../constants.dart';
 import 'package:http/http.dart' as http;
 
+import 'SearchResultPage.dart';
+
 class SearchField extends StatelessWidget {
   const SearchField({
     Key? key,
@@ -51,7 +53,14 @@ class SearchField extends StatelessWidget {
             tileColor: Colors.white,
           );
         },
-        onSuggestionSelected: (suggestion) {},
+        onSuggestionSelected: (suggestion) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => SearchResultPage(result: suggestion),
+            ),
+          );
+        },
       ),
     );
   }
