@@ -116,7 +116,7 @@ class _checkoutState extends State<checkout> {
                         icon: Icons.delivery_dining,
                         isactive: waydelivary == "delivary" ? true : false,
                         title: "توصيل",
-                        pcolor: const Color.fromARGB(255, 231, 97, 97),
+                        pcolor: bluebasic,
                       )),
                   const SizedBox(
                     width: 10,
@@ -131,7 +131,7 @@ class _checkoutState extends State<checkout> {
                         icon: Icons.drive_eta,
                         isactive: waydelivary == "store" ? true : false,
                         title: "من المحل",
-                        pcolor: const Color.fromARGB(255, 231, 97, 97),
+                        pcolor: bluebasic,
                       ))
                 ],
               )),
@@ -173,78 +173,71 @@ class _checkoutState extends State<checkout> {
                     ),
                     const SizedBox(width: 10),
                     const Icon(Icons.map_outlined,
-                        size: 60, color: Color.fromARGB(255, 231, 97, 97)),
+                        size: 60, color: bluebasic),
                   ],
                 ),
               const SizedBox(
                 height: 20,
               ),
-              Container(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 16,
-                  horizontal: 20,
-                ),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(30),
-                    topRight: Radius.circular(30),
+              Directionality(
+                textDirection: TextDirection.rtl,
+                child: Container(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 16,
+                    horizontal: 20,
                   ),
-                  boxShadow: [
-                    BoxShadow(
-                      offset: const Offset(0, -15),
-                      blurRadius: 20,
-                      color: const Color(0xFFDADADA).withOpacity(0.15),
-                    )
-                  ],
-                ),
-                child: SafeArea(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          const Expanded(
-                            child: Text.rich(
-                              TextSpan(
-                                text: "",
-                                children: [
-                                  TextSpan(
-                                    text: "",
-                                    style: TextStyle(
-                                        fontSize: 16, color: Colors.black),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                          Expanded(
-                            child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor:
-                                    const Color.fromARGB(255, 231, 97, 97),
-                              ),
-                              onPressed: () {
-                                addOrder(username!, addressController.text,
-                                    paymentMethod, waydelivary);
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(builder: (context) {
-                                    return orders(paymentMethod: paymentMethod);
-                                  }),
-                                );
-                              },
-                              child: const Text(
-                                "أكمل عملية الدفع",
-                                style: TextStyle(
-                                    color: Colors.white, height: 1, fontSize: 20),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(30),
+                      topRight: Radius.circular(30),
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        offset: const Offset(0, -15),
+                        blurRadius: 20,
+                        color: const Color(0xFFDADADA).withOpacity(0.15),
+                      )
                     ],
+                  ),
+                  child: SafeArea(
+                    right: true,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Row(
+                          children: [   
+                            Expanded(
+                              child: Directionality(
+                                textDirection: TextDirection.rtl,
+                                child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor:
+                                        const Color.fromARGB(255, 231, 97, 97),
+                                  ),
+                                  onPressed: () {
+                                    addOrder(username!, addressController.text,
+                                        paymentMethod, waydelivary);
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(builder: (context) {
+                                        return orders(paymentMethod: paymentMethod);
+                                      }),
+                                    );
+                                  },
+                                  child: const Text(
+                                    "أكمل عملية الدفع",
+                                    style: TextStyle(
+                                        color: Colors.white, height: 1, fontSize: 20),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               )

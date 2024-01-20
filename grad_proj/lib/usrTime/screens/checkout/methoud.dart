@@ -12,7 +12,7 @@ class methoud extends StatelessWidget {
       margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
       decoration: BoxDecoration(
-        color: isactive == true ? bluecolor : bluecolor.withOpacity(0.4),
+        color: isactive == true ? bluebasic : bluebasic.withOpacity(0.4),
         borderRadius: BorderRadius.circular(20),
       ),
       child: Text(title,

@@ -118,14 +118,19 @@ class _store1State extends State<store1> {
                   Padding(
                    padding: const EdgeInsets.all(8.0),
                    child: Center(
-                     child: _buildCard(Text(
-                        widget.item['location'] ,
+                     child: _buildCard(Column(
+                       children: [
+                        
+                           Text(
+                        widget.item['about'],
                         textAlign: TextAlign.center,
                         style: Theme.of(context)
                             .textTheme
-                            .bodyText2!
+                            .bodyMedium!
                             .copyWith(color: deepbrowncolor),
-                      ),),
+                      ),
+                       ],
+                     ),),
                    ),
                  ),
                   const Padding(

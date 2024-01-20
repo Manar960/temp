@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../../butombar.dart';
 import '../../map/map.dart';
+import '../../profile/page/profile_page_user.dart';
 import '../booking/boking_screen.dart';
 import '../cart/cart_screen.dart';
 import '../favorite/favorite_screen.dart';
@@ -100,7 +101,7 @@ class StoresScreen extends StatelessWidget {
                 }),
               );
               break;
-            case 3:
+            case 3: 
                Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) {
@@ -109,7 +110,12 @@ class StoresScreen extends StatelessWidget {
               );
               break;
             case 4:
-             
+               Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) {
+                          return const ProfilePage();
+                        }),
+                      );
               break;
           }
         },
