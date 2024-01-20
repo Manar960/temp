@@ -157,3 +157,5 @@ const showcars = "${url}getpro";
 const deleteFav = "${url}deletefav";
 
 const featchuser = "${url}getUserInfo";
+
+const ordarforcom = "${url}getOrdersByDate";
