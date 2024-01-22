@@ -158,4 +158,4 @@ const deleteFav = "${url}deletefav";
 
 const featchuser = "${url}getUserInfo";
 
-const ordarforcom = "${url}getOrdersByDate";
+const ordarforcom = "${url}getOrdersByDateAndCompany";
