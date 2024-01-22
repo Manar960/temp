@@ -42,7 +42,7 @@ class Counter extends StatelessWidget {
             color: color,
           ),
         ),
-        Text(title, style: const TextStyle(fontSize: 16, color: Colors.black)),
+        Text(title, style: const TextStyle(fontSize: 18, color: Colors.white,fontWeight: FontWeight.bold)),
       ],
     );
   }

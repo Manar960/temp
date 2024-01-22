@@ -180,7 +180,7 @@ class HomeScreenu extends StatelessWidget {
                         padding: const EdgeInsets.all(20),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20),
-                          color: pagecolor,
+                          color: bluebasic,
                           boxShadow: [
                             BoxShadow(
                               offset: const Offset(0, 4),
@@ -193,17 +193,17 @@ class HomeScreenu extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
                             Counter(
-                              color: Color(0xFFFF8748),
+                              color: Color.fromARGB(255, 249, 230, 220),
                               number: 15,
                               title: "محل",
                             ),
                             Counter(
-                              color: Color(0xFFFF4848),
+                              color: Color.fromARGB(255, 249, 236, 236),
                               number: 50,
                               title: "منتج",
                             ),
                             Counter(
-                              color: Color(0xFF36C12C),
+                              color: Color.fromARGB(255, 222, 251, 220),
                               number: 46,
                               title: "نوع",
                             ),

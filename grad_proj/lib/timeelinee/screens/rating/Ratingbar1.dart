@@ -6,8 +6,8 @@ import 'package:intl/intl.dart';
 import 'UserReviweCard.dart';
 
 class Ratingbar1 extends StatefulWidget {
-  const Ratingbar1({Key? key, required this.item}) : super(key: key);
-  final Map<String, dynamic> item;
+  const Ratingbar1({Key? key, required this.companayname}) : super(key: key);
+final String companayname;
 
   @override
   _RatingbarState createState() => _RatingbarState();
@@ -20,7 +20,7 @@ class _RatingbarState extends State<Ratingbar1> {
 
   Future<void> getAllratings() async {
     try {
-      String name = widget.item['Name'];
+      String name = widget.companayname;
       var response = await http.get(
         Uri.parse('https://gp-back-gp.onrender.com/Rating/All-Rates/Store/$name'),
         headers: {"Content-Type": "application/json"},
@@ -67,11 +67,11 @@ class _RatingbarState extends State<Ratingbar1> {
                 comment: item![index]['Comments'],
                 rate: item![index]['Rateing'],
                 Date: DateFormat('yyyy-MM-dd').format(date).toString(),
-                StoreName: widget.item['Name'],
-                item: widget.item,
+                comName: widget.companayname,
                 comComment: item![index]['comComment'],
                 Datecom:DateFormat('yyyy-MM-dd').format(datecom).toString(),
 
+                // item: widget.item,
               );
             },
           ),

@@ -1,10 +1,14 @@
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:grad_proj/constants.dart';
+import 'package:grad_proj/usrTime/screens/booking/boking_screen.dart';
 import 'package:http/http.dart' as http;
 import 'package:lottie/lottie.dart';
 import '../../../config.dart';
 import '../../../login/responsive.dart';
+import '../booking/boking_screen.dart';
 import 'ordercards.dart';
 import 'paymint.dart';
 
@@ -21,13 +25,13 @@ class _ordersState extends State<orders> {
   @override
   void initState() {
     super.initState();
-    getOrdar();
+
   }
 
-  Future<void> getOrdar() async {
+  Future<void> getOrdar(String UserName) async {
     try {
       var response = await http.get(
-        Uri.parse(showordar),
+        Uri.parse('http://localhost:4000/getOrdar/$UserName'),
         headers: {"Content-Type": "application/json"},
       );
 
@@ -61,8 +65,11 @@ class _ordersState extends State<orders> {
       }),
     );
   }
+  final List<int> codes = [158236, 859627, 789632, 123654, 852746];
 
   void showcards(BuildContext context) {
+  int randomPower = codes[Random().nextInt(codes.length)];
+
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -93,7 +100,7 @@ class _ordersState extends State<orders> {
                     ),
                     const SizedBox(height: 16),
                     Text(
-                      'طلبك جاهز يرجى الاستلام في اقرب وقت',
+                      'طلبك جاهز يرجى الاستلام في اقرب وقت'+'\n'+' يرجى اظهار الكود' +randomPower.toString()+' عند وصولك للمحل ',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 18,
@@ -123,8 +130,8 @@ class _ordersState extends State<orders> {
 
   @override
   Widget build(BuildContext context) {
-    getOrdar();
-    return Scaffold(
+    getOrdar(username!);
+      return Scaffold(
       appBar: AppBar(
         title: Text('طلباتك'),
       ),
@@ -171,8 +178,8 @@ class _ordersState extends State<orders> {
                       }
                     },
                     cardColor: index % 2 == 0
-                        ? const Color(0xFFF3F8FF)
-                        : const Color(0xFFF3F8FF),
+                        ? kPrimaryColor
+                        : kPrimaryColor,
                   );
                 },
               ),

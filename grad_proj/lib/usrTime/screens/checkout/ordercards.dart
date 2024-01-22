@@ -35,8 +35,8 @@ class _orderscardsState extends State<orderscards> {
       },
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 200),
-        height: 320,
-        width: 540,
+        height: 300,
+        width: 500,
         decoration: BoxDecoration(
           color: widget.cardColor,
           borderRadius: BorderRadius.circular(15),
@@ -63,9 +63,9 @@ class _orderscardsState extends State<orderscards> {
                         ),
                         const SizedBox(height: 15),
                         Text(
-                          "\$${widget.price}",
+                          "${widget.price}₪",
                           style: const TextStyle(
-                              fontSize: 15, fontWeight: FontWeight.bold),
+                              fontSize: 20, fontWeight: FontWeight.bold),
                         ),
                         const SizedBox(height: 10),
                       ],
@@ -76,7 +76,7 @@ class _orderscardsState extends State<orderscards> {
             ),
             Positioned(
               bottom: 10,
-              right: 10,
+              left: 10,
               child: FloatingActionButton(
                 onPressed: widget.press2,
                 child: const Icon(CupertinoIcons.delete,

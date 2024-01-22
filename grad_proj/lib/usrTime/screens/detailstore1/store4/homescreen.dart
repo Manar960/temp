@@ -3,6 +3,7 @@ import 'package:grad_proj/butombar.dart';
 import 'package:grad_proj/constants.dart';
 import 'package:grad_proj/usrTime/screens/detailstore1/store4/components/seeall.dart';
 import '../../../map/map.dart';
+import '../../../profile/page/profile_page_user.dart';
 import '../../booking/boking_screen.dart';
 import '../../cart/cart_screen.dart';
 import '../../home/components/home_header.dart';
@@ -151,13 +152,18 @@ class _store4State extends State<store4> {
               padding: const EdgeInsets.all(8.0),
               child: Center(
                 child: _buildCard(
-                  Text(
-                    widget.item['location'],
-                    textAlign: TextAlign.center,
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyMedium!
-                        .copyWith(color: deepbrowncolor),
+                  Column(
+                    children: [
+                    
+                       Text(
+                        widget.item['about'],
+                        textAlign: TextAlign.center,
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyMedium!
+                            .copyWith(color: deepbrowncolor),
+                      ),
+                    ],
                   ),
                 ),
               ),
@@ -280,10 +286,15 @@ class _store4State extends State<store4> {
                 MaterialPageRoute(builder: (context) {
                   return const CartScreen();
                 }),
-              );
+              ); 
               break;
             case 4:
-             
+               Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) {
+                          return const ProfilePage();
+                        }),
+                      );
               break;
             }
           },

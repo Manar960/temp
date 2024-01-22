@@ -153,13 +153,18 @@ class _store2State extends State<store2> {
               padding: const EdgeInsets.all(8.0),
               child: Center(
                 child: _buildCard(
-                  Text(
-                    widget.item['location'],
-                    textAlign: TextAlign.center,
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyMedium!
-                        .copyWith(color: deepbrowncolor),
+                  Column(
+                    children: [
+                    
+                        Text(
+                        widget.item['about'],
+                        textAlign: TextAlign.center,
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyMedium!
+                            .copyWith(color: deepbrowncolor),
+                      ),
+                    ],
                   ),
                 ),
               ),
@@ -186,22 +191,22 @@ class _store2State extends State<store2> {
                 ],
               ),
             ),
-            // Directionality(
-            //   textDirection: TextDirection.rtl,
-            //   child: CategoryCard(
-            //           icon: "assets/images/care.svg",
-            //           title: "منتجات العناية",
-            //           press: () {
-            //                 Navigator.push(
-            //     context,
-            //     MaterialPageRoute(
-            //       builder: (context) => productstore2(item: widget.item),
-            //     ),
-            //   );
-                    
-            //           },
-            //         ),
-            // ),
+           Builder(
+             builder: (context) {
+               return  InkWell(
+                onTap: () {
+                Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => productstore2(item: widget.item),
+                ),
+              );
+                },
+                child:const title( tile: "منتجات العناية بالسيارات",icon: Icons.airport_shuttle_outlined),
+            );
+             }
+           ),
+
             const SizedBox(
               height: 10,
             ),

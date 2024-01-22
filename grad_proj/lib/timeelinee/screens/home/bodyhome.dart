@@ -9,6 +9,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
 import '../../../config.dart';
+import '../rating/rate.dart';
 
 class ComponantBody extends StatefulWidget {
   const ComponantBody({Key? key}) : super(key: key);
@@ -28,6 +29,7 @@ class _ComponantBodyState extends State<ComponantBody> {
   int nigh = 0;
   int nighc = 0;
   int counterValue = 4;
+  late int number=0;
   @override
   void initState() {
     super.initState();
@@ -39,6 +41,7 @@ class _ComponantBodyState extends State<ComponantBody> {
       fetchOrdarsCount();
       fetchNighberCount();
       fetchNighbercomCount();
+      getnumber(companyName);
     });
   }
 
@@ -153,6 +156,24 @@ class _ComponantBodyState extends State<ComponantBody> {
     }
   }
 
+  Future<void> getnumber(String storeName) async {
+  try {
+    var response = await http.get(
+      Uri.parse('https://gp-back-gp.onrender.com/Rating/length/Store-/$storeName'),
+      headers: {"Content-Type": "application/json"},
+    );
+    if (response.statusCode == 200) {
+      var jsonResponse = jsonDecode(response.body);
+      setState(() {
+        number = jsonResponse['totalRatings'];
+      });
+    } else {
+      print('Request failed with status: ${response.statusCode}');
+    }
+  } catch (e) {
+    print('Error during API request: $e');
+  }
+}
   @override
   Widget build(BuildContext context) {
     final media = MediaQuery.of(context).size;
@@ -179,7 +200,7 @@ class _ComponantBodyState extends State<ComponantBody> {
                 height: 40,
               ),
               FractionallySizedBox(
-                widthFactor: 0.3,
+                widthFactor: 0.3,       
                 child: CardTile(
                   iconBgColor: Colors.pinkAccent,
                   cardTitle: ' منتجات \n خدمات',
@@ -211,6 +232,18 @@ class _ComponantBodyState extends State<ComponantBody> {
                   mainText: nighc.toString(),
                 ),
               ),
+               const SizedBox(
+                height: 40,
+              ),
+                FractionallySizedBox(
+                widthFactor: 0.3,
+                child: CardTile(
+                  iconBgColor: Colors.orange,
+                  cardTitle: 'التقييمات',
+                  icon: Icons.reviews,
+                  mainText: totalBR.toString(),
+                ),
+              ),
             ],
             if (!ResponsiveWidget.isSmallScreen(context))
               Row(
@@ -240,6 +273,22 @@ class _ComponantBodyState extends State<ComponantBody> {
                     icon: Icons.store,
                     mainText: nighc.toString(),
                   ),
+                    InkWell(
+                      onTap: () {
+                     Navigator.push(
+                     context,
+                     MaterialPageRoute(builder: (context) {
+                     return Reviwandcommint(companayname: companyName);
+                }),
+              );
+                      },
+                      child: CardTile(
+                      iconBgColor: Color.fromARGB(255, 233, 255, 64),
+                      cardTitle: 'التقييمات',
+                      icon: Icons.reviews,
+                      mainText: number.toString(),
+                      ),
+                    ),
                 ],
               ),
             const SizedBox(

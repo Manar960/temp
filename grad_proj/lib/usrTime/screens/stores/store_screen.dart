@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import '../../../butombar.dart';
 import '../../map/map.dart';
+import '../../profile/page/profile_page_user.dart';
 import '../booking/boking_screen.dart';
 import '../cart/cart_screen.dart';
-import '../favorite/favorite_screen.dart';
 import '../home/components/home_header.dart';
 import '../home/home_screen.dart';
 import 'caracc1.dart';
-import 'carcolors.dart';
 import 'carseting.dart';
 import 'carshowrooms.dart';
 
@@ -60,8 +59,6 @@ class StoresScreen extends StatelessWidget {
               ),
             ),
             SizedBox(height: 20),
-            carcolors(),
-            SizedBox(height: 20),
             Padding(
               padding: EdgeInsets.symmetric(vertical: 15),
               child: Divider(
@@ -100,7 +97,7 @@ class StoresScreen extends StatelessWidget {
                 }),
               );
               break;
-            case 3:
+            case 3: 
                Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) {
@@ -109,7 +106,12 @@ class StoresScreen extends StatelessWidget {
               );
               break;
             case 4:
-             
+               Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) {
+                          return const ProfilePage();
+                        }),
+                      );
               break;
           }
         },
