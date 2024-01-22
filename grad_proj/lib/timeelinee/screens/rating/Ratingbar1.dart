@@ -58,14 +58,19 @@ class _RatingbarState extends State<Ratingbar1> {
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
             itemBuilder: (context, index) {
-              String dateString = item![index]['updatedAt'];
+              String dateString = item![index]['createdAt'];
               DateTime date = DateTime.parse(dateString);
+              String datecomString = item![index]['updatedAt'];
+              DateTime datecom = DateTime.parse(datecomString);
               return UserReviweCard(
                 userName: item![index]['UserName'],
                 comment: item![index]['Comments'],
                 rate: item![index]['Rateing'],
                 Date: DateFormat('yyyy-MM-dd').format(date).toString(),
-                StoreName: widget.companayname,
+                comName: widget.companayname,
+                comComment: item![index]['comComment'],
+                Datecom:DateFormat('yyyy-MM-dd').format(datecom).toString(),
+
                 // item: widget.item,
               );
             },

@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 class ProductCard extends StatefulWidget {
@@ -40,9 +42,18 @@ class _ProductCardState extends State<ProductCard>
     _controller.dispose();
     super.dispose();
   }
+ final List<int> carPowers = [1600, 1700, 1800, 1900, 2000];
+final List<int> numberOfHorses = [100, 120, 150, 180, 200]; 
+final List<int> distancesTraveled = [50000, 10000, 15000, 20000, 25000];
+final List<int> year = [2021, 2022, 2023, 2024, 2020];
 
   @override
   Widget build(BuildContext context) {
+    int randomPower = carPowers[Random().nextInt(carPowers.length)];
+    int randomHorses = numberOfHorses[Random().nextInt(numberOfHorses.length)];
+int randomDistance = distancesTraveled[Random().nextInt(distancesTraveled.length)];
+int year1 = year[Random().nextInt(year.length)];
+
     return MouseRegion(
       onEnter: (_) => _controller.forward(),
       onExit: (_) => _controller.reverse(),
@@ -99,7 +110,7 @@ class _ProductCardState extends State<ProductCard>
                               const SizedBox(height: 8),
                               const Text('القوة'),
                               const SizedBox(height: 8),
-                              const Text('1600'),
+                               Text(randomPower.toString()),
                             ],
                           ),
                         ),
@@ -125,7 +136,7 @@ class _ProductCardState extends State<ProductCard>
                               const SizedBox(height: 8),
                               const Text('عدد الاحصنة'),
                               const SizedBox(height: 8),
-                              const Text('132'),
+                               Text(randomHorses.toString()),
                             ],
                           ),
                         ),
@@ -142,7 +153,7 @@ class _ProductCardState extends State<ProductCard>
                               const SizedBox(height: 8),
                               const Text('المسافة'),
                               const SizedBox(height: 8),
-                              const Text('50000'),
+                               Text(randomDistance.toString()),
                             ],
                           ),
                         ),
@@ -155,7 +166,7 @@ class _ProductCardState extends State<ProductCard>
                               const SizedBox(height: 8),
                               const Text('سنة الانتاج'),
                               const SizedBox(height: 8),
-                              const Text('2021'),
+                               Text(year1.toString()),
                             ],
                           ),
                         ),

@@ -7,6 +7,8 @@ import '../../../config.dart';
 import '../../../constants.dart';
 import '../../map/map.dart';
 import '../../models/user.dart';
+import '../../profile/page/profile_page_user.dart';
+import '../booking/boking_screen.dart';
 import '../cart/cart_screen.dart';
 import '../home/home_screen.dart';
 import 'package:http/http.dart' as http;
@@ -24,7 +26,7 @@ class checkout extends StatefulWidget {
 }
 
 String? username = AuthProvider.userData?.userName;
-
+ 
 Future<void> addOrder(String userName, String location, String payminttype,
     String waydelivary) async {
   final response = await http.post(
@@ -48,6 +50,8 @@ class _checkoutState extends State<checkout> {
   String paymentMethod = '';
   String waydelivary = '';
   final TextEditingController addressController = TextEditingController();
+    final TextEditingController phoneController = TextEditingController();
+
   @override
   void initState() {
     super.initState();
@@ -176,6 +180,44 @@ class _checkoutState extends State<checkout> {
                         size: 60, color: bluebasic),
                   ],
                 ),
+                 if (waydelivary == "delivary")
+                 const Text("رقم الجوال",
+                    style: TextStyle(
+                        color: orangecolor,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20)),
+              const SizedBox(
+                height: 10,
+              ),
+              if (waydelivary == "delivary")
+                Row(
+                  children: [
+                    Expanded(
+                      child: TextFormField(
+                        controller: phoneController,
+                        decoration: InputDecoration(
+                          labelText: '',
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                            borderSide: const BorderSide(color: bluecolor),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                            borderSide: const BorderSide(color: bluecolor),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                            borderSide: const BorderSide(color: orangecolor),
+                          ),
+                          labelStyle: const TextStyle(color: bluecolor),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 10),
+                    const Icon(Icons.phone,
+                        size: 60, color: bluebasic),
+                  ],
+                ),
               const SizedBox(
                 height: 20,
               ),
@@ -247,41 +289,52 @@ class _checkoutState extends State<checkout> {
       ),
       bottomNavigationBar: CustomBottomNavigationBar(
         currentIndex: 0,
-        onTap: (index) {
-          switch (index) {
-            case 0:
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) {
-                  return const HomeScreenu();
-                }),
-              );
-              break;
-            case 1:
-              // Navigate to the report page
-              break;
-            case 2:
-              // MapPage
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) {
-                  return const MapPage();
-                }),
-              );
-              break;
-            case 3:
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) {
-                  return const CartScreen();
-                }),
-              );
-              break;
-            case 4:
-              // Navigate to the personal page
-              break;
-          }
-        },
+          onTap: (index) {
+                  switch (index) {
+                    case 0:
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) {
+                          return const HomeScreenu();
+                        }),
+                      );
+                      break;
+                    case 1:
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) {
+                          return const bookScreen();
+                        }),
+                      );
+                      break;
+                    case 2:
+                      //MapPaje
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) {
+                          return const MapPage();
+                        }),
+                      );
+                      break;
+
+                    case 3:
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) {
+                          return const CartScreen();
+                        }),
+                      );
+                      break;
+                    case 4:
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) {
+                          return const ProfilePage();
+                        }),
+                      );
+                      break;
+                  }
+                },
       ),
     );
   }

@@ -9,10 +9,10 @@ import 'package:http/http.dart' as http;
 import 'package:readmore/readmore.dart';
 
 class UserReviweCard extends StatelessWidget{
-  const UserReviweCard({Key?key, required this.userName, required this.Date, required this.comment, required this.rate, required this.StoreName}):super(key: key);
+  const UserReviweCard({Key?key, required this.userName, required this.Date, required this.comment, required this.rate, required this.comName, required this.comComment, required this.Datecom}):super(key: key);
 final String userName,Date,comment;
 final double rate;
-final String StoreName;
+final String comName,comComment,Datecom;
 
 
 Future<void> deleteratings(String UserName,String Name ) async {
@@ -44,47 +44,6 @@ Future<void> deleteratings(String UserName,String Name ) async {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            PopupMenuButton(
-            child: const Icon(Icons.more_vert), 
-          
-            onSelected: (value) {
-             
-            },
-         
-            itemBuilder: (BuildContext context) => <PopupMenuEntry>[
-              const PopupMenuItem(
-                value: "تعديل",
-                child: Row(
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.only(right: 8.0),
-                      child: Icon(Icons.edit),
-                    ),
-                    Text(
-                      'تعديل',
-                      style: TextStyle(fontSize: 15),
-                    ),
-                  ],
-                ),
-              ),
-              const PopupMenuItem(
-                value: "حذف",
-                child: Row(
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.only(right: 8.0),
-                      child: Icon(Icons.delete)
-                    ),
-                    Text(
-                      'حذف',
-                      style: TextStyle(fontSize: 15),
-                    ),
-                  ],
-                ),
-              ),
-            
-            ],
-          ),
           Spacer(),
             Row(
               children: [
@@ -122,6 +81,37 @@ Future<void> deleteratings(String UserName,String Name ) async {
 
         ),
         const SizedBox(height: 20,),
+         Row(
+          children: [
+             const Spacer(),
+             InkWell(
+              onTap: () {  
+                  deleteratings(userName, comName);
+                  showCards(context, "assets/thankyou.json", 'تم الحذف');
+              },
+               child: const Column(
+                 children: [
+                   Icon(Icons.delete),
+                   Text("حذف")
+                 ],
+               ),
+             ),
+            const SizedBox(width: 20,),
+             InkWell(
+              onTap: () {
+                  showeditRatingDialog1(context, userName,comName);
+              },
+               child: const Column(
+                 children: [
+                  Icon(Icons.comment),
+                  Text("رد")
+                 ],
+               ),
+             ),
+          ],
+        ),
+      if(comComment.isNotEmpty)
+       const SizedBox(height: 15,),
        Container(
           decoration: const BoxDecoration(
             color: kPrimaryColor, 
@@ -140,29 +130,29 @@ Future<void> deleteratings(String UserName,String Name ) async {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "1/1/2024",
+                      Datecom,
                       style: Theme.of(context).textTheme.bodyMedium,
                       textDirection: TextDirection.rtl,
                     ),
                     Text(
-                      "هلا كار",
+                      comName,
                       style: Theme.of(context).textTheme.titleLarge,
                       textDirection: TextDirection.rtl,
                     ),
                   ],
                 ),
                 const SizedBox(height: 10),
-                const Align(
+                 Align(
                   alignment: Alignment.topRight,
                   child: ReadMoreText(
-                    "...مرحبا المتجر كثير ممتاز وتعاملهم رائع وبضاعتهم اروع انصحكم تشتروا منه اخلاق اسم الله استمروا فايتنج اايببل لايب يلا يبا بيغ غايابلا يغت سغات يغت يلبات سيت فالقيللر بلايبغغ ا ",
+                    comComment,
                     trimLines: 2,
                     textDirection: TextDirection.rtl,
                     trimMode: TrimMode.Line,
                     trimExpandedText: "عرض أقل",
                     trimCollapsedText: "عرض المزيد",
-                    lessStyle: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.blue),
-                    moreStyle: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.blue),
+                    lessStyle: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.blue),
+                    moreStyle: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.blue),
                   ),
                 ),
               ],

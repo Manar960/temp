@@ -9,20 +9,27 @@ import 'rate.dart';
 import 'package:http/http.dart' as http;
 import 'package:readmore/readmore.dart';
 
-class UserReviweCard extends StatelessWidget {
-  const UserReviweCard(
-      {Key? key,
-      required this.userName,
-      required this.Date,
-      required this.comment,
-      required this.rate,
-      required this.StoreName,
-      required this.item})
-      : super(key: key);
-  final String userName, Date, comment;
+class UserReviweCard extends StatefulWidget {
+  const UserReviweCard({
+    Key? key,
+    required this.userName,
+    required this.Date,
+    required this.comment,
+    required this.rate,
+    required this.StoreName,
+    required this.item,
+    required this.comComment,
+    required this.Datecom,
+  }) : super(key: key);
+
+  final String userName, Date, comment, StoreName, comComment, Datecom;
   final double rate;
-  final String StoreName;
   final Map<String, dynamic> item;
+
+  @override
+  _UserReviewCardState createState() => _UserReviewCardState();
+}
+class _UserReviewCardState extends State<UserReviweCard> {
 
   Future<void> deleteratings(String UserName, String Name) async {
     try {
@@ -43,7 +50,8 @@ class UserReviweCard extends StatelessWidget {
       print('Error during API request: $e');
     }
   }
-
+ bool yesSelected = false;
+  bool noSelected = false;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -51,16 +59,16 @@ class UserReviweCard extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            if (username == userName)
+            if (username ==widget.userName)
               PopupMenuButton(
                 child: const Icon(Icons.more_vert),
                 onSelected: (value) {
                   if (value == "تعديل") {
-                    showeditRatingDialog(context, userName,
-                        "assets/images/userprofile.png", rate, comment, item);
+                    showeditRatingDialog(context,widget. userName,
+                        "assets/images/userprofile.png",widget. rate, comment,widget. item);
                   } else if (value == "حذف") {
-                    print(StoreName);
-                    deleteratings(userName, StoreName);
+    
+                    deleteratings(widget. userName,widget.StoreName);
                     showCards(context, "assets/thankyou.json", 'تم الحذف');
                   }
                 },
@@ -100,7 +108,7 @@ class UserReviweCard extends StatelessWidget {
             Row(
               children: [
                 Text(
-                  userName,
+                 widget. userName,
                   style: Theme.of(context).textTheme.titleLarge,
                 ),
                 const SizedBox(
@@ -120,7 +128,7 @@ class UserReviweCard extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             Text(
-              Date,
+             widget.Date,
               style: Theme.of(context).textTheme.bodyMedium,
               textDirection: TextDirection.rtl,
             ),
@@ -128,7 +136,7 @@ class UserReviweCard extends StatelessWidget {
               width: 10,
             ),
             Ratingbar(
-              rate: rate,
+              rate:widget. rate,
             ),
           ],
         ),
@@ -151,8 +159,45 @@ class UserReviweCard extends StatelessWidget {
           ),
         ),
         const SizedBox(
-          height: 20,
+          height: 5,
         ),
+       Directionality
+       (
+        textDirection: TextDirection.rtl,
+         child: Row(
+          children: [
+            const Text("هل وجدت هذا مفيدا؟",style: TextStyle(fontSize: 15),),
+            const SizedBox(width: 10), 
+            ElevatedButton(
+               style: ElevatedButton.styleFrom(
+        minimumSize: const Size(30, 20),
+        backgroundColor: yesSelected ? Colors.green : null,
+        ),
+              onPressed: () {
+              setState(() {
+              yesSelected = true;
+              noSelected = false;
+            });              },
+              child: const Text("نعم",style: TextStyle(color: Colors.black)),
+            ),
+            SizedBox(width: 10),
+            ElevatedButton(
+              onPressed: () {
+              setState(() {
+              yesSelected = false;
+              noSelected = true;
+            });              },
+                style: ElevatedButton.styleFrom(
+        minimumSize: const Size(30, 20),
+        backgroundColor: noSelected ? Colors.green : null,
+      ),
+              child: const Text("لا",style: TextStyle(color: Colors.black),),
+            ),
+          ],
+               ),
+       ),
+      const SizedBox(height: 6,),
+      if(widget.comComment.isNotEmpty)
         Container(
           decoration: const BoxDecoration(
             color: kPrimaryColor,
@@ -170,32 +215,32 @@ class UserReviweCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "1/1/2024",
+                    widget.Datecom,
                       style: Theme.of(context).textTheme.bodyMedium,
                       textDirection: TextDirection.rtl,
                     ),
                     Text(
-                      "هلا كار",
+                     widget. StoreName,
                       style: Theme.of(context).textTheme.titleLarge,
                       textDirection: TextDirection.rtl,
                     ),
                   ],
                 ),
                 const SizedBox(height: 10),
-                const Align(
+                 Align(
                   alignment: Alignment.topRight,
                   child: ReadMoreText(
-                    "...مرحبا المتجر كثير ممتاز وتعاملهم رائع وبضاعتهم اروع انصحكم تشتروا منه اخلاق اسم الله استمروا فايتنج اايببل لايب يلا يبا بيغ غايابلا يغت سغات يغت يلبات سيت فالقيللر بلايبغغ ا ",
+                   widget. comComment,
                     trimLines: 2,
                     textDirection: TextDirection.rtl,
                     trimMode: TrimMode.Line,
                     trimExpandedText: "عرض أقل",
                     trimCollapsedText: "عرض المزيد",
-                    lessStyle: TextStyle(
+                    lessStyle: const TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.bold,
                         color: Colors.blue),
-                    moreStyle: TextStyle(
+                    moreStyle: const TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.bold,
                         color: Colors.blue),

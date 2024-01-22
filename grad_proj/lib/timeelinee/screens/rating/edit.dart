@@ -2,36 +2,28 @@ import 'dart:convert';
 import 'package:grad_proj/constants.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 class EditRatingDialog extends StatelessWidget {
   final String userName;
-  final String userImage;
-    final String com;
-    final Map<String, dynamic> item;
-
-  final Function(double) onRatingChanged;
+  final String com;
   final Function(String) onCommentChanged;
-  final double rate;
+
   EditRatingDialog({super.key, 
     required this.userName,
-    required this.userImage,
-    required this.onRatingChanged,
     required this.onCommentChanged, 
-    required this.rate, required this.com, required this.item,
+    required this.com,
 
   }): commentController = TextEditingController(text: com);
- Future<void> addRate( String UserName,String StoreName,double rate,String comment) async {
-    const url = 'https://gp-back-gp.onrender.com/Rating/AddRating-For/Store';
+ Future<void> addcomment(String UserName,String Name,String comment) async {
+    const url = 'http://localhost:4000/Rating/comment-For/company';
 
     final response = await http.post(
       Uri.parse(url),
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode({
-        "UserName":UserName,
-        "Name":StoreName,
-        "Rateing":rate,
-        "Comments":comment,
+         "UserName":UserName,
+        "Name":Name,
+        "comComment":comment,
       }),
     );
     if (response.statusCode == 200) {
@@ -45,37 +37,16 @@ class EditRatingDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text('تقييم هذا المتجر',  textDirection: TextDirection.rtl,),
+      title: const Text('التعليق',  textDirection: TextDirection.rtl,),
       content: Column(
         mainAxisSize: MainAxisSize.min,
-        children: [
-          CircleAvatar(
-            radius: 30,
-            backgroundImage: Image.asset(userImage).image,
-          ),
+        children: [ 
+          Text('الرد على $userName!',  textDirection: TextDirection.rtl,),
           const SizedBox(height: 10),
-          Text('أهلاً, $userName!',  textDirection: TextDirection.rtl,),
-          const SizedBox(height: 10),
-          RatingBar.builder(
-            initialRating: rate,
-            minRating: 1,
-            direction: Axis.horizontal,
-            allowHalfRating: false,
-            itemCount: 5,
-            itemSize: 30.0,
-            itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
-            itemBuilder: (context, _) => const Icon(
-              Icons.star,
-              color: Colors.amber,
-            ),
-            onRatingUpdate: onRatingChanged,
-            textDirection: TextDirection.rtl,
-          ),
-          const SizedBox(height: 10),
-          TextField(
+       TextField(
             style: const TextStyle(fontSize: 15),
             decoration: const InputDecoration(
-              hintText: 'صف تجربتك',
+              hintText: 'ردك',
              hintTextDirection: TextDirection.rtl,
 
             ),
@@ -90,35 +61,29 @@ class EditRatingDialog extends StatelessWidget {
         Center(
           child: ElevatedButton(
             onPressed: () {
-            // addRate(username!,item['Name'],rating,comment);
-            //   Navigator.of(context).pop(); 
+            addcomment(userName,com,comment);
+              Navigator.of(context).pop(); 
             },
-            child: const Text('تعديل',style: TextStyle(color: bluebasic),),
+            child: const Text('ارسال',style: TextStyle(color: bluebasic),),
           ),
         ),
       ],
     );
   }
 }
-  double rating = 0;
+
   String comment = '';
-void showeditRatingDialog(BuildContext context, String userName, String userImage,double rate, String com,final Map<String, dynamic> item) {
+void showeditRatingDialog1(BuildContext context, String userName, String com) {
 
   showDialog(
     context: context,
     builder: (BuildContext context) {
       return EditRatingDialog(
         userName: userName,
-        userImage: userImage,
-        rate: rate,
         com:com,
-        onRatingChanged: (newRating) {
-          rating = newRating;
-        },
         onCommentChanged: (newComment) {
           comment = newComment;
-     
-        }, item: item,
+        }
       );
       
     },

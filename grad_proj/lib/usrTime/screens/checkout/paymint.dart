@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:grad_proj/butombar.dart';
+import 'package:grad_proj/usrTime/profile/page/profile_page_user.dart';
 import 'package:grad_proj/usrTime/screens/checkout/waydelivary.dart';
 import '../../../constants.dart';
 import '../../map/map.dart';
+import '../booking/boking_screen.dart';
 import '../cart/cart_screen.dart';
 import '../home/home_screen.dart';
 
@@ -150,41 +152,52 @@ class _paymentMethod1State extends State<paymentMethod1> {
       ),
       bottomNavigationBar: CustomBottomNavigationBar(
         currentIndex: 0,
-        onTap: (index) {
-          switch (index) {
-            case 0:
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) {
-                  return const HomeScreenu();
-                }),
-              );
-              break;
-            case 1:
-              // Navigate to the report page
-              break;
-            case 2:
-              // MapPage
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) {
-                  return const MapPage();
-                }),
-              );
-              break;
-            case 3:
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) {
-                  return const CartScreen();
-                }),
-              );
-              break;
-            case 4:
-              // Navigate to the personal page
-              break;
-          }
-        },
+          onTap: (index) {
+                  switch (index) {
+                    case 0:
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) {
+                          return const HomeScreenu();
+                        }),
+                      );
+                      break;
+                    case 1:
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) {
+                          return const bookScreen();
+                        }),
+                      );
+                      break;
+                    case 2:
+                      //MapPaje
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) {
+                          return const MapPage();
+                        }),
+                      );
+                      break;
+
+                    case 3:
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) {
+                          return const CartScreen();
+                        }),
+                      );
+                      break;
+                    case 4:
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) {
+                          return const ProfilePage();
+                        }),
+                      );
+                      break;
+                  }
+                },
       ),
     );
   }

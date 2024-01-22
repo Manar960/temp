@@ -286,7 +286,7 @@ class _ComponantBodyState extends State<ComponantBody> {
                       iconBgColor: Color.fromARGB(255, 233, 255, 64),
                       cardTitle: 'التقييمات',
                       icon: Icons.reviews,
-                      mainText: nighc.toString(),
+                      mainText: number.toString(),
                       ),
                     ),
                 ],
