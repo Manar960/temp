@@ -24,11 +24,11 @@ class CartScreen extends StatefulWidget {
 }
 
 class _CartScreenState extends State<CartScreen> {
-  List? item=[];
+  List? item = [];
   @override
   void initState() {
     super.initState();
-  } 
+  }
 
   Future<void> getallitemcarts() async {
     try {
@@ -89,7 +89,8 @@ class _CartScreenState extends State<CartScreen> {
                         onDismissed: (direction) {
                           setState(() {
                             removeFromCart(
-                                item![index]['ProBarCode'].toString(), username!);
+                                item![index]['ProBarCode'].toString(),
+                                username!);
                           });
                         },
                         background: Container(
@@ -111,15 +112,14 @@ class _CartScreenState extends State<CartScreen> {
                   }),
             ),
           ),
-         const CheckoutCard(),
+          const CheckoutCard(),
         ],
       ),
-      bottomNavigationBar: 
-     CustomBottomNavigationBar(
+      bottomNavigationBar: CustomBottomNavigationBar(
         currentIndex: 0,
-          onTap: (index) {
-            switch (index) {
-              case 0:
+        onTap: (index) {
+          switch (index) {
+            case 0:
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) {
@@ -140,12 +140,12 @@ class _CartScreenState extends State<CartScreen> {
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) {
-                  return const MapPage();
+                  return MapPage();
                 }),
               );
               break;
             case 3:
-               Navigator.push(
+              Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) {
                   return const CartScreen();
@@ -154,16 +154,15 @@ class _CartScreenState extends State<CartScreen> {
               break;
             case 4:
               Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) {
-                    return const ProfilePage();
-                  }),
-                );
+                context,
+                MaterialPageRoute(builder: (context) {
+                  return const ProfilePage();
+                }),
+              );
               break;
-
-            }
-          },
-        ),
+          }
+        },
+      ),
     );
   }
 }

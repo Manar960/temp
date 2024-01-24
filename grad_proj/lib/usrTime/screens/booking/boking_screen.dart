@@ -28,7 +28,8 @@ class _bookScreenState extends State<bookScreen> {
   Future<void> getBookingsForUser(String userName) async {
     try {
       var response = await http.get(
-        Uri.parse('https://gp-back-gp.onrender.com/bookings-for/user/$userName'),
+        Uri.parse(
+            'https://gp-back-gp.onrender.com/bookings-for/user/$userName'),
         headers: {"Content-Type": "application/json"},
       );
       if (response.statusCode == 200) {
@@ -47,12 +48,11 @@ class _bookScreenState extends State<bookScreen> {
   @override
   void initState() {
     super.initState();
-     getBookingsForUser(username!);
+    getBookingsForUser(username!);
   }
 
   @override
   Widget build(BuildContext context) {
-   
     return Scaffold(
       appBar: AppBar(
         title: const Text('الحجوزات'),
@@ -77,7 +77,8 @@ class _bookScreenState extends State<bookScreen> {
                     crossAxisCount: Responsive.isDesktop(context) ? 2 : 1,
                     crossAxisSpacing: 10,
                     mainAxisSpacing: 20,
-                    childAspectRatio: Responsive.isDesktop(context) ? 3.5 : 2.5),
+                    childAspectRatio:
+                        Responsive.isDesktop(context) ? 3.5 : 2.5),
                 itemCount: item?.length ?? 0,
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
@@ -119,7 +120,7 @@ class _bookScreenState extends State<bookScreen> {
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) {
-                  return const MapPage();
+                  return MapPage();
                 }),
               );
               break;

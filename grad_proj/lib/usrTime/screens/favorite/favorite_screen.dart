@@ -32,7 +32,6 @@ class _favScreenState extends State<favScreen> {
         var jsonResponse = jsonDecode(response.body);
         setState(() {
           item = jsonResponse['data'];
-
         });
       } else {
         // ignore: avoid_print
@@ -47,12 +46,11 @@ class _favScreenState extends State<favScreen> {
   @override
   void initState() {
     super.initState();
-       
   }
 
   @override
   Widget build(BuildContext context) {
- getfav();
+    getfav();
     return Scaffold(
       appBar: AppBar(
         title: const Text('المفضلة'),
@@ -116,7 +114,7 @@ class _favScreenState extends State<favScreen> {
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) {
-                  return const MapPage();
+                  return MapPage();
                 }),
               );
               break;

@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-class MapPage extends StatefulWidget {
-  const MapPage({Key? key}) : super(key: key);
+import 'directions_model.dart' as DirectionsModel;
+import 'directions_repository.dart';
+import 'package:dio/dio.dart';
 
+class MapPage extends StatefulWidget {
   @override
-  State<MapPage> createState() => _MapPageState();
+  _MapPageState createState() => _MapPageState();
 }
 
 class _MapPageState extends State<MapPage> {
@@ -13,10 +15,11 @@ class _MapPageState extends State<MapPage> {
     target: LatLng(37.773972, -122.431297),
     zoom: 11.5,
   );
+
   late GoogleMapController _googleMapController;
-  late Marker _origin;
-  late Marker _destination;
-  //late Directions _info;
+  Marker? _origin;
+  Marker? _destination;
+  DirectionsModel.Directions? _info;
 
   @override
   void dispose() {
@@ -25,68 +28,120 @@ class _MapPageState extends State<MapPage> {
   }
 
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          centerTitle: false,
-          title: const Text('Google Maps'),
-          actions: [
-            if (_origin != null)
-              TextButton(
-                onPressed: () => _googleMapController.animateCamera(
-                  CameraUpdate.newCameraPosition(
-                    CameraPosition(
-                      target: _origin.position,
-                      zoom: 14.5,
-                      tilt: 50.0,
-                    ),
+      appBar: AppBar(
+        centerTitle: false,
+        title: const Text('Google Maps'),
+        actions: [
+          if (_origin != null)
+            TextButton(
+              onPressed: () => _googleMapController.animateCamera(
+                CameraUpdate.newCameraPosition(
+                  CameraPosition(
+                    target: _origin!.position,
+                    zoom: 14.5,
+                    tilt: 50.0,
                   ),
                 ),
-                style: TextButton.styleFrom(
-                  primary: Colors.green,
-                  textStyle: const TextStyle(fontWeight: FontWeight.w600),
-                ),
-                child: const Text('ORIGIN'),
               ),
-            if (_destination != null)
-              TextButton(
-                onPressed: () => _googleMapController.animateCamera(
-                  CameraUpdate.newCameraPosition(
-                    CameraPosition(
-                      target: _destination.position,
-                      zoom: 14.5,
-                      tilt: 50.0,
-                    ),
+              style: TextButton.styleFrom(
+                primary: Colors.green,
+                textStyle: const TextStyle(fontWeight: FontWeight.w600),
+              ),
+              child: const Text('ORIGIN'),
+            ),
+          if (_destination != null)
+            TextButton(
+              onPressed: () => _googleMapController.animateCamera(
+                CameraUpdate.newCameraPosition(
+                  CameraPosition(
+                    target: _destination!.position,
+                    zoom: 14.5,
+                    tilt: 50.0,
                   ),
                 ),
-                style: TextButton.styleFrom(
-                  primary: Colors.blue,
-                  textStyle: const TextStyle(fontWeight: FontWeight.w600),
+              ),
+              style: TextButton.styleFrom(
+                primary: Colors.blue,
+                textStyle: const TextStyle(fontWeight: FontWeight.w600),
+              ),
+              child: const Text('DEST'),
+            )
+        ],
+      ),
+      body: Stack(
+        alignment: Alignment.center,
+        children: [
+          GoogleMap(
+            myLocationButtonEnabled: false,
+            zoomControlsEnabled: false,
+            initialCameraPosition: _initialCameraPosition,
+            onMapCreated: (controller) => _googleMapController = controller,
+            markers: {
+              if (_origin != null) _origin!,
+              if (_destination != null) _destination!
+            },
+            polylines: {
+              if (_info != null)
+                Polyline(
+                  polylineId: const PolylineId('overview_polyline'),
+                  color: Colors.red,
+                  width: 5,
+                  points: _info!.polylinePoints
+                      .map((e) => LatLng(e.latitude, e.longitude))
+                      .toList(),
                 ),
-                child: const Text('DEST'),
-              )
-          ],
+            },
+            onLongPress: _addMarker,
+          ),
+          if (_info != null)
+            Positioned(
+              top: 20.0,
+              child: Container(
+                padding: const EdgeInsets.symmetric(
+                  vertical: 6.0,
+                  horizontal: 12.0,
+                ),
+                decoration: BoxDecoration(
+                  color: Colors.yellowAccent,
+                  borderRadius: BorderRadius.circular(20.0),
+                  boxShadow: const [
+                    BoxShadow(
+                      color: Colors.black26,
+                      offset: Offset(0, 2),
+                      blurRadius: 6.0,
+                    )
+                  ],
+                ),
+                child: Text(
+                  '${_info!.totalDistance}, ${_info!.totalDuration}',
+                  style: const TextStyle(
+                    fontSize: 18.0,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+            ),
+        ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Theme.of(context).primaryColor,
+        foregroundColor: Colors.black,
+        onPressed: () => _googleMapController.animateCamera(
+          _info != null
+              ? CameraUpdate.newLatLngBounds(_info!.bounds, 100.0)
+              : CameraUpdate.newCameraPosition(_initialCameraPosition),
         ),
-        body: GoogleMap(
-          myLocationButtonEnabled: false,
-          zoomControlsEnabled: false,
-          initialCameraPosition: _initialCameraPosition,
-          onMapCreated: (controller) => _googleMapController = controller,
-          markers: {
-            if (_origin != null) _origin,
-            if (_destination != null) _destination
-          },
-          onLongPress: _addMarker,
-        ));
+        child: const Icon(Icons.center_focus_strong),
+      ),
+    );
   }
 
   void _addMarker(LatLng pos) async {
     if (_origin == null || (_origin != null && _destination != null)) {
+      // Origin is not set OR Origin/Destination are both set
+      // Set origin
       setState(() {
         _origin = Marker(
           markerId: const MarkerId('origin'),
@@ -95,12 +150,21 @@ class _MapPageState extends State<MapPage> {
               BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueGreen),
           position: pos,
         );
+        // Reset destination
+        _destination = null;
 
-        //_destination = null;
-
-        //  _info = null;
+        // Reset info
+        _info = DirectionsModel.Directions(
+          bounds:
+              LatLngBounds(northeast: LatLng(0, 0), southwest: LatLng(0, 0)),
+          polylinePoints: [],
+          totalDistance: '',
+          totalDuration: '',
+        );
       });
     } else {
+      // Origin is already set
+      // Set destination
       setState(() {
         _destination = Marker(
           markerId: const MarkerId('destination'),
@@ -109,6 +173,16 @@ class _MapPageState extends State<MapPage> {
           position: pos,
         );
       });
+
+      // Get directions
+      final directions = await DirectionsRepository(dio: Dio()).getDirections(
+        origin: _origin!.position,
+        destination: pos,
+      );
+
+      if (directions != null) {
+        setState(() => _info = directions as DirectionsModel.Directions?);
+      }
     }
   }
 }

@@ -151,7 +151,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) {
-                    return const MapPage();
+                    return MapPage();
                   }),
                 );
                 break;

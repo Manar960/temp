@@ -14,20 +14,15 @@ import 'componant/mainfeater.dart';
 import 'componant/proudctsize.dart';
 
 class Detailsproduct extends StatefulWidget {
-  const Detailsproduct({
-    Key? key,
-    required this.item
-  }) : super(key: key);
+  const Detailsproduct({Key? key, required this.item}) : super(key: key);
 
   final Map<String, dynamic> item;
-  
+
   @override
   _DetailsproductState createState() => _DetailsproductState();
 }
 
 class _DetailsproductState extends State<Detailsproduct> {
-
-
   @override
   void initState() {
     super.initState();
@@ -37,23 +32,26 @@ class _DetailsproductState extends State<Detailsproduct> {
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor:  bluebasic ,
+      backgroundColor: bluebasic,
       appBar: AppBar(
-        backgroundColor: Colors.white ,
+        backgroundColor: Colors.white,
         elevation: 0,
         actions: <Widget>[
           IconButton(
-            icon: SvgPicture.asset("assets/icons/search.svg",color: Colors.black,),
+            icon: SvgPicture.asset(
+              "assets/icons/search.svg",
+              color: Colors.black,
+            ),
             onPressed: () {},
           ),
           IconButton(
-            icon: SvgPicture.asset("assets/icons/cart.svg",color:  Colors.black),
+            icon:
+                SvgPicture.asset("assets/icons/cart.svg", color: Colors.black),
             onPressed: () {},
           ),
           const SizedBox(width: 16 / 2)
         ],
       ),
-      
       body: Directionality(
         textDirection: TextDirection.rtl,
         child: SingleChildScrollView(
@@ -69,7 +67,6 @@ class _DetailsproductState extends State<Detailsproduct> {
                         top: size.height * 0.12,
                         left: kPadding,
                         right: kPadding,
-                        
                       ),
                       height: double.infinity,
                       decoration: const BoxDecoration(
@@ -83,18 +80,18 @@ class _DetailsproductState extends State<Detailsproduct> {
                         child: Column(
                           children: <Widget>[
                             const SizedBox(height: 22),
-                            BulidSize(item :widget.item),
+                            BulidSize(item: widget.item),
                             const SizedBox(height: kPadding / 2),
-                            Description(item :widget.item ),
+                            Description(item: widget.item),
                             const SizedBox(height: kPadding / 2),
-                            CounterWithFavBtn(item:widget.item),
+                            CounterWithFavBtn(item: widget.item),
                             const SizedBox(height: 10),
-                            AddToCart(item:widget.item)
+                            AddToCart(item: widget.item)
                           ],
                         ),
                       ),
                     ),
-                    pagedetail(item :widget.item)
+                    pagedetail(item: widget.item)
                   ],
                 ),
               )
@@ -102,11 +99,11 @@ class _DetailsproductState extends State<Detailsproduct> {
           ),
         ),
       ),
-       bottomNavigationBar: CustomBottomNavigationBar(
+      bottomNavigationBar: CustomBottomNavigationBar(
         currentIndex: 0,
-          onTap: (index) {
-            switch (index) {
-              case 0:
+        onTap: (index) {
+          switch (index) {
+            case 0:
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) {
@@ -127,12 +124,12 @@ class _DetailsproductState extends State<Detailsproduct> {
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) {
-                  return const MapPage();
+                  return MapPage();
                 }),
               );
               break;
             case 3:
-               Navigator.push(
+              Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) {
                   return const CartScreen();
@@ -140,19 +137,10 @@ class _DetailsproductState extends State<Detailsproduct> {
               );
               break;
             case 4:
-             
               break;
-            }
-          },
-        ),
-
+          }
+        },
+      ),
     );
-
-    
   }
-  
-  
-
-  
-  }
-
+}
