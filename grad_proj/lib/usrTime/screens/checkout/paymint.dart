@@ -140,8 +140,8 @@ class _paymentMethod1State extends State<paymentMethod1> {
                     },
                     child: const Text(
                       "أكمل عملية الدفع",
-                      style:
-                          TextStyle(color: Colors.white, height: 1, fontSize: 20),
+                      style: TextStyle(
+                          color: Colors.white, height: 1, fontSize: 20),
                     ),
                   ),
                 ),
@@ -152,52 +152,52 @@ class _paymentMethod1State extends State<paymentMethod1> {
       ),
       bottomNavigationBar: CustomBottomNavigationBar(
         currentIndex: 0,
-          onTap: (index) {
-                  switch (index) {
-                    case 0:
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) {
-                          return const HomeScreenu();
-                        }),
-                      );
-                      break;
-                    case 1:
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) {
-                          return const bookScreen();
-                        }),
-                      );
-                      break;
-                    case 2:
-                      //MapPaje
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) {
-                          return const MapPage();
-                        }),
-                      );
-                      break;
+        onTap: (index) {
+          switch (index) {
+            case 0:
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) {
+                  return const HomeScreenu();
+                }),
+              );
+              break;
+            case 1:
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) {
+                  return const bookScreen();
+                }),
+              );
+              break;
+            case 2:
+              //MapPaje
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) {
+                  return MapPage();
+                }),
+              );
+              break;
 
-                    case 3:
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) {
-                          return const CartScreen();
-                        }),
-                      );
-                      break;
-                    case 4:
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) {
-                          return const ProfilePage();
-                        }),
-                      );
-                      break;
-                  }
-                },
+            case 3:
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) {
+                  return const CartScreen();
+                }),
+              );
+              break;
+            case 4:
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) {
+                  return const ProfilePage();
+                }),
+              );
+              break;
+          }
+        },
       ),
     );
   }

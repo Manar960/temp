@@ -147,15 +147,13 @@ class _store4State extends State<store4> {
                 height: 4,
               ),
             ),
-
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Center(
                 child: _buildCard(
                   Column(
                     children: [
-                    
-                       Text(
+                      Text(
                         widget.item['about'],
                         textAlign: TextAlign.center,
                         style: Theme.of(context)
@@ -190,30 +188,32 @@ class _store4State extends State<store4> {
                 ],
               ),
             ),
-               InkWell(
-              onTap: () {
-                 Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) {
-                  return  SeeAll(item: widget.item,);
-                }),
-              );
-              },
-              child: const title(tile: "جميع السيارات المتوفرة",icon: Icons.car_rental)),
-
-
+            InkWell(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) {
+                      return SeeAll(
+                        item: widget.item,
+                      );
+                    }),
+                  );
+                },
+                child: const title(
+                    tile: "جميع السيارات المتوفرة", icon: Icons.car_rental)),
             const SizedBox(
               height: 20,
             ),
-            const title(tile: "العلامات التجارية",icon: Icons.supervised_user_circle),
+            const title(
+                tile: "العلامات التجارية", icon: Icons.supervised_user_circle),
             const Directionality(
-              textDirection: TextDirection.rtl,
-              child: Center(child: Catforstore())),
+                textDirection: TextDirection.rtl,
+                child: Center(child: Catforstore())),
             const SizedBox(
               height: 10,
             ),
             Directionality(
-             textDirection: TextDirection.rtl,
+              textDirection: TextDirection.rtl,
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: NewArrivalProducts(item: widget.item),
@@ -222,40 +222,43 @@ class _store4State extends State<store4> {
             const SizedBox(
               height: 10,
             ),
-             Directionality(
+            Directionality(
               textDirection: TextDirection.rtl,
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: PopularProducts(item:widget.item ),
+                child: PopularProducts(item: widget.item),
               ),
             ),
             const SizedBox(
               height: 10,
             ),
-         
-
             const Padding(
               padding: EdgeInsets.symmetric(vertical: 15),
               child: Divider(
                 height: 4,
               ),
             ),
-              Ratecard(press: (){
-                 Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) {
-                return  Reviwandcommint(item: widget.item,);
-              }),
-            );
-              },item: widget.item,)
+            Ratecard(
+              press: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) {
+                    return Reviwandcommint(
+                      item: widget.item,
+                    );
+                  }),
+                );
+              },
+              item: widget.item,
+            )
           ],
         ),
       ),
       bottomNavigationBar: CustomBottomNavigationBar(
         currentIndex: 0,
-           onTap: (index) {
-            switch (index) {
-              case 0:
+        onTap: (index) {
+          switch (index) {
+            case 0:
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) {
@@ -276,30 +279,29 @@ class _store4State extends State<store4> {
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) {
-                  return const MapPage();
+                  return MapPage();
                 }),
               );
               break;
             case 3:
-               Navigator.push(
+              Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) {
                   return const CartScreen();
                 }),
-              ); 
+              );
               break;
             case 4:
-               Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) {
-                          return const ProfilePage();
-                        }),
-                      );
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) {
+                  return const ProfilePage();
+                }),
+              );
               break;
-            }
-          },
-        ),
-
+          }
+        },
+      ),
     );
   }
 

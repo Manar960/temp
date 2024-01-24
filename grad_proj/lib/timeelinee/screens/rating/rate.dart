@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:grad_proj/constants.dart';
@@ -9,109 +7,113 @@ import '../../../butombar.dart';
 import '../../../usrTime/map/map.dart';
 import 'Ratingbar1.dart';
 
-
-
 class Reviwandcommint extends StatefulWidget {
-  const Reviwandcommint({Key? key, required this.companayname}) : super(key: key);
-final String companayname;
+  const Reviwandcommint({Key? key, required this.companayname})
+      : super(key: key);
+  final String companayname;
 
   @override
   _ReviwandcommintState createState() => _ReviwandcommintState();
 }
+
 class _ReviwandcommintState extends State<Reviwandcommint> {
-  late String rates='0.0';
-  late double adjustRate=0;
-late  Map<String, dynamic> star = {
-  "1": 0.0,
-  "2": 0.0,
-  "3": 0.0,
-  "4": 0.0,
-  "5": 0.0,
-};
+  late String rates = '0.0';
+  late double adjustRate = 0;
+  late Map<String, dynamic> star = {
+    "1": 0.0,
+    "2": 0.0,
+    "3": 0.0,
+    "4": 0.0,
+    "5": 0.0,
+  };
   Future<void> getAvareg(String Name) async {
-  try {
-   
-    var response = await http.get(
-      Uri.parse('https://gp-back-gp.onrender.com/Rating/Avareg--rate/Store/$Name'),
-      headers: {"Content-Type": "application/json"},
-    );
-    if (response.statusCode == 200) {
-      var jsonResponse = jsonDecode(response.body);
-      setState(() {
-        rates = jsonResponse['averageRating'];
-        adjustRate=jsonResponse['adjustedRate'];
-      });
-    } else {
-      print('Request failed with status: ${response.statusCode}');
+    try {
+      var response = await http.get(
+        Uri.parse(
+            'https://gp-back-gp.onrender.com/Rating/Avareg--rate/Store/$Name'),
+        headers: {"Content-Type": "application/json"},
+      );
+      if (response.statusCode == 200) {
+        var jsonResponse = jsonDecode(response.body);
+        setState(() {
+          rates = jsonResponse['averageRating'];
+          adjustRate = jsonResponse['adjustedRate'];
+        });
+      } else {
+        print('Request failed with status: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error during API request: $e');
     }
-  } catch (e) {
-    print('Error during API request: $e');
   }
-}
 
   Future<void> getAvaregstar(String Name) async {
-  try {
-   
-    var response = await http.get(
-      Uri.parse('https://gp-back-gp.onrender.com/Rating/persantge-of-each-star/$Name'),
-      headers: {"Content-Type": "application/json"},
-    );
-    if (response.statusCode == 200) {
-      var jsonResponse = jsonDecode(response.body);
-      setState(() {
-        star = jsonResponse['data'];
-      });
-    } else {
-      print('Request failed with status: ${response.statusCode}');
+    try {
+      var response = await http.get(
+        Uri.parse(
+            'https://gp-back-gp.onrender.com/Rating/persantge-of-each-star/$Name'),
+        headers: {"Content-Type": "application/json"},
+      );
+      if (response.statusCode == 200) {
+        var jsonResponse = jsonDecode(response.body);
+        setState(() {
+          star = jsonResponse['data'];
+        });
+      } else {
+        print('Request failed with status: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error during API request: $e');
     }
-  } catch (e) {
-    print('Error during API request: $e');
   }
-}
 
-@override
+  @override
   void initState() {
     super.initState();
-     getAvareg(widget.companayname);
+    getAvareg(widget.companayname);
     getAvaregstar(widget.companayname);
-
   }
+
   @override
   Widget build(BuildContext context) {
-    
-     
     return Scaffold(
       appBar: AppBar(
         title: Text('التقييم والمراجعة'),
-      leading: IconButton(
-        icon: Icon(Icons.arrow_back),
-        onPressed: () {
-          Navigator.pop(context);
-        },
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
       ),
-    ),
-      body:
-         SingleChildScrollView(
+      body: SingleChildScrollView(
         padding: EdgeInsets.all(30),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(height: 8,),
-            Trating(rate: rates,star: star,),
-              Align(
+            const SizedBox(
+              height: 8,
+            ),
+            Trating(
+              rate: rates,
+              star: star,
+            ),
+            Align(
               alignment: Alignment.centerRight,
-               child: Ratingbar(rate:adjustRate ),
-             ), 
-              const SizedBox(height:30,),
-              Ratingbar1(companayname:widget.companayname)
-       ],
+              child: Ratingbar(rate: adjustRate),
+            ),
+            const SizedBox(
+              height: 30,
+            ),
+            Ratingbar1(companayname: widget.companayname)
+          ],
         ),
       ),
-      bottomNavigationBar:  CustomBottomNavigationBar(
+      bottomNavigationBar: CustomBottomNavigationBar(
         currentIndex: 0,
-          onTap: (index) {
-            switch (index) {
-               case 0:
+        onTap: (index) {
+          switch (index) {
+            case 0:
               // Navigator.push(
               //   context,
               //   MaterialPageRoute(builder: (context) {
@@ -132,7 +134,7 @@ late  Map<String, dynamic> star = {
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) {
-                  return const MapPage();
+                  return MapPage();
                 }),
               );
               break;
@@ -145,14 +147,14 @@ late  Map<String, dynamic> star = {
               // );
               break;
             case 4:
-             
               break;
-            }
-          },
-        ),
+          }
+        },
+      ),
     );
   }
 }
+
 class Ratingbar extends StatelessWidget {
   const Ratingbar({
     Key? key,
@@ -204,13 +206,15 @@ class Trating extends StatelessWidget {
         ),
         Padding(
           padding: const EdgeInsets.all(10.0),
-          child: Text(rate, style: Theme.of(context).textTheme.displayLarge,),
+          child: Text(
+            rate,
+            style: Theme.of(context).textTheme.displayLarge,
+          ),
         ),
       ],
     );
   }
 }
-
 
 class Ratingprogress extends StatelessWidget {
   const Ratingprogress({
@@ -231,7 +235,7 @@ class Ratingprogress extends StatelessWidget {
           child: SizedBox(
             width: double.infinity,
             child: RotatedBox(
-              quarterTurns: 2, 
+              quarterTurns: 2,
               child: LinearProgressIndicator(
                 value: value,
                 minHeight: 11,
@@ -242,7 +246,9 @@ class Ratingprogress extends StatelessWidget {
             ),
           ),
         ),
-        SizedBox(width: 8,),
+        SizedBox(
+          width: 8,
+        ),
         Expanded(
           flex: 1,
           child: Text(text, style: Theme.of(context).textTheme.bodyMedium),

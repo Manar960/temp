@@ -93,12 +93,12 @@ class StoresScreen extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) {
-                  return const MapPage();
+                  return MapPage();
                 }),
               );
               break;
-            case 3: 
-               Navigator.push(
+            case 3:
+              Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) {
                   return const CartScreen();
@@ -106,12 +106,12 @@ class StoresScreen extends StatelessWidget {
               );
               break;
             case 4:
-               Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) {
-                          return const ProfilePage();
-                        }),
-                      );
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) {
+                  return const ProfilePage();
+                }),
+              );
               break;
           }
         },

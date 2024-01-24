@@ -148,15 +148,13 @@ class _store2State extends State<store2> {
                 height: 4,
               ),
             ),
-
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Center(
                 child: _buildCard(
                   Column(
                     children: [
-                    
-                        Text(
+                      Text(
                         widget.item['about'],
                         textAlign: TextAlign.center,
                         style: Theme.of(context)
@@ -191,41 +189,44 @@ class _store2State extends State<store2> {
                 ],
               ),
             ),
-           Builder(
-             builder: (context) {
-               return  InkWell(
+            Builder(builder: (context) {
+              return InkWell(
                 onTap: () {
-                Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => productstore2(item: widget.item),
-                ),
-              );
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => productstore2(item: widget.item),
+                    ),
+                  );
                 },
-                child:const title( tile: "منتجات العناية بالسيارات",icon: Icons.airport_shuttle_outlined),
-            );
-             }
-           ),
-
+                child: const title(
+                    tile: "منتجات العناية بالسيارات",
+                    icon: Icons.airport_shuttle_outlined),
+              );
+            }),
             const SizedBox(
               height: 10,
             ),
-            const title(tile: "العلامات التجارية المشهورة",icon: Icons.no_crash_rounded),
+            const title(
+                tile: "العلامات التجارية المشهورة",
+                icon: Icons.no_crash_rounded),
             const Directionality(
-              textDirection: TextDirection.rtl,
-              child: Padding(
-                padding: EdgeInsets.all(16),
-                child: BrandCards(),
-              )),
+                textDirection: TextDirection.rtl,
+                child: Padding(
+                  padding: EdgeInsets.all(16),
+                  child: BrandCards(),
+                )),
             const SizedBox(
               height: 10,
             ),
-            const title(tile: "الخدمات المتوفرة",icon: Icons.supervised_user_circle),
+            const title(
+                tile: "الخدمات المتوفرة", icon: Icons.supervised_user_circle),
             ServiceSection(name: widget.item['Name']),
             const SizedBox(
               height: 20,
             ),
-            const title(tile: "من اعمالنا",icon: Icons.workspace_premium_outlined),
+            const title(
+                tile: "من اعمالنا", icon: Icons.workspace_premium_outlined),
             const SizedBox(
               height: 10,
             ),
@@ -233,12 +234,11 @@ class _store2State extends State<store2> {
             const SizedBox(
               height: 8,
             ),
-           const title(tile: "قبل وبعد",icon: Icons.shape_line_outlined),
+            const title(tile: "قبل وبعد", icon: Icons.shape_line_outlined),
             const SizedBox(
               height: 8,
             ),
             horizontalWidgetBasedOnScreenType(context),
-
             const SizedBox(
               height: 10,
             ),
@@ -248,22 +248,25 @@ class _store2State extends State<store2> {
                 height: 4,
               ),
             ),
-                Ratecard(press: (){
-                     Navigator.push(
+            Ratecard(
+              press: () {
+                Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) {
-                    return  Reviwandcommint(item:widget.item);
+                    return Reviwandcommint(item: widget.item);
                   }),
                 );
-                  },item: widget.item,)
+              },
+              item: widget.item,
+            )
           ],
         ),
       ),
       bottomNavigationBar: CustomBottomNavigationBar(
         currentIndex: 0,
-           onTap: (index) {
-            switch (index) {
-              case 0:
+        onTap: (index) {
+          switch (index) {
+            case 0:
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) {
@@ -284,12 +287,12 @@ class _store2State extends State<store2> {
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) {
-                  return const MapPage();
+                  return MapPage();
                 }),
               );
               break;
             case 3:
-               Navigator.push(
+              Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) {
                   return const CartScreen();
@@ -297,12 +300,10 @@ class _store2State extends State<store2> {
               );
               break;
             case 4:
-             
               break;
-            }
-          },
-        ),
-
+          }
+        },
+      ),
     );
   }
 
@@ -326,10 +327,12 @@ class _store2State extends State<store2> {
 
 class title extends StatelessWidget {
   const title({
-    super.key, required this.tile, required this.icon,
+    super.key,
+    required this.tile,
+    required this.icon,
   });
-final String tile;
-final IconData icon;
+  final String tile;
+  final IconData icon;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -347,8 +350,14 @@ final IconData icon;
                     fontSize: 21,
                   ),
             ),
-            SizedBox(width: 10,),
-             Icon(icon,color: bluebasic,size: 40,)
+            SizedBox(
+              width: 10,
+            ),
+            Icon(
+              icon,
+              color: bluebasic,
+              size: 40,
+            )
           ],
         ),
       ),

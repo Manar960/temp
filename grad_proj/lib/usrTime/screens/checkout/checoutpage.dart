@@ -26,7 +26,7 @@ class checkout extends StatefulWidget {
 }
 
 String? username = AuthProvider.userData?.userName;
- 
+
 Future<void> addOrder(String userName, String location, String payminttype,
     String waydelivary) async {
   final response = await http.post(
@@ -50,7 +50,7 @@ class _checkoutState extends State<checkout> {
   String paymentMethod = '';
   String waydelivary = '';
   final TextEditingController addressController = TextEditingController();
-    final TextEditingController phoneController = TextEditingController();
+  final TextEditingController phoneController = TextEditingController();
 
   @override
   void initState() {
@@ -66,11 +66,11 @@ class _checkoutState extends State<checkout> {
       body: Container(
         padding: const EdgeInsets.all(20),
         child: Directionality(
-        textDirection: TextDirection.rtl,
+          textDirection: TextDirection.rtl,
           child: ListView(
             children: [
               const Text("اختر",
-              textDirection: TextDirection.rtl,
+                  textDirection: TextDirection.rtl,
                   style: TextStyle(
                       color: orangecolor,
                       fontWeight: FontWeight.bold,
@@ -176,12 +176,11 @@ class _checkoutState extends State<checkout> {
                       ),
                     ),
                     const SizedBox(width: 10),
-                    const Icon(Icons.map_outlined,
-                        size: 60, color: bluebasic),
+                    const Icon(Icons.map_outlined, size: 60, color: bluebasic),
                   ],
                 ),
-                 if (waydelivary == "delivary")
-                 const Text("رقم الجوال",
+              if (waydelivary == "delivary")
+                const Text("رقم الجوال",
                     style: TextStyle(
                         color: orangecolor,
                         fontWeight: FontWeight.bold,
@@ -214,8 +213,7 @@ class _checkoutState extends State<checkout> {
                       ),
                     ),
                     const SizedBox(width: 10),
-                    const Icon(Icons.phone,
-                        size: 60, color: bluebasic),
+                    const Icon(Icons.phone, size: 60, color: bluebasic),
                   ],
                 ),
               const SizedBox(
@@ -249,7 +247,7 @@ class _checkoutState extends State<checkout> {
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         Row(
-                          children: [   
+                          children: [
                             Expanded(
                               child: Directionality(
                                 textDirection: TextDirection.rtl,
@@ -264,14 +262,17 @@ class _checkoutState extends State<checkout> {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(builder: (context) {
-                                        return orders(paymentMethod: paymentMethod);
+                                        return orders(
+                                            paymentMethod: paymentMethod);
                                       }),
                                     );
                                   },
                                   child: const Text(
                                     "أكمل عملية الدفع",
                                     style: TextStyle(
-                                        color: Colors.white, height: 1, fontSize: 20),
+                                        color: Colors.white,
+                                        height: 1,
+                                        fontSize: 20),
                                   ),
                                 ),
                               ),
@@ -289,52 +290,52 @@ class _checkoutState extends State<checkout> {
       ),
       bottomNavigationBar: CustomBottomNavigationBar(
         currentIndex: 0,
-          onTap: (index) {
-                  switch (index) {
-                    case 0:
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) {
-                          return const HomeScreenu();
-                        }),
-                      );
-                      break;
-                    case 1:
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) {
-                          return const bookScreen();
-                        }),
-                      );
-                      break;
-                    case 2:
-                      //MapPaje
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) {
-                          return const MapPage();
-                        }),
-                      );
-                      break;
+        onTap: (index) {
+          switch (index) {
+            case 0:
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) {
+                  return const HomeScreenu();
+                }),
+              );
+              break;
+            case 1:
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) {
+                  return const bookScreen();
+                }),
+              );
+              break;
+            case 2:
+              //MapPaje
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) {
+                  return MapPage();
+                }),
+              );
+              break;
 
-                    case 3:
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) {
-                          return const CartScreen();
-                        }),
-                      );
-                      break;
-                    case 4:
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) {
-                          return const ProfilePage();
-                        }),
-                      );
-                      break;
-                  }
-                },
+            case 3:
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) {
+                  return const CartScreen();
+                }),
+              );
+              break;
+            case 4:
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) {
+                  return const ProfilePage();
+                }),
+              );
+              break;
+          }
+        },
       ),
     );
   }
