@@ -236,12 +236,14 @@ class Ratingprogress extends StatelessWidget {
             width: double.infinity,
             child: RotatedBox(
               quarterTurns: 2,
-              child: LinearProgressIndicator(
-                value: value,
-                minHeight: 11,
-                backgroundColor: Colors.grey.shade300,
+              child: ClipRRect(
                 borderRadius: BorderRadius.circular(7),
-                valueColor: const AlwaysStoppedAnimation(bluebasic),
+                child: LinearProgressIndicator(
+                  value: value,
+                  minHeight: 11,
+                  backgroundColor: Colors.grey.shade300,
+                  valueColor: const AlwaysStoppedAnimation(bluebasic),
+                ),
               ),
             ),
           ),
