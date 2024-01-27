@@ -23,7 +23,7 @@ class _ordersState extends State<orders> {
   List? item;
 
   @override
-  void initState() {
+  void initState() { 
     super.initState();
 
   }
@@ -31,7 +31,7 @@ class _ordersState extends State<orders> {
   Future<void> getOrdar(String UserName) async {
     try {
       var response = await http.get(
-        Uri.parse('http://localhost:4000/getOrdar/$UserName'),
+        Uri.parse('https://gp-back-gp.onrender.com/getOrdar/$UserName'),
         headers: {"Content-Type": "application/json"},
       );
 
