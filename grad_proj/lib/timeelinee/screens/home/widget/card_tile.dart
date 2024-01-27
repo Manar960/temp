@@ -51,7 +51,6 @@ class CardTile extends StatelessWidget {
                       ),
                     ),
                     const Spacer(),
-                    const Divider(),
                     const Align(
                         alignment: Alignment.topLeft, child: FittedBox()),
                     const SizedBox(

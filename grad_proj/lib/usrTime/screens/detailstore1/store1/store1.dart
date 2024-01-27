@@ -134,7 +134,7 @@ class _store1State extends State<store1> {
             const SizedBox(
               height: 10,
             ),
-            Categoriesviwe(item: widget.item),
+            Categoriesviwe(item: widget.item['Name']),
             const SizedBox(
               height: 10,
             ),

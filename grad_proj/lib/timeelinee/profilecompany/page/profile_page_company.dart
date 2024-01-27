@@ -29,7 +29,8 @@ class _ProfilePageCompanyStatead extends State<ProfilePageadCompany> {
   Map<String, dynamic>? companyData;
   final String pageTitle = 'الملف الشخصي';
   String? _imagePath;
-
+ String comtaype='';
+ String comloc='';
   @override
   void initState() {
     super.initState();
@@ -235,10 +236,10 @@ class _ProfilePageCompanyStatead extends State<ProfilePageadCompany> {
 
         if (jsonResponse != null && jsonResponse['status'] == true) {
           final Map<String, dynamic>? companyData = jsonResponse['companyInfo'];
-          String comtaype = companyData?['Type'];
+           comtaype = companyData?['Type'];
 
           print("company type $comtaype");
-          String comloc = companyData?['location'];
+           comloc = companyData?['location'];
 
           print("company location $comloc");
 
@@ -278,7 +279,7 @@ class _ProfilePageCompanyStatead extends State<ProfilePageadCompany> {
               size: 30.0,
             ),
             title: Text(
-              companyData?['Type'] ?? 'Type Not Available',
+              comtaype,
               style: const TextStyle(
                 color: Colors.black,
                 fontSize: 20.0,
@@ -297,7 +298,7 @@ class _ProfilePageCompanyStatead extends State<ProfilePageadCompany> {
               size: 30.0,
             ),
             title: Text(
-              companyData?['location'] ?? 'Location Not Available',
+              comloc,
               style: const TextStyle(
                 color: Colors.black,
                 fontSize: 20.0,

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:grad_proj/usrTime/screens/booking/boking_screen.dart';
 import '../../../../../constants.dart';
@@ -18,6 +20,7 @@ import 'componants/date.dart';
 import 'componants/imageslider.dart';
 import 'componants/pro.dart';
 import 'componants/service_section.dart';
+import 'package:http/http.dart' as http;
 
 // ignore: camel_case_types
 class store2 extends StatefulWidget {
@@ -35,7 +38,33 @@ class _store2State extends State<store2> {
   @override
   void initState() {
     super.initState();
+    getimages(widget.item['Name']);
   }
+  List <String> blobs=[],blobs2=[];
+ Future<void> getimages(String name) async {
+  try {
+   
+    final response = await http.get(
+      Uri.parse('http://localhost:4000/getimages/$name'),
+      headers: {"Content-Type": "application/json"},
+    
+    );
+if (response.statusCode == 200) {
+        var jsonResponse = jsonDecode(response.body);
+        setState(() {
+                blobs = (jsonResponse['blobs'] as List<dynamic>).cast<String>();
+        blobs2 = (jsonResponse['blobs2'] as List<dynamic>).cast<String>();
+        });
+
+        print(blobs);
+      } else {
+        // ignore: avoid_print
+        print('Request failed with status: ${response.statusCode}');
+      }
+  } catch (error) {
+    print('Error: $error');
+  }
+}
 
   @override
   Widget build(BuildContext context) {
@@ -230,7 +259,7 @@ class _store2State extends State<store2> {
             const SizedBox(
               height: 10,
             ),
-            const ImageSlider(),
+             ImageSlider(blobs:blobs),
             const SizedBox(
               height: 8,
             ),

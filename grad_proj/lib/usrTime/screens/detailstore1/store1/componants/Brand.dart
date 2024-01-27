@@ -27,7 +27,7 @@ class _BrandviweState extends State<Brandviwe> {
 
 Future<void> fetchProductsForStore(String name) async {
     var response = await http.get(
-      Uri.parse('https://gp-back-gp.onrender.com/brand-product/cat/$name/brand'),
+      Uri.parse('https://gp-back-gp.onrender.com/brand-product/cat/$name/براند'),
       headers: {"Content-Type": "application/json"},
     );
 

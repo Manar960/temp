@@ -391,13 +391,16 @@ class _LoginFormState extends State<LoginForm> {
         var myToken = jsonResponse['token'];
         var companyName = jsonResponse['comaname'];
         var companyemail = jsonResponse['userEmail'];
+        var companyType = jsonResponse['comType'];
         Provider.of<CompanyProvider>(context, listen: false)
             .setCompanyName(companyName);
         // ignore: avoid_print
         print(companyName);
+        print(companyType);
         prefs.setString('token', myToken);
         prefs.setString('company', companyName);
         prefs.setString('companyemail', companyemail);
+        prefs.setString('companyType', companyType);
         // ignore: use_build_context_synchronously
         Navigator.push(
           context,

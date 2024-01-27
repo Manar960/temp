@@ -58,13 +58,7 @@ class StoresScreen extends StatelessWidget {
                 height: 4,
               ),
             ),
-            SizedBox(height: 20),
-            Padding(
-              padding: EdgeInsets.symmetric(vertical: 15),
-              child: Divider(
-                height: 4,
-              ),
-            ),
+           
           ],
         ),
       ),

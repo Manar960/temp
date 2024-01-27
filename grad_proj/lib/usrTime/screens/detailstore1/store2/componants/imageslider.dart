@@ -6,13 +6,20 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:grad_proj/login/responsive.dart';
 
 class ImageSlider extends StatefulWidget {
-  const ImageSlider({super.key});
+  const ImageSlider({super.key, required this.blobs,});
+  final List<String> blobs;
 
   @override
   _ImageSliderState createState() => _ImageSliderState();
 }
-class _ImageSliderState extends State<ImageSlider> {
 
+class _ImageSliderState extends State<ImageSlider> {
+@override
+  void setState(VoidCallback fn) {
+    // TODO: implement setState
+    super.setState(fn);
+    print(widget.blobs);
+  }
   final List<String> images = [
     'assets/images/11.jpg',
     'assets/images/12.jpg',
@@ -26,6 +33,7 @@ class _ImageSliderState extends State<ImageSlider> {
   ];
   @override
   Widget build(BuildContext context) {
+
     return Center(
         child: CarouselSlider(
           items: images.map((String imageUrl) {
@@ -37,10 +45,19 @@ class _ImageSliderState extends State<ImageSlider> {
               ),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(12.0),
-                child: Image.asset(
+                child: ClipRRect(
+                borderRadius: BorderRadius.circular(12.0),
+                child: Image.network(
                   imageUrl,
                   fit: BoxFit.fill,
+                  errorBuilder: (context, error, stackTrace) {
+                    // Handle the error here
+                    print('Image loading error: $error');
+                    return Text('Error loading image');
+                  },
                 ),
+              ),
+
               ),
             );
           }).toList(),

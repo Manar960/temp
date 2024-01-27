@@ -6,10 +6,10 @@ import '../../../home/components/section_title.dart';
 import 'Subcat.dart';
 import 'catcard.dart';
 class Categoriesviwe extends StatefulWidget {
-  const Categoriesviwe({
+  const Categoriesviwe({ 
     Key? key, required this.item,
   }) : super(key: key);
-final Map<String, dynamic> item;
+final String item;
 
   @override
   _CategoriesviweState createState() => _CategoriesviweState();
@@ -21,12 +21,12 @@ class _CategoriesviweState extends State<Categoriesviwe> {
   @override
   void initState() {
     super.initState();
-   fetchWheelProductsForStore(widget.item["Name"]);
+   fetchWheelProductsForStore(widget.item);
   }
 
 Future<void> fetchWheelProductsForStore(String name) async {
     var response = await http.get(
-      Uri.parse('https://gp-back-gp.onrender.com/brand-product/cat/$name/section'),
+      Uri.parse('https://gp-back-gp.onrender.com/brand-product/cat/$name/اقسام'),
       headers: {"Content-Type": "application/json"},
     );
 
@@ -43,6 +43,7 @@ Future<void> fetchWheelProductsForStore(String name) async {
 
   @override
   Widget build(BuildContext context) {
+    fetchWheelProductsForStore(widget.item);
     return Column(
       children: [
         Padding(

@@ -235,15 +235,25 @@ class _ComponantBodyState extends State<ComponantBody> {
                const SizedBox(
                 height: 40,
               ),
-                FractionallySizedBox(
-                widthFactor: 0.3,
-                child: CardTile(
-                  iconBgColor: Colors.orange,
-                  cardTitle: 'التقييمات',
-                  icon: Icons.reviews,
-                  mainText: totalBR.toString(),
+                InkWell(
+                    onTap: () {
+                     Navigator.push(
+                     context,
+                     MaterialPageRoute(builder: (context) {
+                     return Reviwandcommint(companayname: companyName);
+                }),
+              );
+                      },
+                  child: FractionallySizedBox(
+                  widthFactor: 0.3,
+                  child: CardTile(
+                    iconBgColor: Colors.orange,
+                    cardTitle: 'التقييمات',
+                    icon: Icons.reviews,
+                    mainText: totalBR.toString(),
+                  ),
+                                ),
                 ),
-              ),
             ],
             if (!ResponsiveWidget.isSmallScreen(context))
               Row(
